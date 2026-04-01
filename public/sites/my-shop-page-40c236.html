@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface2: #1a1a1a;
+            --border: rgba(255, 255, 255, 0.07);
+            --text: #f5f5f5;
+            --muted: #888;
+            --accent: #e8c97e;
+            --accent-dark: #c4a55a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* &#9472;&#9472; Nav &#9472;&#9472; */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 68px;
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            padding: 10px 22px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        /* &#9472;&#9472; Hero &#9472;&#9472; */
+        .hero {
+            min-height: 88vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 0;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            padding: 80px 8% 80px 8%;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(232, 201, 126, 0.1);
+            border: 1px solid rgba(232, 201, 126, 0.2);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 28px;
+        }
+
+        .hero-h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        .hero-h1 em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 440px;
+            margin-bottom: 44px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 52px;
+        }
+
+        .btn-gold {
+            padding: 14px 32px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-gold:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-gold {
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-outline-gold:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .hero-trust-avatars {
+            display: flex;
+        }
+
+        .hero-trust-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+            margin-left: -8px;
+            background: linear-gradient(135deg, var(--surface2), var(--surface));
+        }
+
+        .hero-trust-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .hero-right {
+            height: 88vh;
+            position: relative;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-product-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 60% 50%, rgba(232, 201, 126, 0.08) 0%, transparent 70%);
+        }
+
+        .hero-product-card {
+            position: relative;
+            width: 260px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-product-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+        }
+
+        .hero-product-info {
+            padding: 16px;
+        }
+
+        .hero-product-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .hero-product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero-product-old-price {
+            font-size: 13px;
+            color: var(--muted);
+            text-decoration: line-through;
+            margin-left: 6px;
+        }
+
+        /* &#9472;&#9472; Section base &#9472;&#9472; */
+        .section {
+            padding: 96px 8%;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 48px;
+            line-height: 1.15;
+        }
+
+        /* &#9472;&#9472; Products Grid &#9472;&#9472; */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            border-color: rgba(232, 201, 126, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .product-p1-bg {
+            background: linear-gradient(135deg, #1e1e2e, #252535);
+        }
+
+        .product-p2-bg {
+            background: linear-gradient(135deg, #1e2e1e, #253525);
+        }
+
+        .product-p3-bg {
+            background: linear-gradient(135deg, #2e1e1e, #352525);
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-category {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .product-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+
+        .product-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .product-add-btn {
+            padding: 8px 16px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .product-add-btn:hover {
+            background: var(--accent-dark);
+        }
+
+        /* &#9472;&#9472; Features &#9472;&#9472; */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(232, 201, 126, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .feature-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* &#9472;&#9472; CTA Banner &#9472;&#9472; */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 72px 8%;
+            text-align: center;
+            margin: 0 4% 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(232, 201, 126, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-banner h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .cta-banner p {
+            font-size: 16px;
+            color: var(--muted);
+            margin-bottom: 36px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* &#9472;&#9472; Footer &#9472;&#9472; */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo" id="nav_logo"><span>.</span>SHOP.</a>
+        <ul class="nav-links">
+            <li><a href="#products">Products</a></li>
+            <li><a href="#features">Why Us</a></li>
+            <li><a href="#cta">Get Started</a></li>
+        </ul>
+        <a href="#products" class="nav-cta" id="nav_cta_text">Shop Now</a>
+    </nav>
+
+    <!-- Hero -->
+    <section>
+        <div class="hero">
+            <div class="hero-left">
+                <div class="hero-tag" id="hero_badge">&#10022;  New Collection 2026</div>
+                <h1 class="hero-h1" id="hero_headline"><br>for <em>Modern</em> Lives.Premium Products for Modern Lives.</h1>
+                <p class="hero-sub" id="hero_sub">Handpicked, designed with care, and built to last. We believe in quality over quantity &mdash; every single item.</p>
+                <div class="hero-actions">
+                    <a href="#products" class="btn-gold" id="hero_cta_primary">Shop Collection &rarr;</a>
+                    <a href="#features" class="btn-outline-gold" id="hero_cta_secondary">Our Promise</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="hero-trust-avatars">
+                        <div class="hero-trust-avatar"></div>
+                        <div class="hero-trust-avatar" style="background:linear-gradient(135deg,#2a2a3a,#1a1a2a);">
+                        </div>
+                        <div class="hero-trust-avatar" style="background:linear-gradient(135deg,#3a2a2a,#2a1a1a);">
+                        </div>
+                        <div class="hero-trust-avatar" style="background:linear-gradient(135deg,#2a3a2a,#1a2a1a);">
+                        </div>
+                    </div>
+                    <span id="hero_trust_text">Trusted by 4,000+ happy customers</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-product-bg"></div>
+                <div class="hero-product-card">
+                    <div class="hero-product-img" id="hero_product_emoji">&#127911;</div>
+                    <div class="hero-product-info">
+                        <div class="hero-product-name" id="hero_product_name">Pro Wireless Headphones</div>
+                        <div>
+                            <span class="hero-product-price" id="hero_product_price">$249</span>
+                            <span class="hero-product-old-price" id="hero_product_old_price">$349</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" style="background: var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+        <div class="section">
+            <p class="section-label">Our Products</p>
+            <h2 class="section-title" id="products_heading">Featured Collection</h2>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img product-p1-bg" id="p1_emoji">&#127911;</div>
+                    <div class="product-info">
+                        <div class="product-category" id="p1_category">Audio</div>
+                        <div class="product-name" id="p1_name">Pro Wireless Headphones</div>
+                        <div class="product-desc" id="p1_desc">Studio-grade sound with 40-hour battery and active noise cancellation.</div>
+                        <div class="product-foot">
+                            <span class="product-price" id="p1_price">$249</span>
+                            <button class="product-add-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img product-p2-bg" id="p2_emoji">&#9000;&#65039;</div>
+                    <div class="product-info">
+                        <div class="product-category" id="p2_category">Peripherals</div>
+                        <div class="product-name" id="p2_name">Mechanical Keyboard</div>
+                        <div class="product-desc" id="p2_desc">Tactile, silent switches. Aluminium frame. Feels as good as it looks.</div>
+                        <div class="product-foot">
+                            <span class="product-price" id="p2_price">$189</span>
+                            <button class="product-add-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img product-p3-bg" id="p3_emoji">&#128421;&#65039;</div>
+                    <div class="product-info">
+                        <div class="product-category" id="p3_category">Display</div>
+                        <div class="product-name" id="p3_name">4K Monitor Stand</div>
+                        <div class="product-desc" id="p3_desc">Elevate your setup. Full articulation arm with cable management.</div>
+                        <div class="product-foot">
+                            <span class="product-price" id="p3_price">$129</span>
+                            <button class="product-add-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+        <div class="section">
+            <p class="section-label">Why Choose Us</p>
+            <h2 class="section-title" id="features_heading">Our Promise to You</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" id="feat1_icon">&#128666;</div>
+                    <div class="feature-title" id="feat1_title">Free Shipping</div>
+                    <div class="feature-desc" id="feat1_desc">Free worldwide shipping on all orders over $50. Fast, reliable, tracked.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" id="feat2_icon">&#128274;</div>
+                    <div class="feature-title" id="feat2_title">Secure Checkout</div>
+                    <div class="feature-desc" id="feat2_desc">256-bit SSL encryption. Your payment details are always safe with us.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" id="feat3_icon">&#8617;&#65039;</div>
+                    <div class="feature-title" id="feat3_title">Easy Returns</div>
+                    <div class="feature-desc" id="feat3_desc">Not happy? Return within 30 days, no questions asked, full refund.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" id="feat4_icon">&#128172;</div>
+                    <div class="feature-title" id="feat4_title">24/7 Support</div>
+                    <div class="feature-desc" id="feat4_desc">Our team is always on standby. Chat, email, or call &mdash; we're here for you.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner" id="cta">
+        <h2 id="cta_heading">Ready to upgrade your everyday?</h2>
+        <p id="cta_body">Join thousands of customers who choose quality. Limited stock available &mdash; don't miss out.</p>
+        <a href="#products" class="btn-gold" id="cta_btn">Shop the Collection &rarr;</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <span id="footer_brand" style="font-family:'Syne',sans-serif;font-weight:800;color:var(--text);">SHOP.</span>
+        <span id="footer_copy">&copy; 2026 Shop. All rights reserved.</span>
+        <span id="footer_tagline">Made with &hearts;</span>
+    </footer>
+
+</body>
+
+</html>

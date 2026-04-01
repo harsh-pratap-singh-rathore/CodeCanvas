@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minimalist Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#050505", /* Almost pure black */
+                        "surface-dark": "#0f1216",
+                        "border-dark": "#27272a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for that hacker aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .glass-header {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100 font-display selection:bg-primary selection:text-white">
+<div class="flex flex-col min-h-screen w-full overflow-x-hidden">
+<!-- Sticky Navigation -->
+<header class="glass-header fixed top-0 left-0 right-0 z-50 border-b border-border-dark w-full">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<h2 class="text-lg font-bold font-mono tracking-tight">{{brand_name}}</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-mono text-slate-400 hover:text-primary transition-colors" href="#about">#about</a>
+<a class="text-sm font-mono text-slate-400 hover:text-primary transition-colors" href="#skills">#skills</a>
+<a class="text-sm font-mono text-slate-400 hover:text-primary transition-colors" href="#projects">#projects</a>
+<a class="text-sm font-mono text-slate-400 hover:text-primary transition-colors" href="#contact">#contact</a>
+</nav>
+<a class="hidden sm:flex items-center justify-center px-5 py-2 rounded bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-white transition-all text-sm font-mono font-bold" href="{{cta_link}}">
+                    {{cta_button_text}}
+                </a>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pt-16">
+<!-- Hero Section -->
+<section class="relative px-6 py-20 md:py-32 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-6 z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-dark border border-border-dark w-fit">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs font-mono text-slate-400">Available for work</span>
+</div>
+<div>
+<h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tighter mb-4">
+                                {{user_name}}
+                            </h1>
+<h2 class="text-2xl md:text-3xl text-primary font-mono font-medium mb-6">
+                                &lt;{{job_title}} /&gt;
+                            </h2>
+<p class="text-lg text-slate-400 max-w-xl font-light">
+                                {{hero_tagline}}
+                            </p>
+</div>
+<div class="flex flex-wrap gap-4 mt-4">
+<a class="px-8 py-3 bg-primary text-white font-mono font-bold rounded hover:bg-primary/90 transition-colors flex items-center gap-2" href="{{cta_link}}">
+                                {{cta_button_text}}
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="px-8 py-3 bg-transparent border border-border-dark text-slate-300 font-mono font-bold rounded hover:border-primary hover:text-primary transition-colors" href="#projects">
+                                View Work
+                            </a>
+</div>
+</div>
+<div class="relative flex justify-center lg:justify-end">
+<div class="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden border border-border-dark bg-surface-dark group">
+<!-- Glitch effect overlay -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+<div class="w-full h-full bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-700 ease-in-out" data-alt="Portrait of the developer looking confident" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCj5I-O62Qgi5OaE-t69wcVTKDlLFQciD32KVuLKuRBgMt_E3XCNViiWqvO9hCLStCrnb1MIhujRDchvd-t-5VkRW9iA3QaJoecbDMxFKzbUnd3oTgh7EyrudDmPhXJEQ-9AsXAcjyi267Z64_RSeXDSE7xztezgMLrP2sjYoF-pEuLaSYibRU9f8izHBOqFsJojjio6ZPWaiatHV4bjsUXwgT63GW4Zut_ne_OQNv5oGCN-lIzhHBMUDF3zCkozAR0U0vgz0bxYS6');"></div>
+<!-- Tech deco elements -->
+<div class="absolute top-4 left-4 w-2 h-2 bg-primary"></div>
+<div class="absolute top-4 right-4 w-2 h-2 bg-white/20"></div>
+<div class="absolute bottom-4 left-4 w-2 h-2 bg-white/20"></div>
+<div class="absolute bottom-4 right-4 w-2 h-2 bg-primary"></div>
+<div class="absolute bottom-8 right-8 text-xs font-mono text-primary/80 rotate-90 origin-right">SYS.USER_01</div>
+</div>
+</div>
+</div>
+<!-- Background decoration -->
+<div class="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+</section>
+<!-- About Section -->
+<section class="px-6 py-20 border-t border-border-dark bg-surface-dark/30" id="about">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+<div class="space-y-6">
+<h3 class="text-3xl font-bold flex items-center gap-3">
+<span class="text-primary font-mono text-xl">01.</span>
+                                {{about_heading}}
+                            </h3>
+<div class="prose prose-invert prose-lg text-slate-400 font-light">
+<p>{{about_desc}}</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-6 bg-background-dark border border-border-dark rounded-lg hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">schedule</span>
+<div class="text-4xl font-mono font-bold text-white mb-2">{{years_experience}}</div>
+<div class="text-sm text-slate-500 uppercase tracking-wider font-mono">Years Exp.</div>
+</div>
+<div class="p-6 bg-background-dark border border-border-dark rounded-lg hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">code</span>
+<div class="text-4xl font-mono font-bold text-white mb-2">{{projects_completed}}</div>
+<div class="text-sm text-slate-500 uppercase tracking-wider font-mono">Projects Done</div>
+</div>
+<div class="p-6 bg-background-dark border border-border-dark rounded-lg hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">coffee</span>
+<div class="text-4xl font-mono font-bold text-white mb-2">1.2k</div>
+<div class="text-sm text-slate-500 uppercase tracking-wider font-mono">Coffees</div>
+</div>
+<div class="p-6 bg-background-dark border border-border-dark rounded-lg hover:border-primary/50 transition-colors group">
+<span class="material-symbols-outlined text-primary mb-4 text-3xl group-hover:scale-110 transition-transform">terminal</span>
+<div class="text-4xl font-mono font-bold text-white mb-2">99%</div>
+<div class="text-sm text-slate-500 uppercase tracking-wider font-mono">Uptime</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section -->
+<section class="px-6 py-20 border-t border-border-dark" id="skills">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12">
+<h3 class="text-3xl font-bold flex items-center gap-3">
+<span class="text-primary font-mono text-xl">02.</span>
+                            Tech Stack
+                        </h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_1}}</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_2}}</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_3}}</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_4}}</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_5}}</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">{{skill_6}}</span>
+</div>
+<!-- Extra Placeholders to fill grid -->
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">Docker</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">AWS</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">GraphQL</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">Next.js</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">PostgreSQL</span>
+</div>
+<div class="flex items-center justify-center p-4 border border-border-dark bg-surface-dark rounded hover:border-primary/50 hover:shadow-[0_0_15px_rgba(25,127,230,0.15)] transition-all group cursor-default">
+<span class="font-mono text-sm text-slate-300 group-hover:text-white">Figma</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="px-6 py-20 border-t border-border-dark bg-surface-dark/30" id="projects">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 flex justify-between items-end">
+<h3 class="text-3xl font-bold flex items-center gap-3">
+<span class="text-primary font-mono text-xl">03.</span>
+                            Selected Works
+                        </h3>
+<a class="hidden md:flex items-center gap-2 text-primary font-mono text-sm hover:underline" href="#">
+                            View All Projects <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Project 1 -->
+<article class="group bg-background-dark border border-border-dark rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
+<div class="relative w-full aspect-video overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500" data-alt="Screenshot of a code editor interface" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTnHMFAV-kGqdH6l8qijxz_dGK3Y6mwo-v1AGeWH4gwhAeqB8gxFRdHs8UC3lljgooZKyhIlq6Q7ummyvkFdgaxhF5rt2asgLIfo7EfjHvFrJgoFqJs5hpldQR2MIQJtJwjoGxlmfBmAyo7ZqluwOZZK13l_qxQ9iKb9ClrxncarWEByADGITU4f5EOAtfHXdyofD6v73_F3ghB0B3wGr5lPSVfrsF7oR5GncJv6o5fA7uW6fdZSks1Bn_jvat_NA9ZiumaXAXZTor');"></div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-xl font-bold text-white group-hover:text-primary transition-colors">{{project_title_1}}</h4>
+<div class="flex gap-3">
+<a class="text-slate-400 hover:text-white transition-colors" href="#" title="GitHub Repo">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405 1.02 0 2.04.135 3 .405 2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="{{project_link_1}}" title="Live Site">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</a>
+</div>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                    {{project_desc_1}}
+                                </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-xs font-mono px-2 py-1 bg-surface-dark border border-border-dark rounded text-primary">React</span>
+<span class="text-xs font-mono px-2 py-1 bg-surface-dark border border-border-dark rounded text-primary">Tailwind</span>
+<span class="text-xs font-mono px-2 py-1 bg-surface-dark border border-border-dark rounded text-primary">Node.js</span>
+</div>
+</div>
+</article>
+<!-- Project 2 -->
+<article class="group bg-background-dark border border-border-dark rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
+<div class="relative w-full aspect-video overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full h-full bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500" data-alt="Dashboard interface with data visualization" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuApnA1ilKAexxuDsSeshO1qr558y9ItRA3hk-YIKijSSijK3KLAlKFj6iUeUiqUW_Pq2HrLATPACSHNxjhVfMMOVhtunjL6tBCb0zSTEMipsIAZfsKDd3fZ8zO4AMGO5TIQjjDjgt298F__F7CajM8ekO7GtQ3Z5p7n17xn6rZU7M-pwwXo_RvHBU1ctvsac_LwVWTjyJ6fqjzJFZ1W5G9f19lEyzDhDC6Eru6nN7hEB2JVwVxUwCtQOxZcDaJX8nl36MDI6JYjJ8ge');"></div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h4 class="text-xl font-bold text-white group-hover:text-primary transition-colors">{{project_title_2}}</h4>
+<div class="flex gap-3">
+<a class="text-slate-400 hover:text-white transition-colors" href="#" title="GitHub Repo">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405 1.02 0 2.04.135 3 .405 2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="{{project_link_2}}" title="Live Site">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</a>
+</div>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                    {{project_desc_2}}
+                                </p>
+<div class="flex flex-wrap gap-2 mt-auto">
+<span class="text-xs font-mono px-2 py-1 bg-surface-dark border border-border-dark rounded text-primary">Vue.js</span>
+<span class="text-xs font-mono px-2 py-1 bg-surface-dark border border-border-dark rounded text-primary">Firebase</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="px-6 py-32 border-t border-border-dark" id="contact">
+<div class="max-w-4xl mx-auto text-center">
+<span class="font-mono text-primary text-sm mb-4 block">04. What's Next?</span>
+<h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">{{contact_heading}}</h2>
+<p class="text-slate-400 max-w-xl mx-auto mb-10 text-lg font-light">
+                        I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                    </p>
+<a class="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-primary text-primary hover:bg-primary/10 transition-colors rounded text-lg font-mono font-bold" href="mailto:{{contact_email}}">
+<span class="material-symbols-outlined">mail</span>
+                        {{contact_email}}
+                    </a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="py-8 border-t border-border-dark bg-background-dark text-center">
+<div class="max-w-7xl mx-auto px-6 flex flex-col items-center gap-6">
+<div class="flex items-center gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors hover:-translate-y-1 transform duration-200" href="{{github_link}}">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405 1.02 0 2.04.135 3 .405 2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path></svg>
+</a>
+<a class="text-slate-400 hover:text-primary transition-colors hover:-translate-y-1 transform duration-200" href="{{linkedin_url}}">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+</a>
+<a class="text-slate-400 hover:text-primary transition-colors hover:-translate-y-1 transform duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">alternate_email</span>
+</a>
+</div>
+<div class="text-sm text-slate-500 font-mono">
+<p>Designed &amp; Built by {{user_name}}</p>
+<p class="mt-1 opacity-60">© 2023 {{brand_name}}. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

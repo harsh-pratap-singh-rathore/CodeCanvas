@@ -1,0 +1,9 @@
+# Block all web access to /storage
+# Files here are served only through PHP controllers, never directly.
+
+Order deny,allow
+Deny from all
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

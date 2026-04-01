@@ -1,0 +1,61 @@
+# CodeCanvas — Public Web Root Apache Configuration
+# Compatible with Hostinger shared hosting (Apache + mod_rewrite)
+
+Options -Indexes -MultiViews
+ServerSignature Off
+
+# ─── Character encoding ───────────────────────────────────────────────────────
+AddDefaultCharset UTF-8
+
+# ─── HTTPS Redirect (production only) ────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Force HTTPS on production (skip on localhost)
+    RewriteCond %{HTTP_HOST} !^localhost [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # ─── Block access to sensitive files anywhere under public/ ──────────────
+    RewriteRule \.(env|log|sql|sh|bat|json)$ - [F,L]
+
+    # ─── Allow direct access to real files and directories ───────────────────
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # ─── Route everything else to index.php ──────────────────────────────────
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ─── Security headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ─── Cache control for static assets ─────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css              "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/webp            "access plus 6 months"
+    ExpiresByType image/png             "access plus 6 months"
+    ExpiresByType image/jpeg            "access plus 6 months"
+    ExpiresByType image/svg+xml        "access plus 1 month"
+    ExpiresByType font/woff2            "access plus 1 year"
+</IfModule>
+
+# ─── Compression ─────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json
+</IfModule>
+
+# ─── Block direct access to .htaccess itself ──────────────────────────────────
+<Files ".htaccess">
+    Require all denied
+</Files>

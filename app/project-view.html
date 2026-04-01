@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio — CodeCanvas</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/responsive.css">
+    <style>
+        /* Project View Specific Styles */
+        .project-view-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 0;
+            height: calc(100vh - 60px);
+            background: #F5F5F5;
+        }
+
+        .preview-panel {
+            background: #E5E5E5;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Device toolbar - minimal and secondary */
+        .device-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 12px;
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        .device-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: #6B6B6B;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .device-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #0F0F0F;
+        }
+
+        .device-btn.active {
+            background: #FFFFFF;
+            color: #0F0F0F;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: auto;
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: max-width 0.3s ease;
+        }
+
+        .preview-container.tablet {
+            max-width: 768px;
+        }
+
+        .preview-container.mobile {
+            max-width: 375px;
+        }
+
+        .preview-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .info-panel {
+            background: #FFFFFF;
+            border-left: 1px solid #E5E5E5;
+            padding: 32px 24px;
+            overflow-y: auto;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 60px;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FFFFFF;
+        }
+
+        .project-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-title h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #F0F0F0;
+            color: #6B6B6B;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .info-section {
+            margin-bottom: 32px;
+        }
+
+        .info-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F0F0F;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .info-item {
+            margin-bottom: 16px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #6B6B6B;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            color: #0F0F0F;
+            font-weight: 500;
+        }
+
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E5E5;
+            background: #FFFFFF;
+            color: #0F0F0F;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            border-color: #000;
+            background: #FAFAFA;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .action-btn.primary {
+            background: #000;
+            color: #FFF;
+            border-color: #000;
+        }
+
+        .action-btn.primary:hover {
+            background: #2B2B2B;
+        }
+
+        @media (max-width: 968px) {
+            .project-view-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
+                height: auto;
+                min-height: calc(100vh - 60px);
+            }
+
+            .preview-panel {
+                min-height: 500px;
+            }
+
+            .info-panel {
+                border-left: none;
+                border-top: 1px solid #E5E5E5;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-layout">
+    <!-- Top Bar -->
+    <header class="project-header">
+        <div class="project-title">
+            <a href="<?= BASE_URL ?>/dashboard.php" style="color: #6B6B6B; text-decoration: none; font-size: 18px;">←</a>
+            <h1>My Portfolio</h1>
+            <span class="status-badge">Draft</span>
+        </div>
+        <button class="btn btn-primary">Publish Website</button>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="project-view-layout">
+        <!-- Left: Preview -->
+        <div class="preview-panel">
+            <!-- Device toolbar -->
+            <div class="device-toolbar">
+                <button class="device-btn active" data-device="desktop">Desktop</button>
+                <button class="device-btn" data-device="tablet">Tablet</button>
+                <button class="device-btn" data-device="mobile">Mobile</button>
+            </div>
+
+            <!-- Preview wrapper -->
+            <div class="preview-wrapper">
+                <div class="preview-container" id="preview-container">
+                    <iframe src="templates/demo-template.html" class="preview-iframe" title="Website Preview">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Info & Actions -->
+        <div class="info-panel">
+            <div class="info-section">
+                <h3>Project Information</h3>
+                <div class="info-item">
+                    <div class="info-label">Project Type</div>
+                    <div class="info-value">Portfolio Website</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Template</div>
+                    <div class="info-value">Minimal</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Last Updated</div>
+                    <div class="info-value">Just now</div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Actions</h3>
+                <div class="action-list">
+                    <a href="change-template.html" class="action-btn">Change Template</a>
+                    <button class="action-btn" disabled>Edit Content <span
+                            style="font-size: 12px; color: #A0A0A0;">(Coming soon)</span></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="<?= BASE_URL ?>/public/assets/js/main.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/mobile-nav.js"></script>
+    <script>
+        // Device preview toggle
+        (function () {
+            const deviceButtons = document.querySelectorAll('.device-btn');
+            const previewContainer = document.getElementById('preview-container');
+
+            deviceButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    deviceButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Update preview size
+                    const device = btn.dataset.device;
+                    previewContainer.className = 'preview-container';
+
+                    if (device === 'tablet') {
+                        previewContainer.classList.add('tablet');
+                    } else if (device === 'mobile') {
+                        previewContainer.classList.add('mobile');
+                    }
+                    // Desktop is default (no class)
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

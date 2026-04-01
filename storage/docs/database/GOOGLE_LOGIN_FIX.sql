@@ -1,0 +1,154 @@
+-- ============================================
+-- CODECANVAS — GOOGLE LOGIN FIX (No DROP DATABASE)
+-- ============================================
+-- Run this in phpMyAdmin > SQL tab
+-- ============================================
+
+USE `codecanvas`;
+
+-- Disable foreign key checks so we can drop tables in any order
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Drop existing tables cleanly
+DROP TABLE IF EXISTS `notifications`;
+DROP TABLE IF EXISTS `messages`;
+DROP TABLE IF EXISTS `projects`;
+DROP TABLE IF EXISTS `templates`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `admins`;
+DROP TABLE IF EXISTS `password_resets`;
+DROP TABLE IF EXISTS `otp_codes`;
+DROP TABLE IF EXISTS `sessions`;
+
+-- Re-enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================================
+-- TABLE 1: USERS (with Google OAuth columns)
+-- ============================================
+CREATE TABLE `users` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `google_id` VARCHAR(255) NULL UNIQUE,
+    `auth_provider` ENUM('local', 'google') NOT NULL DEFAULT 'local',
+    `password_hash` VARCHAR(255) NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `role` ENUM('user', 'admin') DEFAULT 'user',
+    `status` ENUM('active', 'inactive') DEFAULT 'active',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_email` (`email`),
+    INDEX `idx_role` (`role`),
+    INDEX `idx_status` (`status`),
+    INDEX `idx_google_id` (`google_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE 2: TEMPLATES
+-- ============================================
+CREATE TABLE `templates` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `slug` VARCHAR(100) NOT NULL UNIQUE,
+    `template_type` ENUM('personal', 'portfolio', 'business') NOT NULL,
+    `folder_path` VARCHAR(255) NOT NULL,
+    `thumbnail_url` VARCHAR(255) DEFAULT NULL,
+    `preview_image_path` VARCHAR(255) DEFAULT NULL,
+    `preview_fallback_path` VARCHAR(255) DEFAULT NULL,
+    `status` ENUM('active', 'inactive') DEFAULT 'active',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_slug` (`slug`),
+    INDEX `idx_status` (`status`),
+    INDEX `idx_template_type` (`template_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE 3: PROJECTS
+-- ============================================
+CREATE TABLE `projects` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED NOT NULL,
+    `template_id` INT UNSIGNED NOT NULL,
+    `project_name` VARCHAR(255) NOT NULL,
+    `project_type` ENUM('personal', 'portfolio', 'business') DEFAULT 'portfolio',
+    `custom_slug` VARCHAR(100) DEFAULT NULL,
+    `brand_name` VARCHAR(255) DEFAULT NULL,
+    `description` TEXT DEFAULT NULL,
+    `skills` TEXT DEFAULT NULL,
+    `contact` VARCHAR(255) DEFAULT NULL,
+    `status` ENUM('draft', 'published', 'archived', 'active') DEFAULT 'draft',
+    `publish_status` ENUM('draft', 'building', 'deployed', 'failed', 'publishing', 'published') DEFAULT 'draft',
+    `build_log` TEXT DEFAULT NULL,
+    `live_url` VARCHAR(255) DEFAULT NULL,
+    `netlify_site_id` VARCHAR(100) DEFAULT NULL,
+    `content_json` LONGTEXT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`template_id`) REFERENCES `templates`(`id`) ON DELETE RESTRICT,
+    INDEX `idx_user_id` (`user_id`),
+    INDEX `idx_template_id` (`template_id`),
+    INDEX `idx_status` (`status`),
+    INDEX `idx_custom_slug` (`custom_slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE 4: MESSAGES
+-- ============================================
+CREATE TABLE `messages` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `project_id` INT UNSIGNED NOT NULL,
+    `visitor_name` VARCHAR(100) NOT NULL,
+    `visitor_email` VARCHAR(255) NOT NULL,
+    `subject` VARCHAR(255) DEFAULT NULL,
+    `message` TEXT NOT NULL,
+    `is_read` BOOLEAN DEFAULT FALSE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE CASCADE,
+    INDEX `idx_project_id` (`project_id`),
+    INDEX `idx_is_read` (`is_read`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE 5: NOTIFICATIONS
+-- ============================================
+CREATE TABLE `notifications` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED NOT NULL,
+    `type` ENUM('message', 'system', 'project_status') DEFAULT 'system',
+    `title` VARCHAR(255) NOT NULL,
+    `content` TEXT DEFAULT NULL,
+    `link` VARCHAR(255) DEFAULT NULL,
+    `is_read` BOOLEAN DEFAULT FALSE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    INDEX `idx_user_id` (`user_id`),
+    INDEX `idx_is_read` (`is_read`),
+    INDEX `idx_type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- DEFAULT DATA
+-- ============================================
+INSERT INTO `users` (`email`, `password_hash`, `name`, `role`, `status`, `auth_provider`) VALUES
+('admin@codecanvas.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin User', 'admin', 'active', 'local'),
+('user@codecanvas.com',  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Demo User',  'user',  'active', 'local');
+
+INSERT INTO `templates` (`name`, `slug`, `template_type`, `folder_path`, `thumbnail_url`, `status`) VALUES
+('Developer Portfolio',  'developer-portfolio',  'portfolio', 'templates/developer/',      'https://via.placeholder.com/300x200?text=Developer',  'active'),
+('Business Portfolio',   'business-portfolio',   'business',  'templates/business/',       'https://via.placeholder.com/300x200?text=Business',   'active'),
+('Shop Template',        'shop-template',        'business',  'templates/shop/',           'https://via.placeholder.com/300x200?text=Shop',       'active'),
+('Normal Portfolio',     'normal-portfolio',     'personal',  'templates/normal/',         'https://via.placeholder.com/300x200?text=Normal',     'active'),
+('Minimal Portfolio',    'minimal',              'portfolio', 'templates/minimal/',        'https://via.placeholder.com/300x200?text=Minimal',    'active'),
+('Modern Portfolio',     'modern',               'portfolio', 'templates/modern/',         'https://via.placeholder.com/300x200?text=Modern',     'active'),
+('Classic Portfolio',    'classic',              'portfolio', 'templates/classic/',        'https://via.placeholder.com/300x200?text=Classic',    'active'),
+('Elegant Portfolio',    'elegant',              'portfolio', 'templates/elegant/',        'https://via.placeholder.com/300x200?text=Elegant',    'active'),
+('Personal Basic',       'personal-basic',       'personal',  'templates/personal-basic/', 'https://via.placeholder.com/300x200?text=Personal',   'active'),
+('Business Pro',         'business-pro',         'business',  'templates/business-pro/',   'https://via.placeholder.com/300x200?text=Business',   'active');
+
+-- ============================================
+-- VERIFY
+-- ============================================
+SHOW TABLES;
+SELECT id, email, name, role, auth_provider FROM users;

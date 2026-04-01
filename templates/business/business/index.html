@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A minimalistic business template">
+    <title data-edit="seo_title">Minimal Business Template</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR SECTION -->
+    <nav class="navbar">
+        <div class="container nav-wrapper">
+            <a href="#" class="logo" data-edit="nav_logo">MinimalCorp</a>
+            <ul class="nav-links" data-edit-repeat="nav_links_list">
+                <li><a href="#about" data-edit-link="nav_link_url" data-edit="nav_link_text">About</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-edit-link="nav_cta_link" data-edit="nav_cta_text">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container hero-wrapper">
+            <div class="hero-content">
+                <h2 class="subheadline" data-edit="hero_subheadline">Welcome to MinimalCorp</h2>
+                <h1 class="headline" data-edit="hero_title">We build modern businesses</h1>
+                <p class="description" data-edit="hero_description">We help companies grow online by designing simple, clean, and professional digital experiences.</p>
+                <div class="button-group">
+                    <a href="#services" class="btn btn-primary" data-edit-link="hero_btn_1_link" data-edit="hero_btn_1_text">Our Services</a>
+                    <a href="#contact" class="btn btn-secondary" data-edit-link="hero_btn_2_link" data-edit="hero_btn_2_text">Contact Us</a>
+                </div>
+            </div>
+            <div class="hero-media">
+                <img data-edit-img="hero_image" src="https://via.placeholder.com/600x450" alt="Business Growth">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about section-padding" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img data-edit-img="about_image" src="https://via.placeholder.com/500x500" alt="Our Team">
+                </div>
+                <div class="about-content">
+                    <h2 class="section-title" data-edit="about_heading">About Us</h2>
+                    <p data-edit="about_description">We are a dedicated team of professionals committed to delivering exceptional results for our clients across the globe.</p>
+                    <div class="mission-vision">
+                        <div class="mv-box">
+                            <h3 data-edit="mission_title">Our Mission</h3>
+                            <p data-edit="mission_statement">To empower modern enterprises with scalable and efficient digital solutions.</p>
+                        </div>
+                        <div class="mv-box">
+                            <h3 data-edit="vision_title">Our Vision</h3>
+                            <p data-edit="vision_statement">To become the global leader in minimalistic, high-performance web architecture.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services section-padding bg-light" id="services">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="services_heading">Our Services</h2>
+            <div class="grid-3" data-edit-repeat="services_list">
+                <div class="card service-card">
+                    <img data-edit-img="service_icon_1" src="https://via.placeholder.com/64x64" alt="Icon" class="icon">
+                    <h3 data-edit="service_title_1">Strategy Consulting</h3>
+                    <p data-edit="service_desc_1">Comprehensive business analysis and strategic roadmapping for growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features section-padding" id="features">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="features_heading">Why Choose Us</h2>
+            <div class="grid-2" data-edit-repeat="features_list">
+                <div class="feature-item">
+                    <h4 data-edit="feature_title_1">Clean Code</h4>
+                    <p data-edit="feature_desc_1">We write maintainable and standardized code for absolute stability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="portfolio section-padding bg-light" id="portfolio">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="portfolio_heading">Selected Work</h2>
+            <div class="grid-3" data-edit-repeat="portfolio_projects">
+                <div class="card project-card">
+                    <img data-edit-img="project_image_1" src="https://via.placeholder.com/400x300" alt="Project 1">
+                    <div class="card-content">
+                        <h3 data-edit="project_title_1">FinTech Dashboard</h3>
+                        <p data-edit="project_desc_1">A sleek financial management interface for modern banks.</p>
+                        <a href="#" class="view-link" data-edit-link="project_link_1">View Project &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="pricing section-padding" id="pricing">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="pricing_heading">Pricing Plans</h2>
+            <div class="grid-3" data-edit-repeat="pricing_plans">
+                <div class="card pricing-card">
+                    <h3 data-edit="plan_name_1">Starter</h3>
+                    <h2 class="price" data-edit="plan_price_1">$49<span>/mo</span></h2>
+                    <ul class="feature-list" data-edit-repeat="plan_features_list">
+                        <li data-edit="plan_1_feat_1">1 User Account</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary block-btn" data-edit-link="plan_btn_link_1" data-edit="plan_btn_text_1">Choose Starter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials section-padding bg-light" id="testimonials">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="testimonials_heading">What Clients Say</h2>
+            <div class="grid-3" data-edit-repeat="testimonial_list">
+                <div class="card client-card">
+                    <p class="quote" data-edit="quote_text_1">"MinimalCorp transformed our online presence entirely. Their attention to detail and clean design is unmatched."</p>
+                    <div class="client-info">
+                        <img data-edit-img="quote_img_1" src="https://via.placeholder.com/48x48" alt="Client 1">
+                        <div>
+                            <h4 data-edit="quote_name_1">Sarah Jenkins</h4>
+                            <span data-edit="quote_company_1">CEO, TechStart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="team section-padding" id="team">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="team_heading">Meet The Team</h2>
+            <div class="grid-3" data-edit-repeat="team_list">
+                <div class="card team-card text-center">
+                    <img data-edit-img="team_img_1" src="https://via.placeholder.com/150x150" alt="Team Member">
+                    <h3 data-edit="team_name_1">Alex Mercer</h3>
+                    <span class="role" data-edit="team_role_1">Lead Designer</span>
+                    <p data-edit="team_bio_1">Alex has over 10 years of experience crafting beautiful UI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats section-padding bg-dark text-white">
+        <div class="container">
+            <div class="grid-4 text-center" data-edit-repeat="stats_list">
+                <div class="stat-box">
+                    <h2 data-edit="stat_number_1">500+</h2>
+                    <p data-edit="stat_label_1">Projects Completed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq section-padding" id="faq">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="faq_heading">Frequently Asked Questions</h2>
+            <div class="faq-list" data-edit-repeat="faq_items">
+                <div class="faq-item">
+                    <h4 data-edit="faq_q_1">What is your typical project timeline?</h4>
+                    <p data-edit="faq_a_1">Most of our standard projects take between 2 to 4 weeks depending on the complexity and client requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact section-padding bg-light" id="contact">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="contact_heading">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-edit="contact_subheading">Contact Information</h3>
+                    <p data-edit="contact_desc">Ready to start your next project? Let's talk.</p>
+                    <ul class="contact-details">
+                        <li data-edit="contact_email">hello@minimalcorp.com</li>
+                        <li data-edit="contact_phone">+1 (555) 123-4567</li>
+                        <li data-edit="contact_address">123 Corporate Blvd, Suite 100, NY</li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label data-edit="form_label_name">Name</label>
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-edit="form_label_email">Email</label>
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-edit="form_label_message">Message</label>
+                            <textarea rows="4" placeholder="How can we help?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary block-btn" data-edit="form_button_text">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer bg-dark text-white">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2 data-edit="footer_logo_text">MinimalCorp</h2>
+                    <p data-edit="footer_desc">Crafting digital solutions without the clutter.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-edit="footer_links_heading">Quick Links</h4>
+                    <ul data-edit-repeat="footer_links_list">
+                        <li><a href="#about" data-edit-link="footer_link_url_1" data-edit="footer_link_text_1">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4 data-edit="footer_social_heading">Follow Us</h4>
+                    <ul data-edit-repeat="footer_social_list">
+                        <li><a href="#" data-edit-link="footer_social_url_1" data-edit="footer_social_text_1">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-edit="footer_copyright">&copy; 2026 MinimalCorp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

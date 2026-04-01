@@ -1,0 +1,16 @@
+# CodeCanvas Root Redirects
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Allow direct access to public/ if hit directly
+    RewriteCond %{REQUEST_URI} ^/public/ [NC]
+    RewriteRule ^ - [L]
+
+    # Map root-level auth, admin, api to /app folder
+    # Relative checks are more portable than %{REQUEST_DOCUMENT_ROOT} with hardcoded sufolders
+    RewriteCond %{DOCUMENT_ROOT}/app/$1 -d [OR]
+    RewriteCond %{DOCUMENT_ROOT}/app/$1 -f
+    RewriteRule ^(auth|admin|api|dashboard\.php|new-project\.php|profile\.php|settings\.php|messages\.php|notifications\.php|project-editor\.php|project-publish\.php|project-delete\.php|project-unpublish\.php|project-archive\.php|project-duplicate\.php|project-rename\.php|project-save\.php|project-settings\.php|project-view\.php|select-category\.php|select-template\.php|portfolio-generate\.php|portfolio-preview\.php|dashboard\.html|admin-dashboard\.html|project-view\.html|view-settings\.html|change-template\.html|check-slug\.php|ai-writer\.php)(.*)$ app/$1$2 [L]
+
+</IfModule>

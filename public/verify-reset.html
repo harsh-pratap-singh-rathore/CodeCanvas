@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password — CodeCanvas</title>
+    <link href="./assets/css/admin-theme.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--gray-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .auth-header { text-align: center; margin-bottom: 28px; }
+
+        .auth-icon {
+            width: 48px; height: 48px;
+            background: #F5F5F5; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 22px;
+        }
+
+        .auth-title {
+            font-size: 22px; font-weight: 700;
+            color: var(--black); margin-bottom: 6px; letter-spacing: -0.4px;
+        }
+
+        .auth-subtitle {
+            font-size: 13px; color: var(--gray-600); line-height: 1.5;
+        }
+
+        .email-badge {
+            display: inline-block; margin-top: 8px;
+            padding: 4px 10px; border-radius: 20px;
+            background: #F5F5F5; font-size: 12px;
+            font-weight: 500; color: #333;
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        .form-label {
+            display: block; font-size: 13px;
+            font-weight: 500; margin-bottom: 6px; color: var(--black);
+        }
+
+        .form-label span { font-weight: 400; color: var(--gray-500); font-size: 12px; }
+
+        .form-input {
+            width: 100%; padding: 10px 12px;
+            border: 1px solid var(--gray-200); border-radius: 6px;
+            font-size: 14px; font-family: inherit;
+            transition: all 0.2s ease; box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none; border-color: var(--black);
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+
+        /* OTP input — big and clear */
+        #otp {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 10px;
+            text-align: center;
+            padding: 14px 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .password-wrap { position: relative; }
+        .toggle-pw {
+            position: absolute; right: 12px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none;
+            color: var(--gray-500); cursor: pointer;
+            font-size: 13px; padding: 0;
+        }
+
+        .strength-bar {
+            height: 3px; border-radius: 2px;
+            background: #e5e5e5; margin-top: 6px;
+            overflow: hidden;
+        }
+        .strength-fill {
+            height: 100%; width: 0%; border-radius: 2px;
+            transition: width .3s, background .3s;
+        }
+        .strength-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+
+        .btn-full {
+            width: 100%; padding: 11px;
+            border: none; border-radius: 6px;
+            background: var(--black); color: var(--white);
+            font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: opacity .2s;
+        }
+
+        .btn-full:hover   { opacity: 0.85; }
+        .btn-full:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .resend-link {
+            text-align: center; margin-top: 14px;
+            font-size: 13px; color: var(--gray-600);
+        }
+
+        .resend-link a {
+            color: var(--black); font-weight: 500;
+            text-decoration: none; cursor: pointer;
+        }
+
+        .resend-link a:hover { text-decoration: underline; }
+
+        .auth-footer {
+            margin-top: 20px; text-align: center;
+            font-size: 13px; color: var(--gray-600);
+        }
+
+        .auth-footer a {
+            color: var(--black); text-decoration: none; font-weight: 500;
+        }
+
+        .alert {
+            padding: 10px 12px; border-radius: 6px;
+            font-size: 13px; margin-bottom: 16px;
+            display: none; text-align: center; line-height: 1.4;
+        }
+
+        .alert-error   { background:#FEF2F2; color:#991B1B; border:1px solid #FECACA; }
+        .alert-success { background:#F0FDF4; color:#166534; border:1px solid #BBF7D0; }
+
+        .divider {
+            border: none; border-top: 1px solid var(--gray-100);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon">🔒</div>
+            <h1 class="auth-title">Enter Reset Code</h1>
+            <p class="auth-subtitle">
+                Check your inbox for the 6-digit code we sent to
+            </p>
+            <span class="email-badge" id="email-display">your email</span>
+        </div>
+
+        <div class="alert alert-error"   id="form-error"></div>
+        <div class="alert alert-success" id="form-success"></div>
+
+        <form id="resetForm">
+            <!-- Hidden email field (pre-filled from URL param) -->
+            <input type="hidden" id="email" name="email">
+
+            <!-- OTP -->
+            <div class="form-group">
+                <label class="form-label" for="otp">
+                    Verification Code <span>— expires in 10 minutes</span>
+                </label>
+                <input type="text" id="otp" name="otp" class="form-input"
+                       maxlength="6" inputmode="numeric" pattern="[0-9]{6}"
+                       placeholder="000000" autocomplete="one-time-code" autofocus>
+            </div>
+
+            <hr class="divider">
+
+            <!-- New password -->
+            <div class="form-group">
+                <label class="form-label" for="new_password">New Password</label>
+                <div class="password-wrap">
+                    <input type="password" id="new_password" name="new_password"
+                           class="form-input" placeholder="minimum 8 characters" autocomplete="new-password">
+                    <button type="button" class="toggle-pw" onclick="togglePw('new_password', this)">Show</button>
+                </div>
+                <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+                <p class="strength-label" id="strength-label"></p>
+            </div>
+
+            <!-- Confirm password -->
+            <div class="form-group">
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+                <div class="password-wrap">
+                    <input type="password" id="confirm_password" name="confirm_password"
+                           class="form-input" placeholder="repeat new password" autocomplete="new-password">
+                    <button type="button" class="toggle-pw" onclick="togglePw('confirm_password', this)">Show</button>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-full">Reset Password</button>
+        </form>
+
+        <div class="resend-link">
+            Didn't get a code?
+            <a id="resendLink" onclick="resendCode()">Resend</a>
+        </div>
+
+        <div class="auth-footer">
+            <a href="forgot-password.html">← Use a different email</a>
+        </div>
+    </div>
+
+    <script>
+    // ── Pre-fill email from URL ──────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const email  = params.get('email') || '';
+    document.getElementById('email').value = email;
+    document.getElementById('email-display').textContent = email || 'your email';
+
+    // Auto-format OTP input (digits only)
+    document.getElementById('otp').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+
+    // ── Password strength ────────────────────────────────────────────────────
+    document.getElementById('new_password').addEventListener('input', function() {
+        const v = this.value;
+        const fill  = document.getElementById('strength-fill');
+        const label = document.getElementById('strength-label');
+        let score   = 0;
+        if (v.length >= 8)                       score++;
+        if (v.length >= 12)                      score++;
+        if (/[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+        if (/[0-9]/.test(v))                     score++;
+        if (/[^A-Za-z0-9]/.test(v))              score++;
+        const pct    = ['0%','20%','40%','65%','85%','100%'][score];
+        const color  = ['#e5e5e5','#ef4444','#f97316','#eab308','#22c55e','#16a34a'][score];
+        const text   = ['','Weak','Fair','Good','Strong','Very strong'][score];
+        fill.style.width      = pct;
+        fill.style.background = color;
+        label.textContent     = text;
+    });
+
+    // ── Toggle password visibility ───────────────────────────────────────────
+    function togglePw(id, btn) {
+        const inp = document.getElementById(id);
+        const show = inp.type === 'password';
+        inp.type    = show ? 'text' : 'password';
+        btn.textContent = show ? 'Hide' : 'Show';
+    }
+
+    // ── Form submit ──────────────────────────────────────────────────────────
+    const resetForm  = document.getElementById('resetForm');
+    const submitBtn  = document.getElementById('submitBtn');
+    const formErr    = document.getElementById('form-error');
+    const formOk     = document.getElementById('form-success');
+
+    function showErr(msg)  { formErr.textContent = msg; formErr.style.display = 'block'; formOk.style.display = 'none'; }
+    function showOk(msg)   { formOk.textContent = msg;  formOk.style.display = 'block'; formErr.style.display = 'none'; }
+    function clearAlerts() { formErr.style.display = 'none'; formOk.style.display = 'none'; }
+
+    resetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearAlerts();
+
+        const otp     = document.getElementById('otp').value.trim();
+        const newPw   = document.getElementById('new_password').value;
+        const confirm = document.getElementById('confirm_password').value;
+
+        if (otp.length !== 6) { showErr('Please enter the 6-digit code.'); return; }
+        if (newPw.length < 8) { showErr('Password must be at least 8 characters.'); return; }
+        if (newPw !== confirm) { showErr('Passwords do not match.'); return; }
+
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Verifying…';
+
+        try {
+            const fd = new FormData(resetForm);
+            const res  = await fetch('../app/auth/verify-reset.php', { method: 'POST', body: fd });
+            const data = await res.json();
+
+            if (data.success) {
+                showOk('✅ Password updated! Redirecting to login…');
+                setTimeout(() => {
+                    window.location.href = data.redirect || 'login.html?reset=1';
+                }, 1800);
+            } else {
+                showErr(data.message || 'Something went wrong. Please try again.');
+                submitBtn.disabled    = false;
+                submitBtn.textContent = 'Reset Password';
+            }
+        } catch {
+            showErr('Network error — please check your connection.');
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'Reset Password';
+        }
+    });
+
+    // ── Resend code ──────────────────────────────────────────────────────────
+    let resendCooldown = 0;
+    async function resendCode() {
+        if (resendCooldown > 0) return;
+        clearAlerts();
+        const link = document.getElementById('resendLink');
+        link.style.opacity = '0.5';
+        link.style.cursor  = 'not-allowed';
+
+        try {
+            const fd = new FormData();
+            fd.append('email', email);
+            const res  = await fetch('../app/auth/forgot-password.php', { method: 'POST', body: fd });
+            const data = await res.json();
+
+            if (data.success) {
+                showOk('A new code has been sent. Check your inbox.');
+                resendCooldown = 60;
+                const tick = setInterval(() => {
+                    resendCooldown--;
+                    link.textContent = `Resend (${resendCooldown}s)`;
+                    if (resendCooldown <= 0) {
+                        clearInterval(tick);
+                        link.textContent   = 'Resend';
+                        link.style.opacity = '1';
+                        link.style.cursor  = 'pointer';
+                    }
+                }, 1000);
+            } else {
+                showErr(data.message);
+                link.style.opacity = '1';
+                link.style.cursor  = 'pointer';
+            }
+        } catch {
+            showErr('Could not resend. Please try again.');
+            link.style.opacity = '1';
+            link.style.cursor  = 'pointer';
+        }
+    }
+    </script>
+
+</body>
+</html>

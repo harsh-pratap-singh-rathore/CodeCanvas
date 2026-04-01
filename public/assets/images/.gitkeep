@@ -1,0 +1,9 @@
+# Assets Directory
+
+This directory contains all static assets for CodeCanvas.
+
+## Structure
+
+- `css/` - Stylesheets
+- `js/` - JavaScript files
+- `images/` - Image assets (logos, icons, template thumbnails)

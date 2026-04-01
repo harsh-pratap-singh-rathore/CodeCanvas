@@ -1,0 +1,641 @@
+{
+    "generated": "2026-04-01 16:42:05",
+    "sections": [
+        {
+            "id": "general",
+            "label": "General Settings",
+            "fields": [
+                {
+                    "key": "navbar_logo",
+                    "type": "textarea",
+                    "label": "Navbar Logo",
+                    "selector": "[data-edit=\"navbar_logo\"]",
+                    "default": "Brand."
+                },
+                {
+                    "key": "nav_cta_text",
+                    "type": "text",
+                    "label": "Nav Cta Text",
+                    "selector": "[data-edit=\"nav_cta_text\"]",
+                    "default": "Contact Us"
+                },
+                {
+                    "key": "hero_headline",
+                    "type": "text",
+                    "label": "Hero Headline",
+                    "selector": "[data-edit=\"hero_headline\"]",
+                    "default": "We Build Modern Businesses."
+                },
+                {
+                    "key": "hero_subheadline",
+                    "type": "text",
+                    "label": "Hero Subheadline",
+                    "selector": "[data-edit=\"hero_subheadline\"]",
+                    "default": "Innovative solutions for growth."
+                },
+                {
+                    "key": "hero_description",
+                    "type": "textarea",
+                    "label": "Hero Description",
+                    "selector": "[data-edit=\"hero_description\"]",
+                    "default": "Helping companies scale their online presence with minimal effort and maximum impact."
+                },
+                {
+                    "key": "hero_primary_btn",
+                    "type": "text",
+                    "label": "Hero Primary Btn",
+                    "selector": "[data-edit=\"hero_primary_btn\"]",
+                    "default": "Get Started"
+                },
+                {
+                    "key": "hero_secondary_btn",
+                    "type": "text",
+                    "label": "Hero Secondary Btn",
+                    "selector": "[data-edit=\"hero_secondary_btn\"]",
+                    "default": "View Work"
+                },
+                {
+                    "key": "about_heading",
+                    "type": "text",
+                    "label": "About Heading",
+                    "selector": "[data-edit=\"about_heading\"]",
+                    "default": "About Our Company"
+                },
+                {
+                    "key": "about_description",
+                    "type": "textarea",
+                    "label": "About Description",
+                    "selector": "[data-edit=\"about_description\"]",
+                    "default": "We are a team of passionate individuals dedicated to delivering exceptional results. Our focus is on clean design and robust engineering."
+                },
+                {
+                    "key": "mission_title",
+                    "type": "text",
+                    "label": "Mission Title",
+                    "selector": "[data-edit=\"mission_title\"]",
+                    "default": "Our Mission"
+                },
+                {
+                    "key": "mission_statement",
+                    "type": "textarea",
+                    "label": "Mission Statement",
+                    "selector": "[data-edit=\"mission_statement\"]",
+                    "default": "To empower businesses through technology."
+                },
+                {
+                    "key": "vision_title",
+                    "type": "text",
+                    "label": "Vision Title",
+                    "selector": "[data-edit=\"vision_title\"]",
+                    "default": "Our Vision"
+                },
+                {
+                    "key": "vision_statement",
+                    "type": "textarea",
+                    "label": "Vision Statement",
+                    "selector": "[data-edit=\"vision_statement\"]",
+                    "default": "To be the global leader in digital innovation."
+                },
+                {
+                    "key": "services_heading",
+                    "type": "text",
+                    "label": "Services Heading",
+                    "selector": "[data-edit=\"services_heading\"]",
+                    "default": "Our Services"
+                },
+                {
+                    "key": "service_title",
+                    "type": "text",
+                    "label": "Service Title",
+                    "selector": "[data-edit=\"service_title\"]",
+                    "default": "Consulting"
+                },
+                {
+                    "key": "service_description",
+                    "type": "textarea",
+                    "label": "Service Description",
+                    "selector": "[data-edit=\"service_description\"]",
+                    "default": "Strategic advice to help you reach your goals faster."
+                },
+                {
+                    "key": "features_heading",
+                    "type": "text",
+                    "label": "Features Heading",
+                    "selector": "[data-edit=\"features_heading\"]",
+                    "default": "Why Choose Us"
+                },
+                {
+                    "key": "feature_title",
+                    "type": "text",
+                    "label": "Feature Title",
+                    "selector": "[data-edit=\"feature_title\"]",
+                    "default": "Fast & Reliable"
+                },
+                {
+                    "key": "feature_description",
+                    "type": "textarea",
+                    "label": "Feature Description",
+                    "selector": "[data-edit=\"feature_description\"]",
+                    "default": "Built on modern tech stacks for maximum performance."
+                },
+                {
+                    "key": "portfolio_heading",
+                    "type": "text",
+                    "label": "Portfolio Heading",
+                    "selector": "[data-edit=\"portfolio_heading\"]",
+                    "default": "Selected Work"
+                },
+                {
+                    "key": "project_title",
+                    "type": "text",
+                    "label": "Project Title",
+                    "selector": "[data-edit=\"project_title\"]",
+                    "default": "E-Commerce Platform"
+                },
+                {
+                    "key": "project_description",
+                    "type": "textarea",
+                    "label": "Project Description",
+                    "selector": "[data-edit=\"project_description\"]",
+                    "default": "A complete digital storefront with seamless checkout."
+                },
+                {
+                    "key": "project_link_text",
+                    "type": "text",
+                    "label": "Project Link Text",
+                    "selector": "[data-edit=\"project_link_text\"]",
+                    "default": "View Case Study →"
+                },
+                {
+                    "key": "pricing_heading",
+                    "type": "text",
+                    "label": "Pricing Heading",
+                    "selector": "[data-edit=\"pricing_heading\"]",
+                    "default": "Transparent Pricing"
+                },
+                {
+                    "key": "plan_name",
+                    "type": "text",
+                    "label": "Plan Name",
+                    "selector": "[data-edit=\"plan_name\"]",
+                    "default": "Starter"
+                },
+                {
+                    "key": "plan_price",
+                    "type": "textarea",
+                    "label": "Plan Price",
+                    "selector": "[data-edit=\"plan_price\"]",
+                    "default": "$49\/mo"
+                },
+                {
+                    "key": "plan_feature_list",
+                    "type": "text",
+                    "label": "Plan Feature List",
+                    "selector": "[data-edit=\"plan_feature_list\"]",
+                    "default": "Up to 5 Users\n                        Basic Support\n                        10GB Storage"
+                },
+                {
+                    "key": "plan_button_text",
+                    "type": "text",
+                    "label": "Plan Button Text",
+                    "selector": "[data-edit=\"plan_button_text\"]",
+                    "default": "Choose Plan"
+                },
+                {
+                    "key": "testimonial_heading",
+                    "type": "text",
+                    "label": "Testimonial Heading",
+                    "selector": "[data-edit=\"testimonial_heading\"]",
+                    "default": "Client Success Stories"
+                },
+                {
+                    "key": "testimonial_text",
+                    "type": "textarea",
+                    "label": "Testimonial Text",
+                    "selector": "[data-edit=\"testimonial_text\"]",
+                    "default": "\"This team completely transformed our business. Highly recommended.\""
+                },
+                {
+                    "key": "client_name",
+                    "type": "text",
+                    "label": "Client Name",
+                    "selector": "[data-edit=\"client_name\"]",
+                    "default": "Jane Doe"
+                },
+                {
+                    "key": "client_company",
+                    "type": "text",
+                    "label": "Client Company",
+                    "selector": "[data-edit=\"client_company\"]",
+                    "default": "TechCorp Inc."
+                },
+                {
+                    "key": "team_heading",
+                    "type": "text",
+                    "label": "Team Heading",
+                    "selector": "[data-edit=\"team_heading\"]",
+                    "default": "Meet Our Team"
+                },
+                {
+                    "key": "team_name",
+                    "type": "text",
+                    "label": "Team Name",
+                    "selector": "[data-edit=\"team_name\"]",
+                    "default": "Michael Johnson"
+                },
+                {
+                    "key": "team_role",
+                    "type": "textarea",
+                    "label": "Team Role",
+                    "selector": "[data-edit=\"team_role\"]",
+                    "default": "CEO & Founder"
+                },
+                {
+                    "key": "team_bio",
+                    "type": "textarea",
+                    "label": "Team Bio",
+                    "selector": "[data-edit=\"team_bio\"]",
+                    "default": "15+ years of experience in leading high-growth technology companies."
+                },
+                {
+                    "key": "stat_number",
+                    "type": "textarea",
+                    "label": "Stat Number",
+                    "selector": "[data-edit=\"stat_number\"]",
+                    "default": "500+"
+                },
+                {
+                    "key": "stat_label",
+                    "type": "textarea",
+                    "label": "Stat Label",
+                    "selector": "[data-edit=\"stat_label\"]",
+                    "default": "Projects Completed"
+                },
+                {
+                    "key": "faq_heading",
+                    "type": "text",
+                    "label": "Faq Heading",
+                    "selector": "[data-edit=\"faq_heading\"]",
+                    "default": "Frequently Asked Questions"
+                },
+                {
+                    "key": "faq_question",
+                    "type": "text",
+                    "label": "Faq Question",
+                    "selector": "[data-edit=\"faq_question\"]",
+                    "default": "What is your typical project timeline?"
+                },
+                {
+                    "key": "faq_answer",
+                    "type": "textarea",
+                    "label": "Faq Answer",
+                    "selector": "[data-edit=\"faq_answer\"]",
+                    "default": "Most projects are delivered within 4 to 8 weeks, depending on the complexity and scope."
+                },
+                {
+                    "key": "contact_heading",
+                    "type": "text",
+                    "label": "Contact Heading",
+                    "selector": "[data-edit=\"contact_heading\"]",
+                    "default": "Get in Touch"
+                },
+                {
+                    "key": "contact_email_label",
+                    "type": "text",
+                    "label": "Contact Email Label",
+                    "selector": "[data-edit=\"contact_email_label\"]",
+                    "default": "Email:"
+                },
+                {
+                    "key": "contact_email",
+                    "type": "text",
+                    "label": "Contact Email",
+                    "selector": "[data-edit=\"contact_email\"]",
+                    "default": "hello@brand.com"
+                },
+                {
+                    "key": "contact_phone_label",
+                    "type": "text",
+                    "label": "Contact Phone Label",
+                    "selector": "[data-edit=\"contact_phone_label\"]",
+                    "default": "Phone:"
+                },
+                {
+                    "key": "contact_phone",
+                    "type": "text",
+                    "label": "Contact Phone",
+                    "selector": "[data-edit=\"contact_phone\"]",
+                    "default": "+1 (555) 123-4567"
+                },
+                {
+                    "key": "contact_address_label",
+                    "type": "text",
+                    "label": "Contact Address Label",
+                    "selector": "[data-edit=\"contact_address_label\"]",
+                    "default": "Address:"
+                },
+                {
+                    "key": "contact_address",
+                    "type": "text",
+                    "label": "Contact Address",
+                    "selector": "[data-edit=\"contact_address\"]",
+                    "default": "123 Business Ave, Suite 100, Tech City, 10001"
+                },
+                {
+                    "key": "contact_form_name_label",
+                    "type": "text",
+                    "label": "Contact Form Name Label",
+                    "selector": "[data-edit=\"contact_form_name_label\"]",
+                    "default": "Name"
+                },
+                {
+                    "key": "contact_form_email_label",
+                    "type": "text",
+                    "label": "Contact Form Email Label",
+                    "selector": "[data-edit=\"contact_form_email_label\"]",
+                    "default": "Email"
+                },
+                {
+                    "key": "contact_form_message_label",
+                    "type": "text",
+                    "label": "Contact Form Message Label",
+                    "selector": "[data-edit=\"contact_form_message_label\"]",
+                    "default": "Message"
+                },
+                {
+                    "key": "contact_form_button",
+                    "type": "text",
+                    "label": "Contact Form Button",
+                    "selector": "[data-edit=\"contact_form_button\"]",
+                    "default": "Send Message"
+                },
+                {
+                    "key": "footer_logo",
+                    "type": "text",
+                    "label": "Footer Logo",
+                    "selector": "[data-edit=\"footer_logo\"]",
+                    "default": "Brand."
+                },
+                {
+                    "key": "footer_description",
+                    "type": "textarea",
+                    "label": "Footer Description",
+                    "selector": "[data-edit=\"footer_description\"]",
+                    "default": "Building the future of digital business today."
+                },
+                {
+                    "key": "footer_links_title",
+                    "type": "text",
+                    "label": "Footer Links Title",
+                    "selector": "[data-edit=\"footer_links_title\"]",
+                    "default": "Quick Links"
+                },
+                {
+                    "key": "footer_social_title",
+                    "type": "text",
+                    "label": "Footer Social Title",
+                    "selector": "[data-edit=\"footer_social_title\"]",
+                    "default": "Connect"
+                },
+                {
+                    "key": "footer_copyright",
+                    "type": "textarea",
+                    "label": "Footer Copyright",
+                    "selector": "[data-edit=\"footer_copyright\"]",
+                    "default": "© 2026 Brand. All rights reserved."
+                },
+                {
+                    "key": "hero_image",
+                    "type": "image",
+                    "label": "Hero Image",
+                    "selector": "[data-edit-img=\"hero_image\"]",
+                    "default": "https:\/\/via.placeholder.com\/600x400"
+                },
+                {
+                    "key": "about_image",
+                    "type": "image",
+                    "label": "About Image",
+                    "selector": "[data-edit-img=\"about_image\"]",
+                    "default": "https:\/\/via.placeholder.com\/500x500"
+                },
+                {
+                    "key": "service_icon",
+                    "type": "image",
+                    "label": "Service Icon",
+                    "selector": "[data-edit-img=\"service_icon\"]",
+                    "default": "https:\/\/via.placeholder.com\/64x64"
+                },
+                {
+                    "key": "project_image",
+                    "type": "image",
+                    "label": "Project Image",
+                    "selector": "[data-edit-img=\"project_image\"]",
+                    "default": "https:\/\/via.placeholder.com\/400x250"
+                },
+                {
+                    "key": "client_photo",
+                    "type": "image",
+                    "label": "Client Photo",
+                    "selector": "[data-edit-img=\"client_photo\"]",
+                    "default": "https:\/\/via.placeholder.com\/48x48"
+                },
+                {
+                    "key": "team_photo",
+                    "type": "image",
+                    "label": "Team Photo",
+                    "selector": "[data-edit-img=\"team_photo\"]",
+                    "default": "https:\/\/via.placeholder.com\/300x300"
+                },
+                {
+                    "key": "nav_link_1",
+                    "type": "link",
+                    "label": "Nav Link 1",
+                    "selector": "[data-edit-link=\"nav_link_1\"]",
+                    "default": "#about"
+                },
+                {
+                    "key": "nav_link_2",
+                    "type": "link",
+                    "label": "Nav Link 2",
+                    "selector": "[data-edit-link=\"nav_link_2\"]",
+                    "default": "#services"
+                },
+                {
+                    "key": "nav_link_3",
+                    "type": "link",
+                    "label": "Nav Link 3",
+                    "selector": "[data-edit-link=\"nav_link_3\"]",
+                    "default": "#portfolio"
+                },
+                {
+                    "key": "nav_cta_link",
+                    "type": "link",
+                    "label": "Nav Cta Link",
+                    "selector": "[data-edit-link=\"nav_cta_link\"]",
+                    "default": "#contact"
+                },
+                {
+                    "key": "hero_primary_btn_link",
+                    "type": "link",
+                    "label": "Hero Primary Btn Link",
+                    "selector": "[data-edit-link=\"hero_primary_btn_link\"]",
+                    "default": "#services"
+                },
+                {
+                    "key": "hero_secondary_btn_link",
+                    "type": "link",
+                    "label": "Hero Secondary Btn Link",
+                    "selector": "[data-edit-link=\"hero_secondary_btn_link\"]",
+                    "default": "#portfolio"
+                },
+                {
+                    "key": "project_link",
+                    "type": "link",
+                    "label": "Project Link",
+                    "selector": "[data-edit-link=\"project_link\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "plan_button_link",
+                    "type": "link",
+                    "label": "Plan Button Link",
+                    "selector": "[data-edit-link=\"plan_button_link\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "footer_link_1",
+                    "type": "link",
+                    "label": "Footer Link 1",
+                    "selector": "[data-edit-link=\"footer_link_1\"]",
+                    "default": "#about"
+                },
+                {
+                    "key": "footer_link_2",
+                    "type": "link",
+                    "label": "Footer Link 2",
+                    "selector": "[data-edit-link=\"footer_link_2\"]",
+                    "default": "#services"
+                },
+                {
+                    "key": "footer_link_3",
+                    "type": "link",
+                    "label": "Footer Link 3",
+                    "selector": "[data-edit-link=\"footer_link_3\"]",
+                    "default": "#portfolio"
+                },
+                {
+                    "key": "footer_link_4",
+                    "type": "link",
+                    "label": "Footer Link 4",
+                    "selector": "[data-edit-link=\"footer_link_4\"]",
+                    "default": "#pricing"
+                },
+                {
+                    "key": "social_link_1",
+                    "type": "link",
+                    "label": "Social Link 1",
+                    "selector": "[data-edit-link=\"social_link_1\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "social_link_2",
+                    "type": "link",
+                    "label": "Social Link 2",
+                    "selector": "[data-edit-link=\"social_link_2\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "social_link_3",
+                    "type": "link",
+                    "label": "Social Link 3",
+                    "selector": "[data-edit-link=\"social_link_3\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "navbar_bg",
+                    "type": "color",
+                    "label": "Navbar Bg",
+                    "selector": "[data-edit-color=\"navbar_bg\"]",
+                    "default": "#ffffff"
+                },
+                {
+                    "key": "stats_bg",
+                    "type": "color",
+                    "label": "Stats Bg",
+                    "selector": "[data-edit-color=\"stats_bg\"]",
+                    "default": "#ffffff"
+                },
+                {
+                    "key": "services",
+                    "type": "repeat",
+                    "label": "Services",
+                    "selector": "[data-edit-repeat=\"services\"]",
+                    "default": ""
+                },
+                {
+                    "key": "features",
+                    "type": "repeat",
+                    "label": "Features",
+                    "selector": "[data-edit-repeat=\"features\"]",
+                    "default": ""
+                },
+                {
+                    "key": "portfolio_projects",
+                    "type": "repeat",
+                    "label": "Portfolio Projects",
+                    "selector": "[data-edit-repeat=\"portfolio_projects\"]",
+                    "default": ""
+                },
+                {
+                    "key": "pricing_plans",
+                    "type": "repeat",
+                    "label": "Pricing Plans",
+                    "selector": "[data-edit-repeat=\"pricing_plans\"]",
+                    "default": ""
+                },
+                {
+                    "key": "testimonials",
+                    "type": "repeat",
+                    "label": "Testimonials",
+                    "selector": "[data-edit-repeat=\"testimonials\"]",
+                    "default": ""
+                },
+                {
+                    "key": "team_members",
+                    "type": "repeat",
+                    "label": "Team Members",
+                    "selector": "[data-edit-repeat=\"team_members\"]",
+                    "default": ""
+                },
+                {
+                    "key": "statistics",
+                    "type": "repeat",
+                    "label": "Statistics",
+                    "selector": "[data-edit-repeat=\"statistics\"]",
+                    "default": ""
+                },
+                {
+                    "key": "faqs",
+                    "type": "repeat",
+                    "label": "Faqs",
+                    "selector": "[data-edit-repeat=\"faqs\"]",
+                    "default": ""
+                },
+                {
+                    "key": "footer_quick_links",
+                    "type": "repeat",
+                    "label": "Footer Quick Links",
+                    "selector": "[data-edit-repeat=\"footer_quick_links\"]",
+                    "default": ""
+                },
+                {
+                    "key": "footer_social_links",
+                    "type": "repeat",
+                    "label": "Footer Social Links",
+                    "selector": "[data-edit-repeat=\"footer_social_links\"]",
+                    "default": ""
+                }
+            ]
+        }
+    ]
+}

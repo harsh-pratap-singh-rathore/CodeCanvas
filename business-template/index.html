@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalistic Business Template</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" data-edit-color="navbar_bg">
+        <div class="container nav-container">
+            <div class="logo" data-edit="navbar_logo">Brand.</div>
+            <ul class="nav-links">
+                <li><a href="#about" data-edit-link="nav_link_1">About</a></li>
+                <li><a href="#services" data-edit-link="nav_link_2">Services</a></li>
+                <li><a href="#portfolio" data-edit-link="nav_link_3">Portfolio</a></li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-edit-link="nav_cta_link"><span
+                    data-edit="nav_cta_text">Contact Us</span></a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 data-edit="hero_headline">We Build Modern Businesses.</h1>
+                <h2 data-edit="hero_subheadline">Innovative solutions for growth.</h2>
+                <p data-edit="hero_description">Helping companies scale their online presence with minimal effort and
+                    maximum impact.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary" data-edit-link="hero_primary_btn_link"><span
+                            data-edit="hero_primary_btn">Get Started</span></a>
+                    <a href="#portfolio" class="btn btn-secondary" data-edit-link="hero_secondary_btn_link"><span
+                            data-edit="hero_secondary_btn">View Work</span></a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img data-edit-img="hero_image" src="https://via.placeholder.com/600x400" alt="Hero Image">
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about">
+        <div class="container about-container">
+            <div class="about-image">
+                <img data-edit-img="about_image" src="https://via.placeholder.com/500x500" alt="About Us">
+            </div>
+            <div class="about-content">
+                <h2 class="section-title" data-edit="about_heading">About Our Company</h2>
+                <p data-edit="about_description">We are a team of passionate individuals dedicated to delivering
+                    exceptional results. Our focus is on clean design and robust engineering.</p>
+                <div class="mission-vision">
+                    <div class="mission">
+                        <h3 data-edit="mission_title">Our Mission</h3>
+                        <p data-edit="mission_statement">To empower businesses through technology.</p>
+                    </div>
+                    <div class="vision">
+                        <h3 data-edit="vision_title">Our Vision</h3>
+                        <p data-edit="vision_statement">To be the global leader in digital innovation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="services bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="services_heading">Our Services</h2>
+            <div class="grid-3" data-edit-repeat="services">
+                <div class="card service-card">
+                    <img class="icon" data-edit-img="service_icon" src="https://via.placeholder.com/64x64"
+                        alt="Service Icon">
+                    <h3 data-edit="service_title">Consulting</h3>
+                    <p data-edit="service_description">Strategic advice to help you reach your goals faster.</p>
+                </div>
+                <div class="card service-card">
+                    <img class="icon" data-edit-img="service_icon" src="https://via.placeholder.com/64x64"
+                        alt="Service Icon">
+                    <h3 data-edit="service_title">Development</h3>
+                    <p data-edit="service_description">Custom software solutions tailored to your unique needs.</p>
+                </div>
+                <div class="card service-card">
+                    <img class="icon" data-edit-img="service_icon" src="https://via.placeholder.com/64x64"
+                        alt="Service Icon">
+                    <h3 data-edit="service_title">Design</h3>
+                    <p data-edit="service_description">Beautiful, user-centric interfaces that engage your audience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="features_heading">Why Choose Us</h2>
+            <div class="grid-3" data-edit-repeat="features">
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">Fast & Reliable</h4>
+                    <p data-edit="feature_description">Built on modern tech stacks for maximum performance.</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">Secure by Design</h4>
+                    <p data-edit="feature_description">Top-tier security protocols to protect your data.</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">24/7 Support</h4>
+                    <p data-edit="feature_description">Our team is always here when you need us.</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">Scalable Architecture</h4>
+                    <p data-edit="feature_description">Grows seamlessly alongside your business.</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">Analytics Integration</h4>
+                    <p data-edit="feature_description">Deep insights to drive your decision making.</p>
+                </div>
+                <div class="feature-item">
+                    <h4 data-edit="feature_title">Custom Workflows</h4>
+                    <p data-edit="feature_description">Adaptable logic to match your internal processes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="portfolio bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="portfolio_heading">Selected Work</h2>
+            <div class="grid-3" data-edit-repeat="portfolio_projects">
+                <div class="card project-card">
+                    <img data-edit-img="project_image" src="https://via.placeholder.com/400x250" alt="Project">
+                    <div class="card-body">
+                        <h3 data-edit="project_title">E-Commerce Platform</h3>
+                        <p data-edit="project_description">A complete digital storefront with seamless checkout.</p>
+                        <a href="#" class="btn-link" data-edit-link="project_link"><span
+                                data-edit="project_link_text">View Case Study &rarr;</span></a>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <img data-edit-img="project_image" src="https://via.placeholder.com/400x250" alt="Project">
+                    <div class="card-body">
+                        <h3 data-edit="project_title">Fintech Dashboard</h3>
+                        <p data-edit="project_description">Real-time financial analytics and reporting application.</p>
+                        <a href="#" class="btn-link" data-edit-link="project_link"><span
+                                data-edit="project_link_text">View Case Study &rarr;</span></a>
+                    </div>
+                </div>
+                <div class="card project-card">
+                    <img data-edit-img="project_image" src="https://via.placeholder.com/400x250" alt="Project">
+                    <div class="card-body">
+                        <h3 data-edit="project_title">Healthcare App</h3>
+                        <p data-edit="project_description">Patient management system with secure data handling.</p>
+                        <a href="#" class="btn-link" data-edit-link="project_link"><span
+                                data-edit="project_link_text">View Case Study &rarr;</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="pricing_heading">Transparent Pricing</h2>
+            <div class="grid-3" data-edit-repeat="pricing_plans">
+                <div class="card pricing-card">
+                    <h3 data-edit="plan_name">Starter</h3>
+                    <div class="price" data-edit="plan_price">$49<span class="period">/mo</span></div>
+                    <ul class="feature-list" data-edit="plan_feature_list">
+                        <li>Up to 5 Users</li>
+                        <li>Basic Support</li>
+                        <li>10GB Storage</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" data-edit-link="plan_button_link"><span
+                            data-edit="plan_button_text">Choose Plan</span></a>
+                </div>
+                <div class="card pricing-card featured">
+                    <h3 data-edit="plan_name">Professional</h3>
+                    <div class="price" data-edit="plan_price">$99<span class="period">/mo</span></div>
+                    <ul class="feature-list" data-edit="plan_feature_list">
+                        <li>Up to 20 Users</li>
+                        <li>Priority Support</li>
+                        <li>50GB Storage</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" data-edit-link="plan_button_link"><span
+                            data-edit="plan_button_text">Choose Plan</span></a>
+                </div>
+                <div class="card pricing-card">
+                    <h3 data-edit="plan_name">Enterprise</h3>
+                    <div class="price" data-edit="plan_price">$249<span class="period">/mo</span></div>
+                    <ul class="feature-list" data-edit="plan_feature_list">
+                        <li>Unlimited Users</li>
+                        <li>24/7 Support</li>
+                        <li>Unlimited Storage</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" data-edit-link="plan_button_link"><span
+                            data-edit="plan_button_text">Choose Plan</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION -->
+    <section id="testimonials" class="testimonials bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="testimonial_heading">Client Success Stories</h2>
+            <div class="grid-3" data-edit-repeat="testimonials">
+                <div class="card testimonial-card">
+                    <p class="quote" data-edit="testimonial_text">"This team completely transformed our business. Highly
+                        recommended."</p>
+                    <div class="client-info">
+                        <img data-edit-img="client_photo" src="https://via.placeholder.com/48x48" alt="Client">
+                        <div>
+                            <h4 data-edit="client_name">Jane Doe</h4>
+                            <span data-edit="client_company">TechCorp Inc.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial-card">
+                    <p class="quote" data-edit="testimonial_text">"The best investment we made this year. Professional
+                        and efficient."</p>
+                    <div class="client-info">
+                        <img data-edit-img="client_photo" src="https://via.placeholder.com/48x48" alt="Client">
+                        <div>
+                            <h4 data-edit="client_name">John Smith</h4>
+                            <span data-edit="client_company">Global Solutions</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card testimonial-card">
+                    <p class="quote" data-edit="testimonial_text">"Exceptional quality and support. They exceeded all
+                        our expectations."</p>
+                    <div class="client-info">
+                        <img data-edit-img="client_photo" src="https://via.placeholder.com/48x48" alt="Client">
+                        <div>
+                            <h4 data-edit="client_name">Sarah Williams</h4>
+                            <span data-edit="client_company">Innovate LLC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section id="team" class="team">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="team_heading">Meet Our Team</h2>
+            <div class="grid-3" data-edit-repeat="team_members">
+                <div class="team-member">
+                    <img data-edit-img="team_photo" src="https://via.placeholder.com/300x300" alt="Team Member">
+                    <h3 data-edit="team_name">Michael Johnson</h3>
+                    <p class="role" data-edit="team_role">CEO & Founder</p>
+                    <p class="bio" data-edit="team_bio">15+ years of experience in leading high-growth technology
+                        companies.</p>
+                </div>
+                <div class="team-member">
+                    <img data-edit-img="team_photo" src="https://via.placeholder.com/300x300" alt="Team Member">
+                    <h3 data-edit="team_name">Emily Chen</h3>
+                    <p class="role" data-edit="team_role">Lead Designer</p>
+                    <p class="bio" data-edit="team_bio">Award-winning product designer focused on minimal, user-centric
+                        interfaces.</p>
+                </div>
+                <div class="team-member">
+                    <img data-edit-img="team_photo" src="https://via.placeholder.com/300x300" alt="Team Member">
+                    <h3 data-edit="team_name">David Brown</h3>
+                    <p class="role" data-edit="team_role">CTO</p>
+                    <p class="bio" data-edit="team_bio">System architecture expert with a passion for scalable, clean
+                        code infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats bg-accent" data-edit-color="stats_bg">
+        <div class="container">
+            <div class="grid-4" data-edit-repeat="statistics">
+                <div class="stat-item">
+                    <div class="stat-number" data-edit="stat_number">500+</div>
+                    <div class="stat-label" data-edit="stat_label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-edit="stat_number">99%</div>
+                    <div class="stat-label" data-edit="stat_label">Client Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-edit="stat_number">24/7</div>
+                    <div class="stat-label" data-edit="stat_label">Global Support</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-edit="stat_number">10x</div>
+                    <div class="stat-label" data-edit="stat_label">Growth ROI</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title text-center" data-edit="faq_heading">Frequently Asked Questions</h2>
+            <div class="faq-list" data-edit-repeat="faqs">
+                <div class="faq-item">
+                    <h4 data-edit="faq_question">What is your typical project timeline?</h4>
+                    <p data-edit="faq_answer">Most projects are delivered within 4 to 8 weeks, depending on the
+                        complexity and scope.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 data-edit="faq_question">Do you offer post-launch support?</h4>
+                    <p data-edit="faq_answer">Yes, all our plans include a minimum of 30 days of post-launch technical
+                        support.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 data-edit="faq_question">How does your pricing work?</h4>
+                    <p data-edit="faq_answer">We offer transparent tiered plans. Custom enterprise requirements are
+                        quoted separately.</p>
+                </div>
+                <div class="faq-item">
+                    <h4 data-edit="faq_question">Can we upgrade our plan later?</h4>
+                    <p data-edit="faq_answer">Absolutely. Our systems are built to scale, allowing smooth transitions
+                        between service tiers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact bg-light">
+        <div class="container contact-container">
+            <div class="contact-info">
+                <h2 class="section-title" data-edit="contact_heading">Get in Touch</h2>
+                <div class="contact-detail">
+                    <strong data-edit="contact_email_label">Email:</strong> <span
+                        data-edit="contact_email">hello@brand.com</span>
+                </div>
+                <div class="contact-detail">
+                    <strong data-edit="contact_phone_label">Phone:</strong> <span data-edit="contact_phone">+1 (555)
+                        123-4567</span>
+                </div>
+                <div class="contact-detail">
+                    <strong data-edit="contact_address_label">Address:</strong> <span data-edit="contact_address">123
+                        Business Ave, Suite 100, Tech City, 10001</span>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name" data-edit="contact_form_name_label">Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-edit="contact_form_email_label">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-edit="contact_form_message_label">Message</label>
+                        <textarea id="message" rows="5" class="form-control" placeholder="How can we help?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" data-edit="contact_form_button">Send
+                        Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <h2 data-edit="footer_logo">Brand.</h2>
+                <p data-edit="footer_description">Building the future of digital business today.</p>
+            </div>
+            <div class="footer-links" data-edit-repeat="footer_quick_links">
+                <h4 data-edit="footer_links_title">Quick Links</h4>
+                <ul>
+                    <li><a href="#about" data-edit-link="footer_link_1">About Us</a></li>
+                    <li><a href="#services" data-edit-link="footer_link_2">Services</a></li>
+                    <li><a href="#portfolio" data-edit-link="footer_link_3">Portfolio</a></li>
+                    <li><a href="#pricing" data-edit-link="footer_link_4">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-social" data-edit-repeat="footer_social_links">
+                <h4 data-edit="footer_social_title">Connect</h4>
+                <ul>
+                    <li><a href="#" data-edit-link="social_link_1">LinkedIn</a></li>
+                    <li><a href="#" data-edit-link="social_link_2">Twitter</a></li>
+                    <li><a href="#" data-edit-link="social_link_3">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p data-edit="footer_copyright">&copy; 2026 Brand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

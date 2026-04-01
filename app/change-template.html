@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Template — CodeCanvas</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/responsive.css">
+    <style>
+        /* Change Template Specific Styles */
+        .change-template-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            color: #0F0F0F;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: #6B6B6B;
+            font-weight: 400;
+        }
+
+        .current-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #000;
+            color: #FFF;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 64px;
+        }
+
+        .action-buttons .btn {
+            min-width: 140px;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-content h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #0F0F0F;
+            margin-bottom: 16px;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: #E5E5E5;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: #000;
+            width: 0%;
+            animation: loadProgress 1s ease forwards;
+        }
+
+        @keyframes loadProgress {
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="change-template-container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>Change Template</h1>
+            <p class="page-subtitle">Your content will remain the same.</p>
+        </div>
+
+        <!-- Template Grid -->
+        <div class="template-grid">
+            <label class="template-card" data-template="developer">
+                <input type="radio" name="template" value="developer" class="template-input" checked>
+                <div class="template-preview">
+                    <div class="template-mockup">
+                        <div class="mockup-header"></div>
+                        <div class="mockup-content"></div>
+                        <div class="mockup-content short"></div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h4>Developer Portfolio</h4>
+                    <p>Hacker-style developer template</p>
+                    <span class="current-indicator">Current</span>
+                </div>
+            </label>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="project-view.html" class="btn">Cancel</a>
+            <button type="button" class="btn btn-primary" id="apply-template">Apply Template</button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <h2>Applying template...</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const templateInputs = document.querySelectorAll('input[name="template"]');
+            const applyButton = document.getElementById('apply-template');
+            const loadingOverlay = document.getElementById('loading-overlay');
+
+            let selectedTemplate = 'developer';
+
+            // Track selection
+            templateInputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    selectedTemplate = input.value;
+                    console.log('Template selected:', selectedTemplate);
+                });
+            });
+
+            // Apply template
+            applyButton.addEventListener('click', () => {
+                console.log('Applying template:', selectedTemplate);
+
+                // Show loading
+                loadingOverlay.classList.add('active');
+
+                // Simulate template application (1 second)
+                setTimeout(() => {
+                    // In production: Update template in database
+                    // For now: Just return to project view
+                    window.location.href = 'project-view.html';
+                }, 1000);
+            });
+        })();
+    </script>
+<script src="<?= BASE_URL ?>/public/assets/js/mobile-nav.js"></script>
+</body>
+
+</html>

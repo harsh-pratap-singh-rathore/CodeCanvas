@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Template - CodeCanvas Editor</title>
+    <link href="assets/css/template-engine.css" rel="stylesheet">
+</head>
+
+<body class="template-engine-body">
+
+    <!-- Header -->
+    <header class="te-header">
+        <a href="dashboard.html" class="te-logo">CodeCanvas</a>
+        <nav class="te-nav">
+            <a href="dashboard.html">Cancel</a>
+            <a href="template-preview.html">Preview</a>
+            <button class="btn btn-primary" onclick="saveData()">Save Changes</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="te-container">
+
+        <div class="editor-layout">
+
+            <!-- Sidebar: Fields -->
+            <div class="editor-sidebar">
+                <h2 style="margin-bottom: 24px; font-size: 20px;">Edit Content</h2>
+                <form id="editor-form">
+                    <p style="text-align: center; color: #666; font-size: 14px; margin-top: 40px;">Parsing template...
+                    </p>
+                </form>
+            </div>
+
+            <!-- Preview: Live Iframe -->
+            <div class="preview-pane">
+                <iframe id="preview-frame" class="preview-iframe" title="Live Preview" srcdoc=""></iframe>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/template-parser.js?v=2"></script>
+    <script src="assets/js/template-renderer.js?v=2"></script>
+    <script src="assets/js/template-engine.js?v=2"></script>
+
+    <script>
+        const engine = window.templateEngine;
+        const form = document.getElementById('editor-form');
+        const frame = document.getElementById('preview-frame');
+
+        // Check if data exists
+        if (!engine.currentHtml || !engine.currentFields) {
+            alert('No template loaded. Redirecting to upload.');
+            window.location.href = 'templates-upload.html';
+        }
+
+        // Initialize Form
+        renderForm();
+        updatePreview();
+
+        /**
+         * Renders input fields based on parsed placeholders
+         */
+        function renderForm() {
+            form.innerHTML = '';
+
+            if (engine.currentFields.length === 0) {
+                form.innerHTML = '<p style="color: #666; font-size: 14px;">No editable fields found in this template.<br>Make sure to add {{placeholders}} to your HTML.</p>';
+                return;
+            }
+
+            engine.currentFields.forEach(field => {
+                const group = document.createElement('div');
+                group.className = 'editor-field';
+
+                const label = document.createElement('label');
+                label.className = 'editor-label';
+                label.textContent = field.replace(/_/g, ' '); // Clean up name
+
+                // Input Type Inference
+                const type = engine.parser.inferType(field);
+
+                if (type === 'image') {
+                    // IMAGE INPUT
+                    const inputContainer = document.createElement('div');
+
+                    // URL Input
+                    const urlInput = document.createElement('input');
+                    urlInput.type = 'text';
+                    urlInput.className = 'editor-input';
+                    urlInput.placeholder = 'Paste image URL here...';
+                    urlInput.value = engine.currentData[field] || '';
+                    urlInput.style.marginBottom = '8px';
+
+                    // File Input
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.style.fontSize = '12px';
+                    fileInput.style.color = '#fff';
+
+                    // Handle File Upload
+                    fileInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (readerEvent) => {
+                                const base64 = readerEvent.target.result;
+                                urlInput.value = base64; // Set Base64 string to data
+                                engine.updateField(field, base64);
+                                updatePreview();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
+                    // Handle URL Input
+                    urlInput.addEventListener('input', (e) => {
+                        engine.updateField(field, e.target.value);
+                        updatePreview();
+                    });
+
+                    inputContainer.appendChild(urlInput);
+                    inputContainer.appendChild(fileInput);
+                    group.appendChild(label);
+                    group.appendChild(inputContainer);
+
+                } else if (type === 'textarea') {
+                    const input = document.createElement('textarea');
+                    input.className = 'editor-textarea';
+                    input.name = field;
+                    input.value = engine.currentData[field] || '';
+
+                    input.addEventListener('input', (e) => {
+                        engine.updateField(field, e.target.value);
+                        updatePreview();
+                    });
+
+                    group.appendChild(label);
+                    group.appendChild(input);
+
+                } else {
+                    const input = document.createElement('input');
+                    input.className = 'editor-input';
+                    input.type = type;
+                    input.name = field;
+                    input.value = engine.currentData[field] || '';
+
+                    input.addEventListener('input', (e) => {
+                        engine.updateField(field, e.target.value);
+                        updatePreview();
+                    });
+
+                    group.appendChild(label);
+                    group.appendChild(input);
+                }
+
+                form.appendChild(group);
+            });
+        }
+
+        /**
+         * Updates the iframe srcdoc with new HTML content
+         */
+        function updatePreview() {
+            const finalHtml = engine.getRenderedHtml();
+            frame.srcdoc = finalHtml;
+        }
+
+        function saveData() {
+            alert('Changes saved successfully!');
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+# CodeCanvas — .gitignore
+
+# Environment (NEVER commit — contains API keys)
+.env
+.env.local
+.env.*.local
+
+# Composer dependencies
+vendor/
+composer.phar
+
+# Logs (auto-generated, may contain sensitive data)
+logs/
+*.log
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large Binary Files (Backups/Templates)
+*.zip
+*.rar
+CodeCanvas.zip
+
+# 🚨 Sensitive Diagnostic Scripts (Private tools)
+fix-*.php
+verify-*.php
+test-*.php
+temp-reset-pass.php
+diag.php
+debug.php
+get_schema*.php
+migrate_*.php
+check-*.php
+reset_admin_password.php
+
+# Documentation with credentials/passwords
+DATABASE_RESET_COMPLETE.md
+SETUP_COMPLETE.md
+database/*.sql
+!database/schema.sql  # Allow the main schema if needed, but keep data out
+
+# Temp/Cache
+tmp/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+public/storage/

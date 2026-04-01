@@ -1,0 +1,242 @@
+{
+    "generated": "2026-03-10 05:47:29",
+    "fields": [
+        {
+            "key": "hero_title",
+            "type": "text",
+            "label": "Hero Title",
+            "section": "Hero",
+            "hint": "",
+            "default": "Harsh Rathore",
+            "selector": "[data-edit=\"hero_title\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "hero_subtitle",
+            "type": "textarea",
+            "label": "Hero Subtitle",
+            "section": "Hero",
+            "hint": "Enter a few sentences. HTML tags like <br> are usually supported.",
+            "default": "Full Stack Developer building modern SaaS apps with React, Node.js, and Cloud Infrastructure. \r\n                    I focus on performance, scalability, and exceptional user experiences.",
+            "selector": "[data-edit=\"hero_subtitle\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "about_text",
+            "type": "textarea",
+            "label": "About Text",
+            "section": "About",
+            "hint": "Enter a few sentences. HTML tags like <br> are usually supported.",
+            "default": "I am a passionate software engineer with 5+ years of experience in crafting high-end digital products. \r\n                    My expertise lies in building scalable backends and fluid frontends that users love. \r\n                    I believe in clean code, robust architecture, and continuous learning.",
+            "selector": "[data-edit=\"about_text\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "skill_title",
+            "type": "text",
+            "label": "Skill Title",
+            "section": "Skills",
+            "hint": "",
+            "default": "JavaScript (ES6+)",
+            "selector": "[data-edit=\"skill_title\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "skill_desc",
+            "type": "textarea",
+            "label": "Skill Desc",
+            "section": "Skills",
+            "hint": "Enter a few sentences. HTML tags like <br> are usually supported.",
+            "default": "Modern frontend and backend development with React, Node.js, and TypeScript.",
+            "selector": "[data-edit=\"skill_desc\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "project_title",
+            "type": "text",
+            "label": "Project Title",
+            "section": "Projects",
+            "hint": "",
+            "default": "Nexus Dashboard",
+            "selector": "[data-edit=\"project_title\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "project_desc",
+            "type": "textarea",
+            "label": "Project Desc",
+            "section": "Projects",
+            "hint": "Enter a few sentences. HTML tags like <br> are usually supported.",
+            "default": "A comprehensive analytics dashboard for modern e-commerce businesses, featuring real-time data tracking and AI insights.",
+            "selector": "[data-edit=\"project_desc\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "contact_title",
+            "type": "text",
+            "label": "Contact Title",
+            "section": "Contact",
+            "hint": "",
+            "default": "Ready to build something amazing?",
+            "selector": "[data-edit=\"contact_title\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "hero_image",
+            "type": "image",
+            "label": "Hero Image",
+            "section": "Hero",
+            "hint": "Upload a high-quality image. Transparent PNGs work best for logos.",
+            "default": "images\/profile.jpg",
+            "selector": "[data-edit-img=\"hero_image\"]",
+            "attribute": "src",
+            "ai_suggested": false
+        },
+        {
+            "key": "project_img",
+            "type": "image",
+            "label": "Project Img",
+            "section": "Projects",
+            "hint": "Upload a high-quality image. Transparent PNGs work best for logos.",
+            "default": "images\/project1.jpg",
+            "selector": "[data-edit-img=\"project_img\"]",
+            "attribute": "src",
+            "ai_suggested": false
+        },
+        {
+            "key": "hero_cta",
+            "type": "url",
+            "label": "Hero Cta",
+            "section": "Hero",
+            "hint": "Paste a full URL (starting with https:\/\/) or a section ID (like #contact).",
+            "default": "#projects",
+            "selector": "[data-edit-link=\"hero_cta\"]",
+            "attribute": "href",
+            "ai_suggested": false
+        },
+        {
+            "key": "project_live",
+            "type": "url",
+            "label": "Project Live",
+            "section": "Projects",
+            "hint": "Paste a full URL (starting with https:\/\/) or a section ID (like #contact).",
+            "default": "#",
+            "selector": "[data-edit-link=\"project_live\"]",
+            "attribute": "href",
+            "ai_suggested": false
+        },
+        {
+            "key": "project_code",
+            "type": "url",
+            "label": "Project Code",
+            "section": "Projects",
+            "hint": "Paste a full URL (starting with https:\/\/) or a section ID (like #contact).",
+            "default": "#",
+            "selector": "[data-edit-link=\"project_code\"]",
+            "attribute": "href",
+            "ai_suggested": false
+        },
+        {
+            "key": "contact_email",
+            "type": "url",
+            "label": "Contact Email",
+            "section": "Contact",
+            "hint": "Paste a full URL (starting with https:\/\/) or a section ID (like #contact).",
+            "default": "mailto:hello@harsh.dev",
+            "selector": "[data-edit-link=\"contact_email\"]",
+            "attribute": "href",
+            "ai_suggested": false
+        },
+        {
+            "key": "contact_github",
+            "type": "url",
+            "label": "Contact Github",
+            "section": "Contact",
+            "hint": "Paste a full URL (starting with https:\/\/) or a section ID (like #contact).",
+            "default": "https:\/\/github.com",
+            "selector": "[data-edit-link=\"contact_github\"]",
+            "attribute": "href",
+            "ai_suggested": false
+        },
+        {
+            "key": "skills",
+            "type": "array",
+            "label": "Skills",
+            "section": "Skills",
+            "hint": "",
+            "default": [
+                {
+                    "name": "JavaScript (ES6+)\r\n                    Modern frontend and backend development with React, Node.js, and TypeScript.",
+                    "icon": "code"
+                }
+            ],
+            "selector": "[data-edit-repeat=\"skills\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "projects",
+            "type": "group",
+            "label": "Projects",
+            "section": "Projects",
+            "hint": "",
+            "default": [
+                {
+                    "title": "Project Name",
+                    "category": "Category",
+                    "description": "Project description.",
+                    "tags": [
+                        "HTML",
+                        "CSS"
+                    ],
+                    "link": "#",
+                    "image": ""
+                }
+            ],
+            "selector": "[data-edit-repeat=\"projects\"]",
+            "attribute": "innerText",
+            "ai_suggested": false
+        },
+        {
+            "key": "section_heading",
+            "type": "text",
+            "label": "Section Heading",
+            "section": "General",
+            "hint": "Automatically detected by CodeCanvas AI.",
+            "default": "A Bit About Me",
+            "selector": "h2",
+            "attribute": "innerText",
+            "ai_suggested": true
+        },
+        {
+            "key": "hero_description",
+            "type": "textarea",
+            "label": "Hero Description",
+            "section": "Hero",
+            "hint": "Automatically detected by CodeCanvas AI.",
+            "default": "I'm currently available for freelance work and full-time opportunities. Let's talk about your next project.",
+            "selector": "p",
+            "attribute": "innerText",
+            "ai_suggested": true
+        },
+        {
+            "key": "nav_logo",
+            "type": "text",
+            "label": "Nav Logo",
+            "section": "Navigation",
+            "hint": "Automatically detected by CodeCanvas AI.",
+            "default": "HR.",
+            "selector": "a",
+            "attribute": "innerText",
+            "ai_suggested": true
+        }
+    ]
+}

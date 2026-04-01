@@ -1,0 +1,11 @@
+-- ============================================
+-- ⚠️ DEPRECATED - DO NOT USE THIS FILE
+-- ============================================
+-- This file is outdated and may cause conflicts.
+-- 
+-- Please use instead:
+-- → database/COMPLETE_DATABASE_RESET.sql
+--
+-- For instructions, see:
+-- → database/DATABASE_SETUP_GUIDE.md
+-- ============================================

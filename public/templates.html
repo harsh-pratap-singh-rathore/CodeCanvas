@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates — CodeCanvas</title>
+    <meta name="description" content="Browse clean, professional website templates.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <style>
+        :root {
+            --card-radius: 14px;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 36px;
+            margin-top: 48px;
+        }
+
+        .template-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .template-card:hover {
+            border-color: #000;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .template-thumbnail {
+            height: 240px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Iframe placeholder while loading */
+        .preview-placeholder {
+            position: absolute;
+            inset: 0;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-size: 12px;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .preview-placeholder.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .template-thumbnail iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 285.7%;
+            height: 285.7%;
+            transform: scale(0.35);
+            transform-origin: 0 0;
+            border: none;
+            pointer-events: none;
+            background: #fff;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 0; /* Hidden by default, faded in via JS */
+        }
+
+        .template-thumbnail iframe.loaded {
+            opacity: 1;
+        }
+
+        .template-card:hover iframe.loaded {
+            transform: scale(0.37);
+        }
+
+        .template-visual-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: rgba(0,0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .template-card:hover .template-visual-overlay {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            color: #10b981;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .live-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .template-info {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .template-meta {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .template-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .template-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .template-actions .btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preview {
+            background: #fff;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-preview:hover {
+            background: #f8fafc;
+            border-color: #0f172a;
+        }
+
+        .btn-start {
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
+        }
+
+        .btn-start:hover {
+            background: #1e293b;
+        }
+
+        .hover-hint {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 5;
+        }
+
+        .template-card:hover .hover-hint {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">CodeCanvas</a>
+                <nav class="nav">
+                    <div class="nav-item" data-dropdown="solutions">
+                        <span class="nav-link">Solutions</span>
+                        <div class="dropdown">
+                            <a href="personal-website.html" class="dropdown-item">
+                                <strong>Personal Website</strong>
+                                <span>Simple personal presence online.</span>
+                            </a>
+                            <a href="portfolio-website.html" class="dropdown-item">
+                                <strong>Portfolio Website</strong>
+                                <span>Showcase skills, projects, and experience.</span>
+                            </a>
+                            <a href="business-landing.html" class="dropdown-item">
+                                <strong>Business Landing Page</strong>
+                                <span>One-page site for businesses and services.</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav-item" data-dropdown="templates">
+                        <a href="templates.html" class="nav-link">Templates</a>
+                    </div>
+                    <div class="nav-item" data-dropdown="resources">
+                        <span class="nav-link">Help & Resources</span>
+                        <div class="dropdown">
+                            <a href="how-it-works.html" class="dropdown-item">
+                                <strong>How CodeCanvas Works</strong>
+                            </a>
+                            <a href="getting-started.html" class="dropdown-item">
+                                <strong>Getting Started</strong>
+                            </a>
+                            <a href="faqs.html" class="dropdown-item">
+                                <strong>FAQs</strong>
+                            </a>
+                            <a href="contact.html" class="dropdown-item">
+                                <strong>Contact Support</strong>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <div class="header-actions">
+                    <a href="login.html" class="btn btn-secondary">Log In</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header" style="text-align: center; padding: 80px 0 40px;">
+        <div class="container">
+            <h1 style="font-size: 52px; margin-bottom: 16px; font-weight: 900; letter-spacing: -0.04em;">Designer Templates</h1>
+            <p style="font-size: 19px; color: #64748b; max-width: 640px; margin: 0 auto; line-height: 1.6;">Smooth, reactive, performance-tuned layouts for your next big idea.</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div id="templates-loading" class="text-center" style="padding: 80px;">
+                <p style="color: #94a3b8; font-weight: 500;">Optimizing previews...</p>
+            </div>
+
+            <div class="templates-grid" id="templates-grid" style="display: none;">
+                <!-- Templates grid injection -->
+            </div>
+
+            <div id="templates-empty" class="text-center" style="display: none; padding: 80px;">
+                <p style="color: #94a3b8; font-size: 18px;">No templates found. Check back later!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">CodeCanvas</div>
+                <div class="footer-links">
+                    <a href="how-it-works.html">Privacy</a>
+                    <a href="faqs.html">Terms</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-copyright">
+                    &copy; 2026 CodeCanvas. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/mobile-nav.js"></script>
+    <script>
+        (async function () {
+            const grid = document.getElementById('templates-grid');
+            const loading = document.getElementById('templates-loading');
+            const empty = document.getElementById('templates-empty');
+
+            try {
+                const res = await fetch('api/get-templates.php');
+                const data = await res.json();
+
+                if (data.success && data.templates && data.templates.length > 0) {
+                    loading.style.display = 'none';
+                    grid.style.display = 'grid';
+
+                    grid.innerHTML = data.templates.map(tpl => `
+                        <div class="template-card" onclick="window.open('${tpl.preview_url}', '_blank')">
+                            <div class="template-thumbnail">
+                                <div class="live-badge">Live Preview</div>
+                                <div class="preview-placeholder">Loading preview...</div>
+                                <iframe data-src="${tpl.preview_url}" loading="lazy" tabindex="-1"></iframe>
+                                <div class="template-visual-overlay">
+                                    <div class="hover-hint">Launch Full Preview</div>
+                                </div>
+                            </div>
+                            <div class="template-info">
+                                <div class="template-meta">${tpl.category} • ${tpl.type}</div>
+                                <div class="template-title">${tpl.name}</div>
+                                <div class="template-description">A professional ${tpl.category} structure designed for high clarity and modern aesthetics. Includes full responsiveness and performance tuning.</div>
+                                <div class="template-actions">
+                                    <a href="${tpl.preview_url}" class="btn btn-preview" target="_blank" onclick="event.stopPropagation()">View Details</a>
+                                    <a href="../app/select-template.php?category=${tpl.category}" class="btn btn-start" onclick="event.stopPropagation()">Use for Free</a>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    // --- PERFORMANCE OPTIMIZATION: Intersection Observer ---
+                    const observerOptions = {
+                        root: null,
+                        rootMargin: '100px', // Load before they come into view
+                        threshold: 0.1
+                    };
+
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const card = entry.target;
+                                const iframe = card.querySelector('iframe');
+                                const placeholder = card.querySelector('.preview-placeholder');
+                                
+                                if (iframe && iframe.dataset.src) {
+                                    iframe.src = iframe.dataset.src;
+                                    iframe.removeAttribute('data-src');
+                                    
+                                    iframe.onload = () => {
+                                        iframe.classList.add('loaded');
+                                        if (placeholder) placeholder.classList.add('hidden');
+                                    };
+                                }
+                                obs.unobserve(card);
+                            }
+                        });
+                    }, observerOptions);
+
+                    document.querySelectorAll('.template-card').forEach(card => {
+                        observer.observe(card);
+                    });
+
+                } else {
+                    loading.style.display = 'none';
+                    empty.style.display = 'block';
+                }
+            } catch (e) {
+                loading.innerHTML = '<p style="color:#ef4444;">Connection failed.</p>';
+                console.error(e);
+            }
+        })();
+    </script>
+</body>
+
+</html>

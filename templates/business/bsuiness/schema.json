@@ -1,0 +1,159 @@
+{
+    "generated": "2026-04-01 20:31:00",
+    "sections": [
+        {
+            "id": "navigation",
+            "label": "Navigation",
+            "fields": [
+                { "key": "navbar_logo",   "label": "Logo Text",       "type": "textarea", "selector": "[data-edit=\"navbar_logo\"]",   "default": "Brand." },
+                { "key": "nav_cta_text",  "label": "CTA Button Text", "type": "text",     "selector": "[data-edit=\"nav_cta_text\"]",  "default": "Contact Us" },
+                { "key": "nav_link_1",    "label": "Nav Link 1 (URL)","type": "link",     "selector": "[data-edit-link=\"nav_link_1\"]","default": "#about" },
+                { "key": "nav_link_2",    "label": "Nav Link 2 (URL)","type": "link",     "selector": "[data-edit-link=\"nav_link_2\"]","default": "#services" },
+                { "key": "nav_link_3",    "label": "Nav Link 3 (URL)","type": "link",     "selector": "[data-edit-link=\"nav_link_3\"]","default": "#portfolio" },
+                { "key": "nav_cta_link",  "label": "CTA Button URL",  "type": "link",     "selector": "[data-edit-link=\"nav_cta_link\"]","default": "#contact" },
+                { "key": "navbar_bg",     "label": "Navbar Background Color", "type": "color", "selector": "[data-edit-color=\"navbar_bg\"]","default": "#ffffff" }
+            ]
+        },
+        {
+            "id": "hero",
+            "label": "Hero Section",
+            "fields": [
+                { "key": "hero_headline",           "label": "Headline",            "type": "text",     "selector": "[data-edit=\"hero_headline\"]",           "default": "We Build Modern Businesses." },
+                { "key": "hero_subheadline",        "label": "Sub-Headline",        "type": "text",     "selector": "[data-edit=\"hero_subheadline\"]",        "default": "Innovative solutions for growth." },
+                { "key": "hero_description",        "label": "Description",         "type": "textarea", "selector": "[data-edit=\"hero_description\"]",        "default": "Helping companies scale their online presence with minimal effort and maximum impact." },
+                { "key": "hero_primary_btn",        "label": "Primary Button Text", "type": "text",     "selector": "[data-edit=\"hero_primary_btn\"]",        "default": "Get Started" },
+                { "key": "hero_secondary_btn",      "label": "Secondary Button Text","type": "text",    "selector": "[data-edit=\"hero_secondary_btn\"]",      "default": "View Work" },
+                { "key": "hero_primary_btn_link",   "label": "Primary Button URL",  "type": "link",     "selector": "[data-edit-link=\"hero_primary_btn_link\"]","default": "#services" },
+                { "key": "hero_secondary_btn_link", "label": "Secondary Button URL","type": "link",     "selector": "[data-edit-link=\"hero_secondary_btn_link\"]","default": "#portfolio" },
+                { "key": "hero_image",              "label": "Hero Image",          "type": "image",    "selector": "[data-edit-img=\"hero_image\"]",          "default": "https://via.placeholder.com/600x400" }
+            ]
+        },
+        {
+            "id": "about",
+            "label": "About",
+            "fields": [
+                { "key": "about_heading",     "label": "Section Heading",   "type": "text",     "selector": "[data-edit=\"about_heading\"]",     "default": "About Our Company" },
+                { "key": "about_description", "label": "Description",       "type": "textarea", "selector": "[data-edit=\"about_description\"]", "default": "We are a team of passionate individuals dedicated to delivering exceptional results." },
+                { "key": "mission_title",     "label": "Mission Title",     "type": "text",     "selector": "[data-edit=\"mission_title\"]",     "default": "Our Mission" },
+                { "key": "mission_statement", "label": "Mission Statement", "type": "textarea", "selector": "[data-edit=\"mission_statement\"]", "default": "To empower businesses through technology." },
+                { "key": "vision_title",      "label": "Vision Title",      "type": "text",     "selector": "[data-edit=\"vision_title\"]",      "default": "Our Vision" },
+                { "key": "vision_statement",  "label": "Vision Statement",  "type": "textarea", "selector": "[data-edit=\"vision_statement\"]",  "default": "To be the global leader in digital innovation." },
+                { "key": "about_image",       "label": "About Image",       "type": "image",    "selector": "[data-edit-img=\"about_image\"]",   "default": "https://via.placeholder.com/500x500" }
+            ]
+        },
+        {
+            "id": "services",
+            "label": "Services",
+            "fields": [
+                { "key": "services_heading",    "label": "Section Heading",    "type": "text",     "selector": "[data-edit=\"services_heading\"]",   "default": "Our Services" },
+                { "key": "service_title",       "label": "Service Title",       "type": "text",     "selector": "[data-edit=\"service_title\"]",      "default": "Consulting" },
+                { "key": "service_description", "label": "Service Description", "type": "textarea", "selector": "[data-edit=\"service_description\"]", "default": "Strategic advice to help you reach your goals faster." },
+                { "key": "service_icon",        "label": "Service Icon",        "type": "image",    "selector": "[data-edit-img=\"service_icon\"]",   "default": "https://via.placeholder.com/64x64" },
+                { "key": "services",            "label": "Services List",       "type": "repeat",   "selector": "[data-edit-repeat=\"services\"]",    "default": "" },
+                { "key": "features_heading",    "label": "Features Heading",    "type": "text",     "selector": "[data-edit=\"features_heading\"]",   "default": "Why Choose Us" },
+                { "key": "feature_title",       "label": "Feature Title",       "type": "text",     "selector": "[data-edit=\"feature_title\"]",      "default": "Fast & Reliable" },
+                { "key": "feature_description", "label": "Feature Description", "type": "textarea", "selector": "[data-edit=\"feature_description\"]", "default": "Built on modern tech stacks for maximum performance." },
+                { "key": "features",            "label": "Features List",       "type": "repeat",   "selector": "[data-edit-repeat=\"features\"]",    "default": "" }
+            ]
+        },
+        {
+            "id": "portfolio",
+            "label": "Portfolio",
+            "fields": [
+                { "key": "portfolio_heading",    "label": "Section Heading",   "type": "text",     "selector": "[data-edit=\"portfolio_heading\"]",    "default": "Selected Work" },
+                { "key": "project_title",        "label": "Project Title",     "type": "text",     "selector": "[data-edit=\"project_title\"]",        "default": "E-Commerce Platform" },
+                { "key": "project_description",  "label": "Project Description","type": "textarea","selector": "[data-edit=\"project_description\"]",  "default": "A complete digital storefront with seamless checkout." },
+                { "key": "project_link_text",    "label": "Link Text",         "type": "text",     "selector": "[data-edit=\"project_link_text\"]",    "default": "View Case Study →" },
+                { "key": "project_link",         "label": "Project URL",       "type": "link",     "selector": "[data-edit-link=\"project_link\"]",   "default": "#" },
+                { "key": "project_image",        "label": "Project Image",     "type": "image",    "selector": "[data-edit-img=\"project_image\"]",   "default": "https://via.placeholder.com/400x250" },
+                { "key": "portfolio_projects",   "label": "Projects List",     "type": "repeat",   "selector": "[data-edit-repeat=\"portfolio_projects\"]","default": "" }
+            ]
+        },
+        {
+            "id": "pricing",
+            "label": "Pricing",
+            "fields": [
+                { "key": "pricing_heading",   "label": "Section Heading",  "type": "text",     "selector": "[data-edit=\"pricing_heading\"]",   "default": "Transparent Pricing" },
+                { "key": "plan_name",         "label": "Plan Name",        "type": "text",     "selector": "[data-edit=\"plan_name\"]",         "default": "Starter" },
+                { "key": "plan_price",        "label": "Plan Price",       "type": "text",     "selector": "[data-edit=\"plan_price\"]",        "default": "$49/mo" },
+                { "key": "plan_feature_list", "label": "Plan Features",    "type": "textarea", "selector": "[data-edit=\"plan_feature_list\"]", "default": "Up to 5 Users\nBasic Support\n10GB Storage" },
+                { "key": "plan_button_text",  "label": "Button Text",      "type": "text",     "selector": "[data-edit=\"plan_button_text\"]",  "default": "Choose Plan" },
+                { "key": "plan_button_link",  "label": "Button URL",       "type": "link",     "selector": "[data-edit-link=\"plan_button_link\"]","default": "#" },
+                { "key": "pricing_plans",     "label": "Pricing Plans List","type": "repeat",  "selector": "[data-edit-repeat=\"pricing_plans\"]","default": "" }
+            ]
+        },
+        {
+            "id": "testimonials",
+            "label": "Testimonials",
+            "fields": [
+                { "key": "testimonial_heading", "label": "Section Heading",  "type": "text",     "selector": "[data-edit=\"testimonial_heading\"]", "default": "Client Success Stories" },
+                { "key": "testimonial_text",    "label": "Testimonial Quote", "type": "textarea", "selector": "[data-edit=\"testimonial_text\"]",    "default": "\"This team completely transformed our business. Highly recommended.\"" },
+                { "key": "client_name",         "label": "Client Name",       "type": "text",     "selector": "[data-edit=\"client_name\"]",         "default": "Jane Doe" },
+                { "key": "client_company",      "label": "Client Company",    "type": "text",     "selector": "[data-edit=\"client_company\"]",      "default": "TechCorp Inc." },
+                { "key": "client_photo",        "label": "Client Photo",      "type": "image",    "selector": "[data-edit-img=\"client_photo\"]",   "default": "https://via.placeholder.com/48x48" },
+                { "key": "testimonials",        "label": "Testimonials List", "type": "repeat",   "selector": "[data-edit-repeat=\"testimonials\"]", "default": "" }
+            ]
+        },
+        {
+            "id": "team",
+            "label": "Team",
+            "fields": [
+                { "key": "team_heading", "label": "Section Heading", "type": "text",     "selector": "[data-edit=\"team_heading\"]", "default": "Meet Our Team" },
+                { "key": "team_name",    "label": "Member Name",     "type": "text",     "selector": "[data-edit=\"team_name\"]",    "default": "Michael Johnson" },
+                { "key": "team_role",    "label": "Member Role",     "type": "text",     "selector": "[data-edit=\"team_role\"]",    "default": "CEO & Founder" },
+                { "key": "team_bio",     "label": "Member Bio",      "type": "textarea", "selector": "[data-edit=\"team_bio\"]",     "default": "15+ years of experience in leading high-growth technology companies." },
+                { "key": "team_photo",   "label": "Member Photo",    "type": "image",    "selector": "[data-edit-img=\"team_photo\"]","default": "https://via.placeholder.com/300x300" },
+                { "key": "team_members", "label": "Team Members List","type": "repeat",  "selector": "[data-edit-repeat=\"team_members\"]","default": "" }
+            ]
+        },
+        {
+            "id": "stats",
+            "label": "Stats",
+            "fields": [
+                { "key": "stat_number",  "label": "Stat Number",      "type": "text",    "selector": "[data-edit=\"stat_number\"]",  "default": "500+" },
+                { "key": "stat_label",   "label": "Stat Label",       "type": "text",    "selector": "[data-edit=\"stat_label\"]",   "default": "Projects Completed" },
+                { "key": "stats_bg",     "label": "Background Color", "type": "color",   "selector": "[data-edit-color=\"stats_bg\"]","default": "#ffffff" },
+                { "key": "statistics",   "label": "Statistics List",  "type": "repeat",  "selector": "[data-edit-repeat=\"statistics\"]","default": "" }
+            ]
+        },
+        {
+            "id": "faq",
+            "label": "FAQ",
+            "fields": [
+                { "key": "faq_heading",  "label": "Section Heading", "type": "text",     "selector": "[data-edit=\"faq_heading\"]",  "default": "Frequently Asked Questions" },
+                { "key": "faq_question", "label": "Question",        "type": "text",     "selector": "[data-edit=\"faq_question\"]", "default": "What is your typical project timeline?" },
+                { "key": "faq_answer",   "label": "Answer",          "type": "textarea", "selector": "[data-edit=\"faq_answer\"]",   "default": "Most projects are delivered within 4 to 8 weeks, depending on the complexity and scope." },
+                { "key": "faqs",         "label": "FAQ List",        "type": "repeat",   "selector": "[data-edit-repeat=\"faqs\"]",  "default": "" }
+            ]
+        },
+        {
+            "id": "contact",
+            "label": "Contact",
+            "fields": [
+                { "key": "contact_heading",           "label": "Section Heading",  "type": "text",     "selector": "[data-edit=\"contact_heading\"]",           "default": "Get in Touch" },
+                { "key": "contact_email",             "label": "Email Address",    "type": "text",     "selector": "[data-edit=\"contact_email\"]",             "default": "hello@brand.com" },
+                { "key": "contact_phone",             "label": "Phone Number",     "type": "text",     "selector": "[data-edit=\"contact_phone\"]",             "default": "+1 (555) 123-4567" },
+                { "key": "contact_address",           "label": "Address",          "type": "text",     "selector": "[data-edit=\"contact_address\"]",           "default": "123 Business Ave, Suite 100, Tech City, 10001" },
+                { "key": "contact_form_button",       "label": "Submit Button Text","type": "text",    "selector": "[data-edit=\"contact_form_button\"]",       "default": "Send Message" }
+            ]
+        },
+        {
+            "id": "footer",
+            "label": "Footer",
+            "fields": [
+                { "key": "footer_logo",         "label": "Logo Text",          "type": "text",     "selector": "[data-edit=\"footer_logo\"]",          "default": "Brand." },
+                { "key": "footer_description",  "label": "Tagline",            "type": "textarea", "selector": "[data-edit=\"footer_description\"]",   "default": "Building the future of digital business today." },
+                { "key": "footer_copyright",    "label": "Copyright Text",     "type": "textarea", "selector": "[data-edit=\"footer_copyright\"]",     "default": "© 2026 Brand. All rights reserved." },
+                { "key": "footer_link_1",       "label": "Footer Link 1 (URL)","type": "link",     "selector": "[data-edit-link=\"footer_link_1\"]",   "default": "#about" },
+                { "key": "footer_link_2",       "label": "Footer Link 2 (URL)","type": "link",     "selector": "[data-edit-link=\"footer_link_2\"]",   "default": "#services" },
+                { "key": "footer_link_3",       "label": "Footer Link 3 (URL)","type": "link",     "selector": "[data-edit-link=\"footer_link_3\"]",   "default": "#portfolio" },
+                { "key": "footer_link_4",       "label": "Footer Link 4 (URL)","type": "link",     "selector": "[data-edit-link=\"footer_link_4\"]",   "default": "#pricing" },
+                { "key": "social_link_1",       "label": "Social Link 1 (URL)","type": "link",     "selector": "[data-edit-link=\"social_link_1\"]",   "default": "#" },
+                { "key": "social_link_2",       "label": "Social Link 2 (URL)","type": "link",     "selector": "[data-edit-link=\"social_link_2\"]",   "default": "#" },
+                { "key": "social_link_3",       "label": "Social Link 3 (URL)","type": "link",     "selector": "[data-edit-link=\"social_link_3\"]",   "default": "#" },
+                { "key": "footer_quick_links",  "label": "Quick Links List",   "type": "repeat",   "selector": "[data-edit-repeat=\"footer_quick_links\"]","default": "" },
+                { "key": "footer_social_links", "label": "Social Links List",  "type": "repeat",   "selector": "[data-edit-repeat=\"footer_social_links\"]","default": "" }
+            ]
+        }
+    ]
+}

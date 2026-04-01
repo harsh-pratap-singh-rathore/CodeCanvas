@@ -1,0 +1,270 @@
+{
+  "template": "developer",
+  "name": "Developer Portfolio",
+  "description": "A hacker-aesthetic dark portfolio template for developers.",
+  "fields": [
+    {
+      "id": "full_name",
+      "label": "Full Name",
+      "type": "text",
+      "selector": ".hacker-name",
+      "attribute": "innerText",
+      "placeholder": "HARSH\nRATHORE",
+      "defaultValue": "HARSH\nRATHORE",
+      "section": "Hero",
+      "hint": "Your name will appear large in the hero section. Use uppercase."
+    },
+    {
+      "id": "nav_logo",
+      "label": "Nav Logo / Initials",
+      "type": "text",
+      "selector": "#nav-logo-link",
+      "attribute": "innerText",
+      "placeholder": "HR_",
+      "defaultValue": "HR_",
+      "section": "Navigation",
+      "hint": "Short initials shown in the top navigation bar."
+    },
+    {
+      "id": "title",
+      "label": "Job Title / Role",
+      "type": "text",
+      "selector": "#hero-job-title",
+      "attribute": "innerText",
+      "placeholder": "Web Developer",
+      "defaultValue": "Web Developer",
+      "section": "Hero",
+      "hint": "Your professional title shown below your name."
+    },
+    {
+      "id": "about",
+      "label": "About Me",
+      "type": "textarea",
+      "selector": "#about-bio-text",
+      "attribute": "innerText",
+      "placeholder": "I am a dedicated Web Developer with a passion for building clean, efficient, and scalable digital solutions...",
+      "defaultValue": "I am Harsh Rathore, a dedicated Web Developer with a passion for building clean, efficient, and scalable digital solutions. My approach blends technical precision with minimalist aesthetics. I don't just write code; I architect experiences that perform seamlessly across all devices.",
+      "section": "About",
+      "hint": "Your bio paragraph in the About section."
+    },
+    {
+      "id": "profile_image",
+      "label": "Profile / Avatar Image",
+      "type": "image",
+      "selector": "#about-profile-img",
+      "attribute": "src",
+      "placeholder": "man.png",
+      "defaultValue": "man.png",
+      "section": "About",
+      "hint": "Upload your profile photo or avatar. Recommended: square image."
+    },
+    {
+      "id": "resume_url",
+      "label": "Resume / CV",
+      "type": "file",
+      "selector": "#resume-download-link",
+      "attribute": "href",
+      "placeholder": "Upload your resume (PDF)",
+      "defaultValue": "#",
+      "section": "About",
+      "hint": "Upload your resume PDF. Visitors will be able to download it directly from your portfolio."
+    },
+    {
+      "id": "years_exp",
+      "label": "Years of Experience",
+      "type": "text",
+      "selector": "#about-years-exp",
+      "attribute": "innerText",
+      "placeholder": "3+",
+      "defaultValue": "3+",
+      "section": "About",
+      "hint": "Stat shown in the About section."
+    },
+    {
+      "id": "projects_count",
+      "label": "Projects Count",
+      "type": "text",
+      "selector": "#about-projects-count",
+      "attribute": "innerText",
+      "placeholder": "50+",
+      "defaultValue": "50+",
+      "section": "About",
+      "hint": "Number of projects stat shown in the About section."
+    },
+    {
+      "id": "skills",
+      "label": "Skills / Tech Stack",
+      "type": "array",
+      "selector": "#skills .grid",
+      "itemSelector": ".group.bg-black\\/40",
+      "itemLabelSelector": "span.font-hacker",
+      "itemIconSelector": "span.material-icons",
+      "attribute": "innerText",
+      "placeholder": [
+        "PHP",
+        "JavaScript",
+        "Node.js",
+        "Java",
+        "MySQL",
+        "HTML/CSS",
+        "React",
+        "AWS",
+        "Git",
+        "Figma"
+      ],
+      "defaultValue": [
+        {
+          "name": "PHP",
+          "icon": "code"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "name": "Node.js",
+          "icon": "data_object"
+        },
+        {
+          "name": "Java",
+          "icon": "coffee"
+        },
+        {
+          "name": "MySQL",
+          "icon": "storage"
+        },
+        {
+          "name": "HTML/CSS",
+          "icon": "html"
+        },
+        {
+          "name": "React",
+          "icon": "view_quilt"
+        },
+        {
+          "name": "AWS",
+          "icon": "cloud_queue"
+        },
+        {
+          "name": "Git",
+          "icon": "terminal"
+        },
+        {
+          "name": "Figma",
+          "icon": "design_services"
+        }
+      ],
+      "section": "Skills",
+      "hint": "Add or remove skills. Each skill shows an icon and name."
+    },
+    {
+      "id": "projects",
+      "label": "Featured Projects",
+      "type": "group",
+      "selector": "#projects .grid.grid-cols-1",
+      "itemSelector": ".group.relative.rounded-lg",
+      "attribute": "group",
+      "defaultValue": [
+        {
+          "title": "Alpha Dashboard",
+          "category": "FINTECH • 2023",
+          "description": "Financial analytics platform built with React and Node.js.",
+          "tags": [
+            "React",
+            "Node",
+            "D3.js"
+          ],
+          "link": "#",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCkvMgPNUfQE8xwnMaDCXsmbHSthnXPIH_BfOyEqJYrJcN7iUvb73mpKkpPGt75Kmr7YPbYhsatBQzB_3dhUM6Xj1tCQGTHVpydhMW6eKCbAyQaNVLHQalsLBwqDoJae7sMFSlFH3AsbOppb8KsJU-QydTl1guqYzXMnLSTInnaxrPuYeteBS6l84ENgpE4UwAUbgjKJpGmGzvtPvzm568Z7paQupp37z5cIotEV4XHgTIZ3bbydr1WUVtOm1N06bUV6941ICxI-"
+        },
+        {
+          "title": "Noir Boutique",
+          "category": "E-COMMERCE • 2022",
+          "description": "Premium fashion platform with custom PHP backend.",
+          "tags": [
+            "PHP",
+            "MySQL",
+            "Stripe"
+          ],
+          "link": "#",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBkCQUNb2HnWpW6S82h66JhrUKlUj7FBwxr0cNj5ZYTZFn0JFjEEnTGQDPEN8GztHF8l82z6qKSCHYvQx2y742bmiDmx2KrrPYnehZrux6DzCrkkWtDT1IhKqcsBq7AI9ZgFYZ13YBitOg51XQX3b6-_wa0a147wyICJRs4EKaUsbutIXVzUxNfS4Y_RH859U_ZRybU_U3o-wgo-Ri40lo9ZCDyqrlrWElMbH8-cNF-mzxhuTv6SqiArqdKIZXnRO-0ebp42tcTZnf4"
+        },
+        {
+          "title": "Vortex API",
+          "category": "SAAS • 2023",
+          "description": "Secure API management tool for developers.",
+          "tags": [
+            "Java",
+            "Spring",
+            "Docker"
+          ],
+          "link": "#",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD2M_KNjRkwGuOUS-9jBfJN-89oPxT3H9l6Ajyrk1p21HElmngGAUoL3dVsQU7BAcY9fVWxJEDJWB1ImCWKhaEffLbExMgDO2UjcoMxflTane-P_ekvB906E-xVGOF2RoM9Ac9pZqXWR8XLBdlUuGIlteMtzY_qsBZQvFTFktj5LnDiYK3ad8G5P4WYridE27_XxOAQdP3uMjCH-QhiYNmYNH--EKRQaE5T462ptc-3Ekw-Rm2u--tQguA_Y_HeO2naJqOCHRl8cRVZ"
+        }
+      ],
+      "section": "Projects",
+      "hint": "Add, edit, or remove featured projects."
+    },
+    {
+      "id": "email",
+      "label": "Email Address",
+      "type": "email",
+      "selector": "#contact-email-link",
+      "attribute": "innerText",
+      "hrefSelector": "#contact-email-link",
+      "hrefAttribute": "href",
+      "hrefPrefix": "mailto:",
+      "placeholder": "harsh@example.com",
+      "defaultValue": "harsh@example.com",
+      "section": "Contact",
+      "hint": "Your contact email shown in the Contact section."
+    },
+    {
+      "id": "location",
+      "label": "Location",
+      "type": "text",
+      "selector": "#contact-location-text",
+      "attribute": "innerText",
+      "placeholder": "India",
+      "defaultValue": "India",
+      "section": "Contact",
+      "hint": "Your city or country shown in the Contact section."
+    },
+    {
+      "id": "footer_name",
+      "label": "Footer Name",
+      "type": "text",
+      "selector": "#footer-copyright-text",
+      "attribute": "innerText",
+      "placeholder": "© 2023 Harsh Rathore. All rights reserved.",
+      "defaultValue": "© 2023 Harsh Rathore. All rights reserved.",
+      "section": "Footer",
+      "hint": "Copyright text in the footer."
+    },
+    {
+      "id": "typing_words",
+      "label": "Typing Animation Words",
+      "type": "array",
+      "selector": "#typing-text",
+      "attribute": "data-words",
+      "isScript": true,
+      "scriptVar": "words",
+      "placeholder": [
+        "PHP",
+        "Node.js",
+        "Java",
+        "React",
+        "MySQL"
+      ],
+      "defaultValue": [
+        "PHP",
+        "Node.js",
+        "Java",
+        "React",
+        "MySQL"
+      ],
+      "section": "Hero",
+      "hint": "Words that cycle in the typing animation below your name."
+    }
+  ]
+}

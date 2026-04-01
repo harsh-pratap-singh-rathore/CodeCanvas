@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Projects — CodeCanvas</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/responsive.css">
+</head>
+
+<body class="dashboard-layout">
+    <!-- Top Bar -->
+    <header class="dashboard-header">
+        <div class="dashboard-header-content">
+            <a href="dashboard.html" class="logo">CodeCanvas</a>
+
+            <div class="user-menu">
+                <div class="user-avatar" data-dropdown="user">
+                    <span class="avatar-circle">JD</span>
+                    <div class="dropdown dropdown-right">
+                        <a href="profile.html" class="dropdown-item">
+                            <strong>Profile</strong>
+                        </a>
+                        <a href="settings.html" class="dropdown-item">
+                            <strong>Settings</strong>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="auth/logout.php" class="dropdown-item">
+                            <strong>Logout</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-section">
+                <a href="new-project.html" class="btn btn-primary" style="width: 100%; margin-bottom: 24px;">+ New
+                    Project</a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-label">Projects</div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link active">All Projects</a>
+                    <a href="dashboard.html?view=yours" class="sidebar-link">Your Projects</a>
+                    <a href="dashboard.html?view=archived" class="sidebar-link">Archived</a>
+                    <a href="dashboard.html?view=trashed" class="sidebar-link">Trashed</a>
+                </nav>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-label">Tags</div>
+                <nav class="sidebar-nav">
+                    <a href="#new-tag" class="sidebar-link sidebar-link-action">+ New Tag</a>
+                    <a href="dashboard.html?tag=uncategorized" class="sidebar-link">Uncategorized</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="dashboard-page-header">
+                <h1>Your Projects</h1>
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input" placeholder="Search in your projects…">
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                <!-- New Project Card -->
+                <div class="project-card project-card-new">
+                    <a href="new-project.html" class="project-card-link">
+                        <div class="project-card-content">
+                            <div class="project-card-icon">+</div>
+                            <div class="project-card-title">New Project</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Existing Project Cards -->
+                <div class="project-card">
+                    <a href="project.html?id=1" class="project-card-link">
+                        <div class="project-card-header">
+                            <span class="project-type">Portfolio</span>
+                            <span class="project-status project-status-live">Live</span>
+                        </div>
+                        <div class="project-card-body">
+                            <h3 class="project-card-title">John Doe Portfolio</h3>
+                            <p class="project-card-meta">Updated 2 hours ago</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="project.html?id=2" class="project-card-link">
+                        <div class="project-card-header">
+                            <span class="project-type">Personal</span>
+                            <span class="project-status project-status-draft">Draft</span>
+                        </div>
+                        <div class="project-card-body">
+                            <h3 class="project-card-title">Personal Website</h3>
+                            <p class="project-card-meta">Updated yesterday</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="project.html?id=3" class="project-card-link">
+                        <div class="project-card-header">
+                            <span class="project-type">Business</span>
+                            <span class="project-status project-status-live">Live</span>
+                        </div>
+                        <div class="project-card-body">
+                            <h3 class="project-card-title">Startup Landing Page</h3>
+                            <p class="project-card-meta">Updated 3 days ago</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="project.html?id=4" class="project-card-link">
+                        <div class="project-card-header">
+                            <span class="project-type">Portfolio</span>
+                            <span class="project-status project-status-draft">Draft</span>
+                        </div>
+                        <div class="project-card-body">
+                            <h3 class="project-card-title">Design Portfolio</h3>
+                            <p class="project-card-meta">Updated 1 week ago</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="project-card">
+                    <a href="project.html?id=5" class="project-card-link">
+                        <div class="project-card-header">
+                            <span class="project-type">Business</span>
+                            <span class="project-status project-status-draft">Draft</span>
+                        </div>
+                        <div class="project-card-body">
+                            <h3 class="project-card-title">Consulting Services</h3>
+                            <p class="project-card-meta">Updated 2 weeks ago</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="<?= BASE_URL ?>/public/assets/js/main.js"></script>
+    <script src="<?= BASE_URL ?>/public/assets/js/mobile-nav.js"></script>
+</body>
+
+</html>

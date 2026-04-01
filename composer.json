@@ -1,0 +1,20 @@
+{
+    "name": "codecanvas/platform",
+    "description": "CodeCanvas SaaS Portfolio Platform",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "google/apiclient": "^2.0",
+        "resend/resend-php": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "process-timeout": 2000
+    }
+}

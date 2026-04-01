@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAL_INTERFACE // PORTFOLIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --accent: #ffffff;
+            --muted: #444444;
+            --glitch: #ff0000;
+            --border: #222222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ── CYBER FONTS ── */
+        h1, h2, h3, .cyber-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* ── UTILITIES ── */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.3;
+        }
+
+        /* ── LAYOUT ── */
+        header {
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-size: 1.2rem; font-weight: 700; border: 1px solid #fff; padding: 5px 15px; }
+
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.9;
+            margin-bottom: 20px;
+            mix-blend-mode: difference;
+        }
+
+        .hero p {
+            max-width: 500px;
+            font-size: 1.1rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section {
+            padding: 100px 10%;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-title::after {
+            content: "";
+            height: 1px;
+            background: var(--border);
+            flex-grow: 1;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border);
+            padding: 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            background: #111;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .cyber-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .cyber-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ── DATA EDIT ATTRIBUTES ── */
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+
+    <header>
+        <div class="logo" data-edit="nav_logo">PROTO_X</div>
+        <nav style="display: flex; gap: 30px; font-size: 0.8rem; opacity: 0.6;">
+            <span data-edit="nav_link1">INDEX</span>
+            <span data-edit="nav_link2">ARCHIVE</span>
+            <span data-edit="nav_link3">TERMINAL</span>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div style="font-size: 0.7rem; color: var(--muted); margin-bottom: 20px;" data-edit="hero_sub">SYSTEM_STATUS: ACTIVE</div>
+        <h1 data-edit="hero_title">CYBER<br>MECHA</h1>
+        <p data-edit="hero_tagline">Neural architecture and heavy industrial design interfaces. Built for the next iteration of the human experience.</p>
+        <div style="margin-top: 40px;">
+            <a href="#" class="cyber-btn" data-edit-link="hero_cta_url">INITIATE_LINK</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">CORE_MODULES</div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div style="font-size: 0.6rem; color: var(--muted); margin-bottom: 10px;">PROJECT_01</div>
+                <h3 data-edit="p1_title">NEURAL_SYNC</h3>
+                <p data-edit="p1_desc">Direct interface between cognitive processes and external hardware monitoring systems.</p>
+            </div>
+            <div class="project-card">
+                <div style="font-size: 0.6rem; color: var(--muted); margin-bottom: 10px;">PROJECT_02</div>
+                <h3 data-edit="p2_title">MECHA_SHELL</h3>
+                <p data-edit="p2_desc">Carbon-fiber exoskeleton design with integrated ballistic protection and hydraulic assistance.</p>
+            </div>
+            <div class="project-card">
+                <div style="font-size: 0.6rem; color: var(--muted); margin-bottom: 10px;">PROJECT_03</div>
+                <h3 data-edit="p3_title">VOID_LINK</h3>
+                <p data-edit="p3_desc">Encrypted communication protocols for extra-atmospheric deployment environments.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--surface);">
+        <div class="section-title">CONTACT_NODE</div>
+        <div style="max-width: 600px;">
+            <h2 style="font-size: 3rem; margin-bottom: 40px;" data-edit="contact_headline">ESTABLISH_CONNECTION</h2>
+            <p style="margin-bottom: 40px; color: var(--muted);" data-edit="contact_bio">Encrypted channels are open. System responses are prioritized by neural signature priority.</p>
+            <a href="mailto:hello@cybermecha.net" style="font-size: 1.5rem; color: var(--accent); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 5px;" data-edit="contact_email">VOID@CYBERMECHA.NET</a>
+        </div>
+    </section>
+
+    <footer style="padding: 40px 10%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted);">
+        <div data-edit="footer_copy">© 2026 CYBERMECHA // ALL_RIGHTS_RESERVED</div>
+        <div>ST_CODE: 0XFF_VOID</div>
+    </footer>
+</body>
+</html>

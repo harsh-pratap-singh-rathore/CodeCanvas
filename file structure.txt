@@ -1,0 +1,184 @@
+CodeCanvas/
+├── .env [Critical]
+│   (Environment variables: API keys, database credentials, app secrets)
+├── .env.example [Optional]
+│   (Template for environment variables)
+├── .gitignore [Critical]
+│   (Git ignore list: vendor, .env, storage, etc.)
+├── .htaccess [Critical]
+│   (Server configuration for routing and security)
+├── add_responsive.py [Optional/Redundant]
+│   (Python script to add responsive tags; likely a one-off utility)
+├── ai-writer.php [Optional]
+│   (Entry point for AI-assisted content writing)
+├── business-template.zip [Unused/Redundant]
+│   (Backup/Old version of business template; delete after verifying)
+├── check-slug.php [Optional]
+│   (Entry point for slug availability checking)
+├── CodeCanvas.zip [Unused/Backup]
+│   (Full project backup; redundant if using Git)
+├── composer.json [Critical]
+│   (PHP dependency manager configuration)
+├── composer.lock [Critical]
+│   (Locked versions of dependencies)
+├── composer.phar [Optional]
+│   (Local composer executable)
+├── convert_subshimmers.php [Unused/Experimental]
+│   (Legacy extraction logic script)
+├── convert_to_shims.php [Unused/Experimental]
+│   (Legacy extraction logic script)
+├── dashboard.php [Critical]
+│   (User dashboard entry point; redirects to app/dashboard.php)
+├── DATABASE_RESET_COMPLETE.md [Optional/Log]
+│   (Documentation of a database reset operation)
+├── db_update.php [Optional/Dev]
+│   (Developer utility for database schema updates)
+├── debug.php [Optional/Debug]
+│   (Debug script for testing logic)
+├── describe_templates.php [Optional/Dev]
+│   (Utility to scan and list template metadata)
+├── diag.php [Optional/Debug]
+│   (Diagnostic script for system health)
+├── final_tree.txt [Unused/Redundant]
+│   (Legacy file structure report)
+├── fix-db-schema.php [Optional/Dev]
+│   (Utility to fix database inconsistencies)
+├── fix-passwords.php [Optional/Dev]
+│   (Utility to hash or migration passwords)
+├── fix.php [Optional/Dev]
+│   (General purpose quick-fix script)
+├── fix_json_redirects.php [Optional/Dev]
+│   (Utility for standardizing JSON response paths)
+├── FORM_EDITOR_INTEGRATION.md [Optional/Docs]
+│   (Integration notes for form editing)
+├── get_schema.php [Optional]
+│   (API endpoint for fetching template schemas)
+├── get_schema_v2.php [Optional]
+│   (Upgraded API endpoint for fetching template schemas)
+├── headers.txt [Unused/Log]
+│   (Snippet of HTTP headers)
+├── index.html [Optional]
+│   (Landing page or placeholder)
+├── index.php [Critical]
+│   (Main application entry point)
+├── list_projects.php [Optional]
+│   (Utility to list all user projects)
+├── messages.php [Optional]
+│   (Entry point for message center)
+├── migrate_production.php [Optional/Dev]
+│   (Script for production environment migration)
+├── new-project.php [Critical]
+│   (Project creation flow entry point)
+├── new_developer_template.zip [Unused/Backup]
+│   (New template version backup)
+├── notifications.php [Optional]
+│   (Notification center entry point)
+├── portfolio-generate.php [Critical]
+│   (Core engine for generating portfolio sites)
+├── portfolio-preview.php [Critical]
+│   (Real-time preview engine for the builder)
+├── profile.php [Critical]
+│   (User profile management)
+├── project-archive.php [Optional]
+│   (Handler for archiving projects)
+├── project-delete.php [Critical]
+├── project-duplicate.php [Optional]
+├── project-editor.php [Critical]
+│   (The main Visual Builder entry point)
+├── project-publish.php [Critical]
+│   (The deployment nexus to Vercel/HTML download)
+├── project-rename.php [Optional]
+├── project-save.php [Critical]
+├── project-settings.php [Critical]
+├── project-unpublish.php [Optional]
+├── project-view.php [Critical]
+├── select-category.php [Critical]
+├── select-template.php [Critical]
+├── settings.php [Critical]
+├── setup.php [Optional]
+├── SETUP_COMPLETE.md [Optional/Log]
+├── shop-template.zip [Unused/Backup]
+├── start_servers.bat [Optional/Dev]
+├── temp-reset-pass.php [Optional/Redundant]
+├── test-google.php [Optional/Debug]
+├── test_create_project.php [Optional/Test]
+├── test_scanner.php [Optional/Test]
+├── test_slugs.php [Optional/Test]
+├── update_templates.py [Optional/Dev]
+├── validation_script.php [Optional/Test]
+├── verify-database.php [Optional/Test]
+├── verify_admin.php [Optional/Test]
+├── verify_db.php [Optional/Test]
+├── verify_saas_integration.php [Optional/Test]
+│
+├── admin/ [Critical]
+│   ├── dashboard.php
+│   ├── templates.php
+│   └── api/
+│       └── ai-analyze-template.php [Critical] (Template scanner AI logic)
+│
+├── api/ [Critical]
+│   ├── check-slug.php
+│   └── contact.php
+│
+├── app/ [Critical] (Core Backend Business Logic)
+│   ├── admin/ [Critical] (Replicated Admin Logic)
+│   ├── api/ [Critical] (Internal API services: Messages, Notifications, SSE)
+│   │   ├── sse-events.php [Critical] (Real-time update engine)
+│   ├── auth/ [Critical] (Authentication Handlers: Google, Login, Signup)
+│   ├── controllers/ [Optional] (Placeholder for future MVC reorganization)
+│   ├── core/ [Critical] (Auth middleware, Template Engines, Scanner)
+│   │   ├── auth.php [Critical] (Session protection)
+│   │   ├── TemplateScanner.php [Critical] (The brain of template ingestion)
+│   ├── events/ [Critical] (Event-driven actions: Deploy, Registered)
+│   ├── services/ [Critical] (External Integrations: Email, Vercel API, OTP)
+│   │   ├── VercelDeployService.php [Critical] (Cloud deployment logic)
+│   ├── tools/ [Optional] (Health checks and deployment tools)
+│   ├── views/ [Critical] (HTML fragments/Layouts for the app)
+│   └── StaticBuilder.php [Critical] (Logic to generate static HTML bundles)
+│
+├── assets/ [Critical] (Common frontend assets - mostly empty, needs reorganization)
+│
+├── auth/ [Critical/Redundant] (Likely a duplicate of app/auth; needs consolidation)
+│
+├── config/ [Critical] (Centralized Configuration)
+│   ├── app.php [Critical] (Constants, URLs, environment settings)
+│   ├── bootstrap.php [Critical] (Autoloader and .env initialization)
+│   └── database.php [Critical] (PDO connection setup)
+│
+├── deployments/ [System Data]
+│   (Generated static sites awaiting Vercel sync or download. Contains project-specific builds)
+│
+├── logs/ [System Data]
+│   ├── .htaccess [Critical] (Protection)
+│   └── email_errors.log [Optional/Log]
+│
+├── public/ [Critical] (SaaS Landing Page & Frontend Entry Points)
+│   ├── assets/ [Critical] (CSS/JS for the landing page and editor)
+│   │   ├── js/
+│   │   │   ├── project-editor.js [Critical] (The largest file; Frontend Editor Engine)
+│   │   │   ├── template-parser.js [Critical]
+│   │   │   └── template-renderer.js [Critical]
+│   ├── business-landing.html, contact.html, etc. [Critical] (Marketing pages)
+│   └── templates/ [Critical] (Live previews for the template marketplace)
+│
+├── storage/ [System Data/Critical]
+│   ├── database/ [Critical] (SQL backups and migration scripts)
+│   │   ├── schema.sql [Critical] (Master setup script)
+│   │   └── PRODUCTION_HOSTINGER.sql [Backup]
+│   ├── docs/ [Optional/Docs] (Extensive project guides and redesign steps)
+│   ├── emails/ [Critical]
+│   │   └── templates/ [Critical] (Beautiful HTML email designs)
+│   └── uploads/ [System Data] (User uploaded images and assets)
+│
+├── templates/ [Product Data/Critical] (The "CodeCanvas Templates")
+│   ├── business/
+│   ├── developer/
+│   ├── normal/
+│   └── shop/
+│
+├── tmp/ [Unused/Redundant]
+│   (Scratchpad for temporary scripts and old zip files. Should be cleared.)
+│
+└── vendor/ [Critical/External]
+    (Library dependencies: Google API, Resend SDK, Symphony components, Guzzle)
