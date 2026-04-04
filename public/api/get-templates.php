@@ -12,6 +12,28 @@ define('IGNORE_DB_ERROR', true);
 require_once '../../config/database.php';
 
 /**
+ * Sanitize a template name that may have been corrupted during upload
+ * (e.g. stored as "shop-template/style.css" instead of "Shop Template").
+ * Falls back to deriving a clean title from the slug or folder path.
+ */
+function sanitizeTemplateName(string $name, string $slug, string $folderPath): string
+{
+    // Detect corrupted name: contains a slash (path separator) or a file extension
+    $looksCorrupted = str_contains($name, '/') || str_contains($name, '\\')
+        || preg_match('/\.(css|html?|js|php|zip)$/i', $name);
+
+    if (!$looksCorrupted) {
+        return $name; // name is fine
+    }
+
+    // Prefer slug, then last segment of folder_path
+    $fallback = $slug ?: (basename(rtrim($folderPath, '/')) ?: $name);
+
+    // Convert slug/folder-name to Title Case (replace hyphens/underscores with spaces)
+    return ucwords(str_replace(['-', '_'], ' ', $fallback));
+}
+
+/**
  * Find the best preview HTML file inside a template folder.
  * Checks for code.html first, then index.html, recursively if needed.
  */
@@ -79,7 +101,7 @@ try {
 
             $results[] = [
                 'id'          => $tpl['id'],
-                'name'        => $tpl['name'],
+                'name'        => sanitizeTemplateName($tpl['name'], $tpl['slug'] ?? '', $tpl['folder_path'] ?? ''),
                 'slug'        => $tpl['slug'],
                 'type'        => $tpl['template_type'],
                 'category'    => $category,

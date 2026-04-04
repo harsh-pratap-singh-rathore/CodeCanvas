@@ -20,20 +20,21 @@ class TemplatePreview {
             $htmlFile = null;
             
             // Candidates in order of priority
-            $candidates = ['code.html', 'index.html', 'index.htm'];
+            $candidates = ['code.html', 'index.html', 'index.htm', 'home.html', 'main.html', 'landing.html', 'shop.html'];
             
-            // Check root (Case-insensitive check for common servers)
-            foreach ($candidates as $c) {
-                if (file_exists($basePath . '/' . $c)) {
-                    $htmlFile = $c;
-                    break;
+            // 1. Check root (Case-insensitive check for common servers)
+            $filesInDir = @scandir($basePath);
+            if ($filesInDir) {
+                // Try to find an exact match first
+                foreach ($candidates as $c) {
+                    if (file_exists($basePath . '/' . $c)) {
+                        $htmlFile = $c;
+                        break;
+                    }
                 }
-            }
-            
-            // Try again with lowercase if needed (for Linux)
-            if (!$htmlFile) {
-                $filesInDir = @scandir($basePath);
-                if ($filesInDir) {
+                
+                // Fallback to case-insensitive match
+                if (!$htmlFile) {
                     foreach ($filesInDir as $f) {
                         if (in_array(strtolower($f), $candidates)) {
                             $htmlFile = $f;
@@ -42,7 +43,7 @@ class TemplatePreview {
                     }
                 }
             }
-            
+           
             // Check subdirectories (1 level deep)
             if (!$htmlFile) {
                 $subDirs = glob($basePath . '/*', GLOB_ONLYDIR);

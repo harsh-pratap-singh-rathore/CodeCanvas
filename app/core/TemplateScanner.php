@@ -20,6 +20,17 @@ class TemplateScanner {
         }
 
         $html = file_get_contents($htmlFile);
+        $htmlHash = md5($html);
+        $cacheFile = dirname($htmlFile) . '/.scan_cache_' . $htmlHash . '.json';
+
+        // Check Cache first
+        if (file_exists($cacheFile)) {
+            $cached = json_decode(file_get_contents($cacheFile), true);
+            if ($cached && isset($cached['schema'])) {
+                return $cached;
+            }
+        }
+
         $dom  = new DOMDocument();
         libxml_use_internal_errors(true);
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -34,20 +45,15 @@ class TemplateScanner {
         
         $finalSchema = null;
         
-        // --- STEP 3: API Pipeline
+        // --- STEP 3: API Pipeline (Modernized to ONE-PASS)
         try {
-            $rawLlmSchema = self::pass1LlmScan($cleanedHtml);
-            if ($rawLlmSchema) {
-                // Merge data-edit fields into RAW schema before Pass 2
-                $mergedRaw = self::mergeExplicitFieldsToRaw($rawLlmSchema, $explicitFields);
-                $optimized = self::pass2LlmOptimization($mergedRaw);
-                
-                if (self::validateSchema($optimized)) {
-                    $finalSchema = $optimized;
-                }
+            $optimized = self::runOnePassLlmScan($cleanedHtml, $explicitFields);
+            
+            if ($optimized && self::validateSchema($optimized)) {
+                $finalSchema = $optimized;
             }
         } catch (Exception $e) {
-            error_log("LLM Scanner Error: " . $e->getMessage());
+            error_log("CodeCanvas LLM Scanner Error: " . $e->getMessage());
         }
 
         // --- STEP 4: Fallback Mechanism (if LLM completely fails)
@@ -57,11 +63,16 @@ class TemplateScanner {
             $finalSchema = self::formatFallbackSchema(array_merge($explicitFields, $heuristicFields));
         }
 
-        return [
+        $result = [
             'schema'   => $finalSchema,
             'total'    => self::countFields($finalSchema),
             'html_file'=> basename($htmlFile)
         ];
+
+        // Save to cache
+        file_put_contents($cacheFile, json_encode($result));
+
+        return $result;
     }
 
     /**
@@ -152,28 +163,28 @@ class TemplateScanner {
      */
     private static function cleanHtmlForLLM(DOMDocument $dom) {
         // Remove entire nodes
-        $removeTags = ['script', 'style', 'svg', 'meta', 'link', 'noscript', 'iframe', 'canvas', 'video', 'audio', 'object', 'embed'];
+        $removeTags = ['script', 'style', 'svg', 'meta', 'link', 'noscript', 'iframe', 'canvas', 'video', 'audio', 'object', 'embed', 'head'];
         $xpath = new DOMXPath($dom);
         
         foreach ($removeTags as $tag) {
             $nodes = $xpath->query("//{$tag}");
             foreach ($nodes as $node) {
-                $node->parentNode->removeChild($node);
+                if ($node->parentNode) $node->parentNode->removeChild($node);
             }
         }
 
-        $preserveTags = ['section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'img', 'a', 'ul', 'li', 'button'];
+        $preserveTags = ['header', 'footer', 'section', 'h1', 'h2', 'h3', 'h4', 'p', 'img', 'a', 'ul', 'li', 'button'];
         
         $allNodes = $xpath->query("//*");
-        $nodesToRename = [];
+        $nodesToRemove = [];
         
         foreach ($allNodes as $node) {
             if ($node->nodeName === '#text') continue;
 
-            // Remove attributes except class, href, src, alt, and data-edit
+            // Remove attributes except key structural ones
             $removeAttrs = [];
             foreach ($node->attributes as $attrName => $attrNode) {
-                if (!in_array($attrName, ['class', 'href', 'src', 'alt']) && !str_starts_with($attrName, 'data-edit')) {
+                if (!in_array($attrName, ['class', 'src', 'alt', 'id']) && !str_starts_with($attrName, 'data-edit')) {
                     $removeAttrs[] = $attrName;
                 }
             }
@@ -181,56 +192,49 @@ class TemplateScanner {
                 $node->removeAttribute($attr);
             }
 
-            // Truncate very long text natively
+            // Truncate text content
             if ($node->childNodes->length === 1 && $node->firstChild->nodeType === XML_TEXT_NODE) {
                 $text = trim($node->nodeValue);
-                if (strlen($text) > 200) {
-                    $node->nodeValue = substr($text, 0, 200);
+                if (strlen($text) > 80) {
+                    $node->nodeValue = substr($text, 0, 80) . '...';
                 }
             }
 
             $nodeName = strtolower($node->nodeName);
-            if (!in_array($nodeName, $preserveTags) && $nodeName !== 'html' && $nodeName !== 'body' && $nodeName !== 'head') {
-                $nodesToRename[] = $node;
+            if (!in_array($nodeName, $preserveTags) && !in_array($nodeName, ['html', 'body', 'div', 'span'])) {
+                $nodesToRemove[] = $node;
             }
         }
 
-        // Rename non-preserved structural tags to div/span instead of stripping them or deleting them
-        foreach ($nodesToRename as $node) {
-            $isInline = in_array(strtolower($node->nodeName), ['b', 'i', 'strong', 'em', 'u', 'mark', 'small', 'del', 'ins', 'sub', 'sup']);
-            $newTag = $isInline ? 'span' : 'div';
-            $newNode = $dom->createElement($newTag);
-            
-            if ($node->attributes) {
-                foreach ($node->attributes as $attr) {
-                    $newNode->setAttribute($attr->nodeName, $attr->nodeValue);
-                }
-            }
+        // Simplify non-essential tags
+        foreach ($nodesToRemove as $node) {
+            if (!$node->parentNode) continue;
             while ($node->childNodes->length > 0) {
-                $newNode->appendChild($node->childNodes->item(0));
+                $node->parentNode->insertBefore($node->childNodes->item(0), $node);
             }
-            $node->parentNode->replaceChild($newNode, $node);
+            $node->parentNode->removeChild($node);
         }
 
         $cleanHtml = $dom->saveHTML();
-        if (strlen($cleanHtml) > 50000) { 
-            // fallback truncation
-            $cleanHtml = substr($cleanHtml, 0, 50000) . "</body></html>";
+        if (strlen($cleanHtml) > 25000) { 
+            $cleanHtml = substr($cleanHtml, 0, 25000) . "</body></html>";
         }
         
         return $cleanHtml;
     }
 
-    /**
-     * Pipeline Helper: Calls NVIDIA DeepSeek LLM
-     */
-    private static function callLLM(string $systemPrompt, string $userPrompt, $retry = false) {
-        $apiKey = "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";
-        $model = "deepseek-ai/deepseek-v3.2";
-        $timeout = 90; // 90s per call — if LLM hangs longer than this, fall back to heuristics
+    private static function callLLM(string $systemPrompt, string $userPrompt) {
+        $provider = $_ENV['LLM_PROVIDER'] ?? getenv('LLM_PROVIDER') ?? 'nvidia';
+        $apiKey   = ($provider === 'nvidia') ? ($_ENV['NVIDIA_API_KEY'] ?? getenv('NVIDIA_API_KEY')) : ($_ENV['GOOGLE_AI_KEY'] ?? getenv('GOOGLE_AI_KEY'));
+        $model    = $_ENV['LLM_MODEL'] ?? getenv('LLM_MODEL') ?? 'deepseek-ai/deepseek-v3.2';
+        $timeout  = (int)($_ENV['LLM_TIMEOUT'] ?? getenv('LLM_TIMEOUT') ?? 30);
 
+        if ($provider === 'google' || str_contains($model, 'gemini')) {
+            return self::callGoogleAI($apiKey, $model, $systemPrompt, $userPrompt, $timeout);
+        }
+
+        // Default NVIDIA implementation
         $url = 'https://integrate.api.nvidia.com/v1/chat/completions';
-        
         $data = [
             'model' => $model,
             'messages' => [
@@ -238,7 +242,7 @@ class TemplateScanner {
                 ['role' => 'user', 'content' => $userPrompt]
             ],
             'temperature' => 0.1,
-            'max_tokens' => 2048,
+            'max_tokens' => 2500,
         ];
 
         $ch = curl_init($url);
@@ -246,170 +250,93 @@ class TemplateScanner {
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer " . $apiKey,
-            "Content-Type: application/json",
-            "Accept: application/json"
-        ]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $apiKey", "Content-Type: application/json"]);
 
         $response = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
 
-        if ($err) throw new Exception("cURL Error: " . $err);
+        if ($err) throw new Exception("LLM cURL Error: " . $err);
 
         $json = json_decode($response, true);
-        if (!$json || !isset($json['choices'][0]['message']['content'])) {
-            // No retry — let the caller's catch block trigger heuristic fallback immediately
-            throw new Exception("Invalid API response format from LLM. Response: " . substr((string)$response, 0, 300));
-        }
-
-        $content = $json['choices'][0]['message']['content'];
+        $content = $json['choices'][0]['message']['content'] ?? '';
         
-        // Ensure strict JSON content parsing
-        $content = preg_replace('/```json/i', '', $content);
-        $content = preg_replace('/```/', '', $content);
-        $content = trim($content);
-        
-        // Find JSON block if it still returned extra text
-        if (str_starts_with($content, '{') === false) {
-            $start = strpos($content, '{');
-            $end = strrpos($content, '}');
-            if ($start !== false && $end !== false) {
-                $content = substr($content, $start, $end - $start + 1);
-            }
+        if (empty($content)) {
+            throw new Exception("Empty response from LLM. Raw: " . substr((string)$response, 0, 200));
         }
 
-        $decoded = json_decode($content, true);
-        if (!$decoded) {
-            throw new Exception("LLM returned non-JSON content.");
+        // Clean JSON formatting
+        $content = preg_replace('/^```json\s*|\s*```$/i', '', trim($content));
+        if (!str_starts_with($content, '{')) {
+            preg_match('/\{.*\}/s', $content, $matches);
+            $content = $matches[0] ?? '{}';
         }
 
-        return $decoded;
+        return json_decode($content, true);
     }
 
-    /**
-     * Pass 1: Raw Structure Detection
-     */
-    private static function pass1LlmScan(string $cleanedHtml) {
-        $system = "You are an intelligent HTML section parser for a visual website builder.
-Analyze the HTML and extract ALL editable content sections: navigation, hero, about, services, portfolio/work, testimonials, contact, footer.
-
-For EACH section found, return:
-- id: lowercase snake_case (e.g. 'hero', 'navigation', 'services')
-- label: Human-readable name (e.g. 'Hero Section', 'Navigation', 'Services')
-- fields: array of editable fields inside the section
-
-For EACH field:
-- key: unique snake_case identifier (e.g. 'hero_title', 'nav_about_link')
-- label: Human-readable field name (e.g. 'Hero Title', 'About Link')
-- type: one of: text, textarea, image, link, email, color
-- selector: precise CSS selector targeting THIS element
-- default: current content of the element (if any)
-
-RETURN EXACT FORMAT:
-{
-  \"sections\": [
-    {
-      \"id\": \"navigation\",
-      \"label\": \"Navigation\",
-      \"fields\": [
-        {
-          \"key\": \"nav_logo\",
-          \"label\": \"Logo Text\",
-          \"type\": \"text\",
-          \"selector\": \".logo\",
-          \"default\": \"Brand\"
-        }
-      ]
-    },
-    {
-      \"id\": \"hero\",
-      \"label\": \"Hero Section\",
-      \"fields\": [
-        {
-          \"key\": \"hero_title\",
-          \"label\": \"Hero Title\",
-          \"type\": \"text\",
-          \"selector\": \"h1\",
-          \"default\": \"We Build Modern Businesses\"
-        }
-      ]
-    }
-  ]
-}
-
-STRICT RULES:
-Return JSON only. No explanations. No markdown. No extra text. No comments. Only valid JSON.";
-
-        $user = "Extract the RAW schema from the following cleaned HTML template:\n\n" . $cleanedHtml;
-        return self::callLLM($system, $user);
-    }
-
-    /**
-     * Merges high-confidence data-edit fields into RAW schema.
-     */
-    private static function mergeExplicitFieldsToRaw(array $raw, array $explicit) {
-        if (empty($explicit)) return $raw;
-        
-        // We will just bundle them into a special high-priority explicit section and let pass 2 handle grouping
-        if (!isset($raw['sections'])) $raw['sections'] = [];
-        $raw['sections'][] = [
-            'id' => 'preconfigured',
-            'fields' => $explicit
+    private static function callGoogleAI($apiKey, $model, $system, $user, $timeout) {
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . $apiKey;
+        $data = [
+            'contents' => [
+                ['role' => 'user', 'parts' => [['text' => $system . "\n\nUser Task: " . $user]]]
+            ],
+            'generationConfig' => [
+                'temperature' => 0.1,
+                'maxOutputTokens' => 4096,
+                'responseMimeType' => 'application/json'
+            ]
         ];
-        return $raw;
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $json = json_decode($response, true);
+        $text = $json['candidates'][0]['content']['parts'][0]['text'] ?? '';
+        
+        return json_decode($text, true);
     }
 
     /**
-     * Pass 2: Optimization
+     * Complete One-Pass Scan & Optimization
      */
-    private static function pass2LlmOptimization(array $rawSchema) {
-        $system = "You are a schema optimizer for a visual website builder editor.
-Given the raw JSON schema from pass 1, optimize it:
-1. Remove duplicate or empty fields.
-2. Merge related fields into logical sections.
-3. Every section MUST have: 'id' (snake_case), 'label' (Human Readable Title Case), 'fields' array.
-4. Every field MUST have: 'key', 'label', 'type', 'selector'. Add 'default' if known.
-5. Normalize field keys (e.g. heading_1 -> hero_title, paragraph_1 -> hero_description).
-6. IF a field is in 'preconfigured' section, NEVER delete it. Move it to the most logical section.
-7. Group fields by website sections: Navigation, Hero Section, About, Services, Work/Portfolio, Testimonials, Contact, Footer.
-8. For repeated structures (cards, items) use type: 'repeat' at section level.
-9. Field labels must be human-readable (e.g. 'Hero Headline', 'Email Address', 'Profile Photo').
-
-FINAL JSON FORMAT REQUIRED:
-{
-  \"sections\": [
-    {
-      \"id\": \"navigation\",
-      \"label\": \"Navigation\",
-      \"fields\": [
+    private static function runOnePassLlmScan(string $cleanedHtml, array $explicitFields) {
+        $system = "You are a professional website template parser. 
+        Analyze the following HTML and extract essential editable content sections (Navigation, Hero, About, Services, Portfolio, Contact, Footer).
+        
+        Strict Rules:
+        1. Identify sections and fields for a visual builder.
+        2. Field Types: text, textarea, image, link, color.
+        3. Use precise CSS selectors.
+        4. If a field exists in 'REQUIRED FIELDS' list, YOU MUST INCLUDE IT in the correct section.
+        5. Group logically into sections.
+        6. REPEATABLE sections (like services or cards) should mark their section as 'type': 'repeat'.
+        
+        REQUIRED FIELDS (Preconfigured via data-edit):
+        " . json_encode($explicitFields) . "
+        
+        Return pure JSON in this format:
         {
-          \"key\": \"nav_logo\",
-          \"label\": \"Logo Text\",
-          \"type\": \"text\",
-          \"selector\": \".logo\",
-          \"default\": \"Brand\"
-        }
-      ]
-    },
-    {
-      \"id\": \"hero\",
-      \"label\": \"Hero Section\",
-      \"fields\": [
-        {
-          \"key\": \"hero_title\",
-          \"label\": \"Hero Title\",
-          \"type\": \"text\",
-          \"selector\": \"h1\"
-        }
-      ]
-    }
-  ]
-}
+          \"sections\": [
+            {
+              \"id\": \"hero\",
+              \"label\": \"Hero Section\",
+                 \"type\": \"normal\",
+              \"fields\": [
+                { \"key\": \"hero_title\", \"label\": \"Headline\", \"type\": \"text\", \"selector\": \"h1\", \"default\": \"Hello World\" }
+              ]
+            }
+          ]
+        }";
 
-STRICT RULES: Return JSON only. No explanations. No markdown. No extra text. No comments. Only valid JSON.";
-        $user = "Optimize this raw schema:\n\n" . json_encode($rawSchema);
+        $user = "Process this HTML and merge/optimize with the required fields:\n\n" . $cleanedHtml;
         return self::callLLM($system, $user);
     }
 

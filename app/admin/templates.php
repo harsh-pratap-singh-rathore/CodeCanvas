@@ -95,6 +95,19 @@ try {
 $userName = $_SESSION['user_name'] ?? 'Admin User';
 $userInitials = strtoupper(substr($userName, 0, 2));
 
+function sanitizeTemplateName(string $name, string $slug, string $folderPath): string
+{
+    $looksCorrupted = str_contains($name, '/') || str_contains($name, '\\')
+        || preg_match('/\.(css|html?|js|php|zip)$/i', $name);
+
+    if (!$looksCorrupted) {
+        return $name;
+    }
+
+    $fallback = $slug ?: (basename(rtrim($folderPath, '/')) ?: $name);
+    return ucwords(str_replace(['-', '_'], ' ', $fallback));
+}
+
 function getTemplateThumbnail($template) {
     $folderPath = rtrim($template['folder_path'] ?? 'templates/developer', '/');
     $absPath = __DIR__ . '/../' . $folderPath;
@@ -427,13 +440,15 @@ function getTemplateThumbnail($template) {
                                 
                                 <div class="template-info-area">
                                     <div class="template-header">
-                                        <h3 class="template-title"><?= htmlspecialchars($template['name']) ?></h3>
+                                        <h3 class="template-title"><?= htmlspecialchars(sanitizeTemplateName($template['name'], $template['slug'] ?? '', $template['folder_path'] ?? '')) ?></h3>
                                     </div>
                                     
                                     <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                                        <span class="template-type-badge">
-                                            <?= htmlspecialchars(ucfirst($template['template_type'])) ?>
-                                        </span>
+                                        <?php if (!empty($template['template_type'])): ?>
+                                            <span class="template-type-badge">
+                                                <?= htmlspecialchars(ucfirst($template['template_type'])) ?>
+                                            </span>
+                                        <?php endif; ?>
                                         <?php 
                                             // Derive category from folder_path
                                             $parts = explode('/', trim($template['folder_path'], '/'));

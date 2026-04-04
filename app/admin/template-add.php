@@ -18,10 +18,11 @@ $userName = $_SESSION['user_name'] ?? 'Admin User';
 $userInitials = strtoupper(substr($userName, 0, 2));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $category = $_POST['category'] ?? 'normal';
+    $templateName  = trim($_POST['name'] ?? '');   // <-- safe variable, never overwritten
+    $name          = $templateName;                 // keep $name for legacy compat
+    $category      = $_POST['category'] ?? 'normal';
     $template_type = $_POST['template_type'] ?? 'portfolio';
-    $status = $_POST['status'] ?? 'active';
+    $status        = $_POST['status'] ?? 'active';
     
     // File Upload Handling
     if (empty($name)) {
@@ -44,13 +45,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // ── ZIP HANDLING ──
             $zip = new ZipArchive();
             if ($zip->open($_FILES['template_file']['tmp_name']) === TRUE) {
-                // Securely extract
+                // --- SMART HOISTING LOGIC ---
+                // Detect if all files are inside a single root folder
+                $rootFolderName = '';
+                $isSingleRoot = true;
+                $fileCount = 0;
+
+                for ($i = 0; $i < $zip->numFiles; $i++) {
+                    $zipEntry = $zip->getNameIndex($i);  // FIXED: was $name (bug!)
+                    if (str_contains($zipEntry, '__MACOSX')) continue;
+                    $fileCount++;
+
+                    $parts = explode('/', trim($zipEntry, '/'));
+                    if (empty($rootFolderName)) {
+                        $rootFolderName = $parts[0];
+                    } elseif ($rootFolderName !== $parts[0]) {
+                        $isSingleRoot = false;
+                        break;
+                    }
+                }
+                
+                // Only hoist if we have files and they are all in one folder
+                $prefix = ($isSingleRoot && $fileCount > 0 && !empty($rootFolderName)) ? $rootFolderName . '/' : '';
+
+                // Extract and flatten if necessary
                 for ($i = 0; $i < $zip->numFiles; $i++) {
                     $entryName = $zip->getNameIndex($i);
-                    // Basic traversal prevention & skip junk
                     if (str_contains($entryName, '..') || str_contains($entryName, '__MACOSX')) continue;
                     
-                    $fileDest = $targetDir . '/' . ltrim($entryName, '/\\');
+                    // Remove prefix if hoisting
+                    $relativeName = $entryName;
+                    if (!empty($prefix) && str_starts_with($entryName, $prefix)) {
+                        $relativeName = substr($entryName, strlen($prefix));
+                    }
+                    if (empty($relativeName)) continue;
+
+                    $fileDest = $targetDir . '/' . ltrim($relativeName, '/\\');
+                    
                     if (str_ends_with($entryName, '/')) {
                         if (!is_dir($fileDest)) mkdir($fileDest, 0755, true);
                     } else {
@@ -82,13 +113,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             TemplateScanner::generateSchema($targetDir, $scanResult);
 
             // Save to DB
-            $folder_path = "templates/" . $category . "/" . $slug; 
+            $folder_path = "templates/" . $category . "/" . $slug;
             try {
                 $stmt = $pdo->prepare("
-                    INSERT INTO templates (name, slug, template_type, folder_path, status) 
+                    INSERT INTO templates (name, slug, template_type, folder_path, status)
                     VALUES (?, ?, ?, ?, ?)
                 ");
-                $stmt->execute([$name, $slug, $template_type, $folder_path, $status]);
+                $stmt->execute([$templateName, $slug, $template_type, $folder_path, $status]); // use $templateName — safe
                 
                 // Detailed result message
                 $keys = [];
@@ -412,12 +443,10 @@ exit;
             overlay.style.display = 'flex';
             
             const stages = [
-                { pct: 10, msg: 'Extracting files...' },
-                { pct: 30, msg: 'Cleaning HTML DOM...' },
-                { pct: 50, msg: 'DeepSeek AI Pass 1: Structure...' },
-                { pct: 80, msg: 'DeepSeek AI Pass 2: Optimization...' },
-                { pct: 90, msg: 'Validating Schema...' },
-                { pct: 98, msg: 'Finalizing database...' }
+                { pct: 20, msg: 'Extracting & Sanitizing...' },
+                { pct: 45, msg: 'AI-Powered Structural Analysis...' },
+                { pct: 85, msg: 'Generating Smart Schema...' },
+                { pct: 98, msg: 'Finalizing Database...' }
             ];
             let idx = 0;
             function setProgress(pct, msg) {
@@ -425,17 +454,17 @@ exit;
                 pctEl.textContent = Math.round(pct) + '%';
                 if (msg) stepEl.textContent = msg;
             }
-            setProgress(0, 'Preparing upload...');
+            setProgress(0, 'Starting upload...');
             
-            setInterval(() => {
+            const timer = setInterval(() => {
                 if (idx < stages.length) { 
                     const s = stages[idx++]; 
                     setProgress(s.pct, s.msg); 
+                } else {
+                    clearInterval(timer);
                 }
-            }, 2500); // Step every 2.5 seconds to align with usual LLM wait times
+            }, 1800);
         });
     </script>
 </body>
 </html>
-
-
