@@ -284,9 +284,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 fill.style.width  = pct + '%';
                 pctEl.textContent = Math.round(pct) + '%';
                 if (msg) stepEl.textContent = msg;
-                if (pct > 25 && pct % 10 === 0) addTag(sampleTags[Math.floor(Math.random()*sampleTags.length)]);
             }
             setProgress(0, 'Starting upload...');
+
+            let tagCount = 0;
+            const tagTimer = setInterval(() => {
+                if (tagCount < 10) {
+                    addTag(sampleTags[Math.floor(Math.random() * sampleTags.length)]);
+                    tagCount++;
+                }
+            }, 600);
             
             const timer = setInterval(() => {
                 if (idx < stages.length) { 
@@ -294,6 +301,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     setProgress(s.pct, s.msg); 
                 } else {
                     clearInterval(timer);
+                    clearInterval(tagTimer);
                 }
             }, 1800);
         });

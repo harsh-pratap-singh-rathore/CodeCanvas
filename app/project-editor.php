@@ -35,8 +35,8 @@ try {
 $folderPath = rtrim($project['folder_path'] ?? 'templates/developer', '/');
 $absFolder  = APP_ROOT . '/' . $folderPath;
 
-$entryPoint = 'code.html';
-foreach (['code.html', 'index.html', 'index.htm'] as $candidate) {
+$entryPoint = 'index.html';
+foreach (['index.html', 'code.html', 'index.htm'] as $candidate) {
     if (file_exists($absFolder . '/' . $candidate)) {
         $entryPoint = $candidate;
         break;
@@ -44,7 +44,7 @@ foreach (['code.html', 'index.html', 'index.htm'] as $candidate) {
 }
 // Check one level deep (e.g. modern-dev-portfolio/portfolio-dev/index.html)
 if (!file_exists($absFolder . '/' . $entryPoint)) {
-    $nested = glob($absFolder . '/*/{code.html,index.html,index.htm}', GLOB_BRACE);
+    $nested = glob($absFolder . '/*/{index.html,code.html,index.htm}', GLOB_BRACE);
     if (!empty($nested)) {
         $entryPoint = str_replace($absFolder . '/', '', $nested[0]);
     }
@@ -60,8 +60,8 @@ $virtualSchema = null;
 
 // Saved user data
 $savedData = [];
-if (!empty($project['user_data'])) {
-    $savedData = json_decode($project['user_data'], true) ?? [];
+if (!empty($project['content_json'])) {
+    $savedData = json_decode($project['content_json'], true) ?? [];
 }
 ?>
 <!DOCTYPE html>

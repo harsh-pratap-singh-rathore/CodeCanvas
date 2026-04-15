@@ -61,7 +61,7 @@ try {
     if ($brandName)   $sql .= ", brand_name = :brand";
     if ($description) $sql .= ", description = :desc";
     if ($skills)      $sql .= ", skills = :skills";
-    if ($contact)     $sql .= ", contact = :contact";
+    if ($contact)     $sql .= ", contact_email = :contact";
 
     $sql .= " WHERE id = :id";
 

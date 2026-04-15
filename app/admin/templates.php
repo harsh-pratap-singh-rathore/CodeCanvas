@@ -114,7 +114,7 @@ function getTemplateThumbnail($template) {
     
     // Dynamically find entry point
     $entryPoint = 'index.html';
-    $candidates = ['code.html', 'index.html', 'index.htm'];
+    $candidates = ['index.html', 'code.html', 'index.htm'];
     
     foreach ($candidates as $c) {
         if (file_exists($absPath . '/' . $c)) {
@@ -125,7 +125,7 @@ function getTemplateThumbnail($template) {
     
     // Check 1 level deep
     if ($entryPoint === 'index.html' && !file_exists($absPath . '/index.html')) {
-        $nested = glob($absPath . '/*/{code.html,index.html,index.htm}', GLOB_BRACE);
+        $nested = glob($absPath . '/*/{index.html,code.html,index.htm}', GLOB_BRACE);
         if (!empty($nested)) $entryPoint = str_replace($absPath . '/', '', $nested[0]);
     }
     

@@ -24,7 +24,8 @@ class MailService
     private static function getClient(): Client
     {
         if (self::$client === null) {
-            self::$client = Resend::client(RESEND_API_KEY);
+            // Using global namespace to ensure the Resend entry-point class is found
+            self::$client = \Resend::client(RESEND_API_KEY);
         }
         return self::$client;
     }

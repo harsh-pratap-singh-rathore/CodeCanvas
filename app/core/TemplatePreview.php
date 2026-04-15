@@ -19,8 +19,8 @@ class TemplatePreview {
             $basePath = rtrim(APP_ROOT, '/\\') . '/' . trim($normalizedFolder, '/');
             $htmlFile = null;
             
-            // Candidates in order of priority
-            $candidates = ['code.html', 'index.html', 'index.htm', 'home.html', 'main.html', 'landing.html', 'shop.html'];
+            // Candidates in order of priority (index.html first)
+            $candidates = ['index.html', 'code.html', 'index.htm', 'home.html', 'main.html', 'landing.html', 'shop.html'];
             
             // 1. Check root (Case-insensitive check for common servers)
             $filesInDir = @scandir($basePath);

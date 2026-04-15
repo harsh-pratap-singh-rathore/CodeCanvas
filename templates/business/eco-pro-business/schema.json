@@ -1,0 +1,334 @@
+{
+    "name": "EcoPro Business",
+    "category": "business",
+    "description": "Premium, eco-friendly business template with emerald accents and light professional theme.",
+    "sections": [
+        {
+            "id": "navigation",
+            "label": "Header & Nav",
+            "fields": [
+                {
+                    "key": "nav_logo_text",
+                    "type": "text",
+                    "label": "Logo Title",
+                    "selector": "[data-edit=\"nav_logo_text\"]",
+                    "default": "EcoPro"
+                },
+                {
+                    "key": "nav_logo_link",
+                    "type": "link",
+                    "label": "Logo Link",
+                    "selector": "[data-edit-link=\"nav_logo_link\"]",
+                    "default": "#"
+                },
+                {
+                    "key": "nav_link_1",
+                    "type": "text",
+                    "label": "Nav 1 Label",
+                    "selector": "[data-edit=\"nav_link_1\"]",
+                    "default": "Home"
+                },
+                {
+                    "key": "nav_link_href_1",
+                    "type": "link",
+                    "label": "Nav 1 Href",
+                    "selector": "[data-edit-link=\"nav_link_href_1\"]",
+                    "default": "#home"
+                },
+                {
+                    "key": "nav_link_2",
+                    "type": "text",
+                    "label": "Nav 2 Label",
+                    "selector": "[data-edit=\"nav_link_2\"]",
+                    "default": "Services"
+                },
+                {
+                    "key": "nav_link_href_2",
+                    "type": "link",
+                    "label": "Nav 2 Href",
+                    "selector": "[data-edit-link=\"nav_link_href_2\"]",
+                    "default": "#services"
+                },
+                {
+                    "key": "nav_link_3",
+                    "type": "text",
+                    "label": "Nav 3 Label",
+                    "selector": "[data-edit=\"nav_link_3\"]",
+                    "default": "About"
+                },
+                {
+                    "key": "nav_link_href_3",
+                    "type": "link",
+                    "label": "Nav 3 Href",
+                    "selector": "[data-edit-link=\"nav_link_href_3\"]",
+                    "default": "#about"
+                },
+                {
+                    "key": "nav_link_4",
+                    "type": "text",
+                    "label": "Nav 4 Label",
+                    "selector": "[data-edit=\"nav_link_4\"]",
+                    "default": "Contact"
+                },
+                {
+                    "key": "nav_link_href_4",
+                    "type": "link",
+                    "label": "Nav 4 Href",
+                    "selector": "[data-edit-link=\"nav_link_href_4\"]",
+                    "default": "#contact"
+                },
+                {
+                    "key": "nav_cta_text",
+                    "type": "text",
+                    "label": "CTA Button Text",
+                    "selector": "[data-edit=\"nav_cta_text\"]",
+                    "default": "Get Started"
+                },
+                {
+                    "key": "nav_cta_link",
+                    "type": "link",
+                    "label": "CTA Button Link",
+                    "selector": "[data-edit-link=\"nav_cta_link\"]",
+                    "default": "#contact"
+                }
+            ]
+        },
+        {
+            "id": "hero",
+            "label": "Hero Section",
+            "fields": [
+                {
+                    "key": "hero_tag",
+                    "type": "text",
+                    "label": "Hero Tagline",
+                    "selector": "[data-edit=\"hero_tag\"]",
+                    "default": "Sustainable Future"
+                },
+                {
+                    "key": "hero_title",
+                    "type": "text",
+                    "label": "Main Title",
+                    "selector": "[data-edit=\"hero_title\"]",
+                    "default": "Innovating for a Greener Tomorrow."
+                },
+                {
+                    "key": "hero_description",
+                    "type": "textarea",
+                    "label": "Description",
+                    "selector": "[data-edit=\"hero_description\"]",
+                    "default": "We help modern enterprises transition to sustainable, high-efficiency business models without compromising on growth or profitability."
+                },
+                {
+                    "key": "hero_image",
+                    "type": "image",
+                    "label": "Hero Image",
+                    "selector": "[data-edit-img=\"hero_image\"]",
+                    "default": "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200"
+                },
+                {
+                    "key": "hero_btn_1_text",
+                    "type": "text",
+                    "label": "Button Text",
+                    "selector": "[data-edit=\"hero_btn_1_text\"]",
+                    "default": "Explored Services"
+                },
+                {
+                    "key": "hero_btn_1_link",
+                    "type": "link",
+                    "label": "Button Link",
+                    "selector": "[data-edit-link=\"hero_btn_1_link\"]",
+                    "default": "#services"
+                }
+            ]
+        },
+        {
+            "id": "services",
+            "label": "Services",
+            "fields": [
+                {
+                    "key": "services_title",
+                    "type": "text",
+                    "label": "Services Heading",
+                    "selector": "[data-edit=\"services_title\"]",
+                    "default": "Professional Services"
+                },
+                {
+                    "key": "services_description",
+                    "type": "textarea",
+                    "label": "Services Summary",
+                    "selector": "[data-edit=\"services_description\"]",
+                    "default": "Tailored solutions designed to elevate your business while reducing your environmental footprint."
+                },
+                {
+                    "key": "services",
+                    "type": "array",
+                    "label": "Service Items",
+                    "selector": "[data-edit-repeat=\"services\"]",
+                    "fields": [
+                        {
+                            "key": "service_name",
+                            "type": "text",
+                            "label": "Service Name",
+                            "selector": "[data-edit=\"service_name\"]"
+                        },
+                        {
+                            "key": "service_desc",
+                            "type": "textarea",
+                            "label": "Service Info",
+                            "selector": "[data-edit=\"service_desc\"]"
+                        }
+                    ],
+                    "default": [
+                        {
+                            "service_name": "Green Architecture",
+                            "service_desc": "Designing energy-efficient workspaces that inspire productivity and minimize waste."
+                        },
+                        {
+                            "service_name": "Sustainable Growth",
+                            "service_desc": "Strategic planning that balances long-term profitability with ecological responsibility."
+                        },
+                        {
+                            "service_name": "Energy Optimization",
+                            "service_desc": "Smart systems integration to drastically reduce your operational carbon footprint."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "stats",
+            "label": "Company Stats",
+            "fields": [
+                {
+                    "key": "stats",
+                    "type": "array",
+                    "label": "Counter Items",
+                    "selector": "[data-edit-repeat=\"stats\"]",
+                    "fields": [
+                        {
+                            "key": "stat_value",
+                            "type": "text",
+                            "label": "Value (e.g. 100+)",
+                            "selector": "[data-edit=\"stat_value\"]"
+                        },
+                        {
+                            "key": "stat_label",
+                            "type": "text",
+                            "label": "Label",
+                            "selector": "[data-edit=\"stat_label\"]"
+                        }
+                    ],
+                    "default": [
+                        { "stat_value": "150+", "stat_label": "Global Clients" },
+                        { "stat_value": "42%", "stat_label": "Energy Saved" },
+                        { "stat_value": "12k", "stat_label": "CO2 Reduced" },
+                        { "stat_value": "24/7", "stat_label": "Active Support" }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "about",
+            "label": "About Section",
+            "fields": [
+                {
+                    "key": "about_title",
+                    "type": "text",
+                    "label": "Heading",
+                    "selector": "[data-edit=\"about_title\"]",
+                    "default": "Lead by Purpose, Driven by Data."
+                },
+                {
+                    "key": "about_description",
+                    "type": "textarea",
+                    "label": "Description",
+                    "selector": "[data-edit=\"about_description\"]",
+                    "default": "Founded in 2012, EcoPro has been at the forefront of the sustainable business revolution. We believe that the businesses of the future are those that respect the planet today. Our team of expert consultants combines deep industry knowledge with cutting-edge green technology."
+                },
+                {
+                    "key": "about_image",
+                    "type": "image",
+                    "label": "About Image",
+                    "selector": "[data-edit-img=\"about_image\"]",
+                    "default": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800"
+                },
+                {
+                    "key": "about_badge_value",
+                    "type": "text",
+                    "label": "Badge Value",
+                    "selector": "[data-edit=\"about_badge_value\"]",
+                    "default": "12+"
+                },
+                {
+                    "key": "about_badge_label",
+                    "type": "text",
+                    "label": "Badge Label",
+                    "selector": "[data-edit=\"about_badge_label\"]",
+                    "default": "Years Industry Experience"
+                },
+                {
+                    "key": "about_cta",
+                    "type": "text",
+                    "label": "Link Text",
+                    "selector": "[data-edit=\"about_cta\"]",
+                    "default": "Learn More About Us"
+                },
+                {
+                    "key": "about_cta_link",
+                    "type": "link",
+                    "label": "Link Href",
+                    "selector": "[data-edit-link=\"about_cta_link\"]",
+                    "default": "#contact"
+                }
+            ]
+        },
+        {
+            "id": "footer",
+            "label": "Footer & Contact",
+            "fields": [
+                {
+                    "key": "footer_logo",
+                    "type": "text",
+                    "label": "Footer Logo",
+                    "selector": "[data-edit=\"footer_logo\"]",
+                    "default": "EcoPro."
+                },
+                {
+                    "key": "footer_description",
+                    "type": "textarea",
+                    "label": "Footer Desc",
+                    "selector": "[data-edit=\"footer_description\"]",
+                    "default": "Leading the way in sustainable business practices globally. Join us in building a better world."
+                },
+                {
+                    "key": "contact_email",
+                    "type": "text",
+                    "label": "Email",
+                    "selector": "[data-edit=\"contact_email\"]",
+                    "default": "hello@ecopro.biz"
+                },
+                {
+                    "key": "contact_phone",
+                    "type": "text",
+                    "label": "Phone",
+                    "selector": "[data-edit=\"contact_phone\"]",
+                    "default": "+1 (555) 123-4567"
+                },
+                {
+                    "key": "contact_address",
+                    "type": "text",
+                    "label": "Address",
+                    "selector": "[data-edit=\"contact_address\"]",
+                    "default": "77 Emerald Ave, NY"
+                },
+                {
+                    "key": "copyright_text",
+                    "type": "text",
+                    "label": "Copyright",
+                    "selector": "[data-edit=\"copyright_text\"]",
+                    "default": "© 2026 EcoPro Business Solutions. All rights reserved."
+                }
+            ]
+        }
+    ]
+}

@@ -69,8 +69,9 @@ async function loadSchema() {
                 const label = sec.label && sec.label.trim() ? sec.label.trim() : sectionLabel(sec.id);
                 if (sec.fields && Array.isArray(sec.fields)) {
                     sec.fields.forEach(f => {
-                        f.section = label;
-                        extractedFields.push(f);
+                        const nf = normalizeField(f); // Ensure every field has an .id
+                        nf.section = label;
+                        extractedFields.push(nf);
                     });
                 }
             });
@@ -100,17 +101,22 @@ async function loadSchema() {
         const localSaved = localStorage.getItem(localKey);
 
         const allFields = schema.fields || [];
+        userData = buildDefaultData(allFields);
+
         if (SAVED_DATA && Object.keys(SAVED_DATA).length > 0) {
-            userData = { ...buildDefaultData(allFields), ...SAVED_DATA };
-        } else if (localSaved) {
+            userData = { ...userData, ...SAVED_DATA };
+        }
+        
+        if (localSaved) {
             try {
-                userData = { ...buildDefaultData(allFields), ...JSON.parse(localSaved) };
-                showToast('Draft restored from local storage', 'info');
+                const parsedLocal = JSON.parse(localSaved);
+                userData = { ...userData, ...parsedLocal };
+                if (!SAVED_DATA || Object.keys(SAVED_DATA).length === 0) {
+                    showToast('Draft restored from local storage', 'info');
+                }
             } catch (e) {
-                userData = buildDefaultData(allFields);
+                // ignore invalid json structure
             }
-        } else {
-            userData = buildDefaultData(allFields);
         }
 
         renderForm(allFields);
@@ -956,9 +962,11 @@ function sendToPreview(message) {
 }
 
 // ── Schedule Debounced Update ──────────────────────────────
-// ── Schedule Debounced Update ────────────────────────────────────
 function scheduleUpdate(field, value) {
     scheduleAutoSave();
+    try {
+        localStorage.setItem(`cc_draft_${PROJECT_ID}`, JSON.stringify(userData));
+    } catch(e){}
     clearTimeout(updateTimer);
     setUpdateStatus('typing...');
     updateTimer = setTimeout(() => {
@@ -1099,7 +1107,7 @@ async function applyAllToPreview() {
     }
 
     schema.fields.forEach(field => {
-        const value = userData[field.id];
+        const value = userData[field.id]; // Works now because fields are normalized
         if (value === undefined || value === null) return;
 
         switch (field.type) {
@@ -1193,7 +1201,7 @@ function saveDraft() {
     try {
         const localKey = `cc_draft_${PROJECT_ID}`;
         localStorage.setItem(localKey, JSON.stringify(userData));
-        showToast('Draft saved', 'success');
+        saveToServer(); // Also push to server
     } catch (e) {
         showToast('Failed to save draft: ' + e.message, 'error');
     }
@@ -1275,7 +1283,7 @@ function scheduleAutoSave() {
                     saveStatusEl.textContent = 'Auto-save failed';
                 });
         }
-    }, 30000); // 30 seconds
+    }, 2000); // 2 seconds
 }
 
 // ── Reset ──────────────────────────────────────────────────

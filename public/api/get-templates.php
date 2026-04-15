@@ -41,25 +41,25 @@ function findEntryFile(string $folderPath): ?string
 {
     $root = APP_ROOT . '/' . rtrim($folderPath, '/');
 
-    // 1. Check code.html directly in the folder
-    if (file_exists($root . '/code.html')) {
-        return rtrim($folderPath, '/') . '/code.html';
-    }
-
-    // 2. Check index.html directly in the folder
+    // 1. Check index.html directly in the folder
     if (file_exists($root . '/index.html')) {
         return rtrim($folderPath, '/') . '/index.html';
+    }
+
+    // 2. Check code.html directly in the folder
+    if (file_exists($root . '/code.html')) {
+        return rtrim($folderPath, '/') . '/code.html';
     }
 
     // 3. Recurse one level into subdirectories to find index.html or code.html
     foreach (glob($root . '/*', GLOB_ONLYDIR) as $subDir) {
         $subRelative = rtrim($folderPath, '/') . '/' . basename($subDir);
 
-        if (file_exists($subDir . '/code.html')) {
-            return $subRelative . '/code.html';
-        }
         if (file_exists($subDir . '/index.html')) {
             return $subRelative . '/index.html';
+        }
+        if (file_exists($subDir . '/code.html')) {
+            return $subRelative . '/code.html';
         }
 
         // 4. One more level deep (e.g. templates/developer/modern-dev-portfolio/portfolio-dev/index.html)
@@ -120,11 +120,11 @@ try {
                 $subDirs = glob($baseDir . '*', GLOB_ONLYDIR);
                 foreach ((array)$subDirs as $subDir) {
                     $htmlFile = null;
-                    foreach (['code.html', 'index.html', 'index.htm'] as $c) {
+                    foreach (['index.html', 'code.html', 'index.htm'] as $c) {
                         if (file_exists($subDir . '/' . $c)) { $htmlFile = $c; break; }
                     }
                     if (!$htmlFile) {
-                        $nested = glob($subDir . '/*/{code.html,index.html,index.htm}', GLOB_BRACE);
+                        $nested = glob($subDir . '/*/{index.html,code.html,index.htm}', GLOB_BRACE);
                         if (!empty($nested)) $htmlFile = str_replace($subDir . '/', '', $nested[0]);
                     }
 
