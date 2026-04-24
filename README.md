@@ -1,69 +1,92 @@
 <div align="center">
-    <br>
-    <h1>CodeCanvas v2</h1>
-    <p><b>Intelligent Design Engine. Zero cloud costs. 100% Local AI Frontend Generation.</b></p>
-    <br>
+
+<img src="https://raw.githubusercontent.com/harsh-pratap-singh-rathore/CodeCanvas/main/public/assets/images/logo.png" alt="CodeCanvas Logo" width="120" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 20px;" />
+
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Outfit&weight=800&size=48&duration=4000&pause=1000&color=000000&center=true&vCenter=true&width=800&height=80&lines=CodeCanvas+V2;Intelligent+Design+Engine;Zero+Cloud+Costs;Local+AI+Generation" alt="Typing SVG" /></a>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama" />
+  <img src="https://img.shields.io/badge/PHP_8.2-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+  <img src="https://img.shields.io/badge/Vanilla_CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS" />
+</p>
+
 </div>
 
-CodeCanvas v2 is an open-source, mathematically structured web application that turns plain text prompts into completely unique, beautifully designed, and structurally sound portfolio websites. It operates completely **locally**, leveraging open-source large language models through Ollama instead of relying on expensive cloud proxies.
-
-Forget templates. Forget dragging blocks. Type your aesthetic, and let the intelligence engine build your frontend architecture in 60 seconds.
-
-## ✨ Features (v2 Core)
-
-- **The Unbound Engine:** CodeCanvas v2 uses a strictly controlled prompt architecture that enforces user-intent (colors, typography, layout) while introducing controlled creative variation to guarantee that **no two outputs are structurally identical**.
-- **Bring Your Own Intelligence:** Fully decoupled from restrictive commercial APIs. Plugs directly into your local **Ollama** server.
-- **Auto-Responsive Layouts:** Employs advanced CSS grid and flexbox logic generated dynamically by the LLM. 
-- **Premium Aesthetics by Default:** Built heavily around polished, modern web principles. Whether generating Brutalism, Apple Minimal, or Neon Glassmorphism, CodeCanvas respects padding, contrast, and layout weight.
-- **100% Live-Editable:** A proprietary HTML parsing system that preserves `data-edit` attributes, meaning every pixel of generated code is instantly editable in the integrated graphical builder without touching the raw HTML.
-- **Zero Vender Lock-in:** 100% ownership. Export your static assets and host them anywhere for free.
-
-## ⚙️ Tech Stack
-
-- **Backend:** PHP 8.2 (Secure PDO, Strict JSON Routing)
-- **Database:** MySQL
-- **Frontend / Dashboard:** Vanilla JavaScript, Glassmorphic CSS Engine
-- **Generative Intelligence:** Any code-optimized open source model (Default: Gemma 4 / DeepSeek-Coder-V2) via Groq and Ollama.
-
 ---
 
-## 🚀 How to Run Locally
-
-CodeCanvas v2 is designed to run locally on your own machine. 
-
-### Step 1: Environment Setup
-1. Download identifying web-server software like **XAMPP**, **MAMP**, or **Herd**.
-2. Clone this repository into your local webroot directory (e.g., `C:\xampp\htdocs\CodeCanvas`).
-3. Start the **Apache** and **MySQL** server processes.
-
-### Step 2: Database Initialization
-1. Navigate to your MySQL client (like phpMyAdmin at `http://localhost/phpmyadmin`).
-2. Create a new database named `v2db`.
-3. Import the SQL file located at `storage/docs/database/AI_BUILDER_SCHEMA.sql` to construct the tables.
-4. Open the `config/database.php` script and verify identical connection parameters.
-
-### Step 3: Local AI Configuration
-CodeCanvas generates massive architectural strings on the fly. To prevent network costs, it uses **Ollama**.
-1. Install [Ollama](https://ollama.com) on your machine.
-2. Pull a highly capable code model in your terminal. We highly recommend Gemma or DeepSeek:
-   ```bash
-   ollama run gemma:7b
-   ```
-3. In `api/generate.php`, around line 90, modify the `model` parameter inside `ollamaRequest()` to exactly match the model you just pulled:
-   ```php
-   'model' => 'gemma:7b',
-   ```
-
-*(Note: The first stage enhancement pipeline uses Groq for instant-JSON processing. Ensure `GROQ_API_KEY` is present in your `.env` configuration file to process the structural blueprints).*
-
-### Step 4: Launch
-Navigate to `http://localhost/CodeCanvas/public/index.html` in your browser. 
-Sign up via standard email or Google OAuth, load the dashboard, input a prompt, and watch your intelligence engine build.
-
----
+<br>
 
 <div align="center">
-    <i>Built with extreme attention to detail. Open Source under the MIT License.</i>
+  <h3>Forget templates. Type your aesthetic, and let the intelligence engine build your frontend architecture natively on your GPU.</h3>
+</div>
+
+<br>
+
+## ✨ Core Features
+
+| 🧠 Unbound Intelligence | 🎨 Premium Aesthetics | ⚡ Zero Vender Lock-in |
+| :---: | :---: | :---: |
+| Generates absolutely unique front-end schemas. No two layouts are the same, bypassing repetitive templates. | Integrates deep mathematical padding, contrast rules, and modern glassmorphic/brutalist design systems. | **100% Free & Open Source.** You own every line of code generated to deploy wherever you wish. |
+
+<br>
+
+## 🎮 How Local Execution Works
+
+CodeCanvas V2 has been aggressively re-architected away from API cloud providers. To protect your data and reduce API generation costs to absolute zero, **CodeCanvas uses your own hardware**.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/harsh-pratap-singh-rathore/CodeCanvas/main/public/assets/images/logo.png" width="80" style="margin-right: 20px; opacity: 0.5;" />
+  <img src="https://img.shields.io/badge/DeepSeek_Coder-0a0a0a?style=for-the-badge&logo=deepseek&logoColor=white" alt="Deepseek" />
+  <img src="https://img.shields.io/badge/Meta_Llama_3-0467DF?style=for-the-badge&logo=meta&logoColor=white" alt="Llama 3" />
+  <img src="https://img.shields.io/badge/Google_Gemma-EA4335?style=for-the-badge&logo=google&logoColor=white" alt="Gemma" />
+</div>
+
+<br>
+
+---
+
+## 🚀 Extreme Local Setup
+
+CodeCanvas v2 is incredibly simple to boot locally on Windows or Mac:
+
+### 1️⃣ Prepare Environment
+Download and run **XAMPP**, **MAMP**, or **Herd**. Clone this repository into your `/htdocs` or public root directory:
+```bash
+git clone https://github.com/harsh-pratap-singh-rathore/CodeCanvas.git
+```
+Start both the **Apache Web Server** and **MySQL Server**.
+
+### 2️⃣ Map The Database
+Navigate to `http://localhost/phpmyadmin`. 
+1. Create a schema titled `v2db`.
+2. Import the local file: `storage/docs/database/AI_BUILDER_SCHEMA.sql`.
+3. Check `config/database.php` in your codebase to ensure credentials align.
+
+### 3️⃣ Start The Engine (Ollama)
+Download and install [Ollama](https://ollama.com). Open your terminal to pull the open-source foundational LLM. We heavily recommend the brilliant Gemma 4 (31b) or DeepSeek architectures for advanced CSS structuring.
+```bash
+ollama run gemma:7b
+```
+Open up `api/generate.php` in your code editor. Locate line 90 inside the `$ollamaRequest` function and switch the model mapping variable to match your terminal:
+
+```php
+'model' => 'gemma:7b',
+```
+
+### 4️⃣ Construct
+Visit `http://localhost/CodeCanvas/public/index.html`. 
+Sign up via a local account or the Google OAuth pipeline, input a prompt like *"A brutalist developer portfolio with extreme padding and neon borders"*, and watch the engine compile.
+
+---
+
+<br>
+
+<div align="center">
+    <a href="https://github.com/harsh-pratap-singh-rathore/CodeCanvas/stargazers"><img src="https://img.shields.io/github/stars/harsh-pratap-singh-rathore/CodeCanvas?style=social" alt="Github Stars" /></a>
+    <br><br>
+    <i>Architected with extreme logic. Released under the MIT License.</i>
     <br>
-    &copy; 2026 CodeCanvas Team.
+    <b>&copy; 2026 CodeCanvas Team</b>
 </div>
