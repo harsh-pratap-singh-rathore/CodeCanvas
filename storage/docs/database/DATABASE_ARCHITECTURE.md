@@ -284,7 +284,7 @@ mysqldump -u root codecanvas > backup_$(date +%Y%m%d).sql
 
 ---
 
-**Database Version:** 1.0
+**Database Version:** 2.0
 **Last Updated:** 2026-02-17
 **Engine:** InnoDB
 **Charset:** UTF8MB4
