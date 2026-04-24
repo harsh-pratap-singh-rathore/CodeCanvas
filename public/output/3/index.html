@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #333333;
+            --accent-color: #FF9900;
+            --background-color: #FFFFFF;
+            --text-color: #333333;
+            --font-family: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--background-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,153,0,0.1) 0%, rgba(51,51,51,0.1) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #e68a00;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .project-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-platforms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .platform {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="portfolio-root">
+        <nav>
+            <div class="container nav-container">
+                <div class="brand" data-edit="navbar.brand">Freelance Software Engineer</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="container">
+                <h1 data-edit="hero.name">Freelance Software Engineer</h1>
+                <h2 data-edit="hero.title">Expert Software Solutions</h2>
+                <p data-edit="hero.subtitle">Delivering high-quality software solutions with a passion for innovation and excellence</p>
+                <a href="#projects" class="cta-button" data-edit="hero.cta">Explore My Services</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2 class="section-heading" data-edit="about.heading">About Me</h2>
+                <div class="about-content">
+                    <p data-edit="about.description">As a freelance software engineer with a strong background in computer science and a passion for innovative technologies, I specialize in developing scalable, efficient, and reliable software solutions. With a solid foundation in programming languages, databases, and frameworks, I have a proven track record of delivering high-quality projects on time and on budget. My expertise includes software development, technical consulting, and project management, with a focus on creating tailored solutions that meet the unique needs of each client. I am committed to staying up-to-date with the latest technologies and trends, and I am always looking for new challenges and opportunities to grow and improve.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-heading" data-edit="projects.heading">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 data-edit="projects.0.title">Project 1: E-commerce Platform</h3>
+                        <p data-edit="projects.0.description">Developed a scalable e-commerce platform using React, Node.js, and MongoDB, featuring a user-friendly interface, secure payment processing, and real-time inventory management. The project involved designing and implementing a robust database schema, creating a responsive and accessible user interface, and integrating third-party APIs for payment processing and shipping integration.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3 data-edit="projects.1.title">Project 2: Mobile App</h3>
+                        <p data-edit="projects.1.description">Designed and developed a mobile app for tracking personal fitness goals, using Java, Android Studio, and Firebase. The app features a user-friendly interface, customizable workout plans, and integration with wearable devices and health trackers. The project involved designing and implementing a robust database schema, creating a responsive and accessible user interface, and integrating third-party APIs for data analytics and social sharing.</p>
+                        <div class="project-tags">
+                            <span class="tag">Java</span>
+                            <span class="tag">Android Studio</span>
+                            <span class="tag">Firebase</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <h3 data-edit="projects.2.title">Project 3: Web Application</h3>
+                        <p data-edit="projects.2.description">Developed a web application for managing and tracking employee data, using Python, Django, and PostgreSQL. The app features a user-friendly interface, secure authentication and authorization, and real-time reporting and analytics. The project involved designing and implementing a robust database schema, creating a responsive and accessible user interface, and integrating third-party APIs for data analytics and social sharing.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Django</span>
+                            <span class="tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-heading" data-edit="skills.heading">My Skills</h2>
+                <div class="skills-container">
+                    <span class="skill" data-edit="skills.0">JavaScript</span>
+                    <span class="skill" data-edit="skills.1">React</span>
+                    <span class="skill" data-edit="skills.2">Node.js</span>
+                    <span class="skill" data-edit="skills.3">Python</span>
+                    <span class="skill" data-edit="skills.4">Django</span>
+                    <span class="skill" data-edit="skills.5">MongoDB</span>
+                    <span class="skill" data-edit="skills.6">PostgreSQL</span>
+                    <span class="skill" data-edit="skills.7">HTML5</span>
+                    <span class="skill" data-edit="skills.8">CSS3</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-heading" data-edit="contact.heading">Get in Touch</h2>
+                <div class="contact-content">
+                    <p data-edit="contact.description">If you have any questions, comments, or would like to discuss a project, please don't hesitate to contact me. You can reach me through my email address, phone number, or social media profiles.</p>
+                    <div class="contact-platforms">
+                        <span class="platform">Email</span>
+                        <span class="platform">Phone</span>
+                        <span class="platform">LinkedIn</span>
+                        <span class="platform">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p data-edit="footer.text">Copyright 2024 Freelance Software Engineer. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

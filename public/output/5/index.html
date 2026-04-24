@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Rathore - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #000000;
+            color: #FFD700;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #000000;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333333;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            font-weight: 400;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #333333;
+            color: #FFD700;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #FFD700;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #FFD700;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cccccc;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: #111111;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #333333;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .project-card p {
+            margin-bottom: 1.5rem;
+            color: #cccccc;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: #333333;
+            color: #FFD700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            background-color: #333333;
+            color: #FFD700;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            margin-bottom: 2rem;
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333333;
+            color: #cccccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 0;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="portfolio-root">
+        <!-- Navigation -->
+        <nav>
+            <div class="container nav-container">
+                <a href="#" class="brand" data-edit="navbar.brand">Harsh Rathore</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 data-edit="hero.name">Harsh Rathore</h1>
+                <h2 data-edit="hero.title">Android Developer</h2>
+                <p data-edit="hero.subtitle">BCA Student with a passion for Android development</p>
+                <a href="#contact" class="cta-button" data-edit="hero.cta">Get in Touch</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2 class="section-heading" data-edit="about.heading">Introduction</h2>
+                <div class="about-content">
+                    <p data-edit="about.description">Harsh Rathore is a BCA student with a strong passion for Android development. He has a solid foundation in programming languages such as Java and Kotlin, and is always looking to learn and improve his skills. With a keen eye for design and a love for technology, Harsh is dedicated to creating innovative and user-friendly applications that make a positive impact on people's lives. He is a team player, always willing to collaborate and share his knowledge with others, and is excited to take on new challenges and opportunities in the field of Android development.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-heading" data-edit="projects.heading">Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 data-edit="projects.0.title">Android App Development</h3>
+                        <p data-edit="projects.0.description">Developed a mobile app for tracking personal expenses, using Java and Android Studio. The app features a user-friendly interface, data storage, and analytics. The project involved designing and implementing the app's architecture, writing clean and efficient code, and testing the app for bugs and errors.</p>
+                        <div class="project-tags">
+                            <span class="tag">Android</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Mobile App Development</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-edit="projects.1.title">Kotlin Programming</h3>
+                        <p data-edit="projects.1.description">Created a Kotlin-based project that demonstrates the use of coroutines and flows for asynchronous programming. The project involved designing and implementing a Kotlin-based API, writing clean and efficient code, and testing the API for bugs and errors.</p>
+                        <div class="project-tags">
+                            <span class="tag">Kotlin</span>
+                            <span class="tag">Coroutines</span>
+                            <span class="tag">Flows</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-edit="projects.2.title">Android Game Development</h3>
+                        <p data-edit="projects.2.description">Developed a 2D game for Android devices, using Java and LibGDX. The game features a user-friendly interface, game logic, and scoring system. The project involved designing and implementing the game's architecture, writing clean and efficient code, and testing the game for bugs and errors.</p>
+                        <div class="project-tags">
+                            <span class="tag">Android</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Game Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-heading" data-edit="skills.heading">Skills</h2>
+                <div class="skills-container">
+                    <span class="skill-tag" data-edit="skills.0">Android Development</span>
+                    <span class="skill-tag" data-edit="skills.1">Java</span>
+                    <span class="skill-tag" data-edit="skills.2">Kotlin</span>
+                    <span class="skill-tag" data-edit="skills.3">Mobile App Development</span>
+                    <span class="skill-tag" data-edit="skills.4">Game Development</span>
+                    <span class="skill-tag" data-edit="skills.5">Coroutines</span>
+                    <span class="skill-tag" data-edit="skills.6">Flows</span>
+                    <span class="skill-tag" data-edit="skills.7">API Design</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-heading" data-edit="contact.heading">Get in Touch</h2>
+                <div class="contact-content">
+                    <p data-edit="contact.description">If you're interested in collaborating or learning more about my work, please don't hesitate to reach out. I'm always excited to meet new people and explore new opportunities.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p data-edit="footer.text">Copyright 2024 Harsh Rathore. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

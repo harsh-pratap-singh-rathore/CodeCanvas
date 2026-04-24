@@ -28,8 +28,7 @@ $files = [
         '../settings.php'
     ],
     'Admin Panel' => [
-        '../admin/dashboard.php',
-        '../admin/templates.php'
+        '../admin/index.php',
     ],
     'Database' => [
         '../storage/docs/database/unified_auth_schema.sql'

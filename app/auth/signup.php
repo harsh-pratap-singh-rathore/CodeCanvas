@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $response['success'] = true;
             $response['message'] = 'Account created successfully!';
-            $response['redirect'] = BASE_URL . '/dashboard.php';
+            $response['redirect'] = BASE_URL . '/app/dashboard.php';
 
             // Dispatch welcome email event (non-blocking — failure won't affect signup)
             UserRegisteredEvent::dispatch($email, $name);

@@ -5,63 +5,354 @@
     <link rel="icon" type="image/png" href="./assets/images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeCanvas — Turn Your Details Into a Clean, Live Website in Minutes</title>
-    <meta name="description"
-        content="AI-generated content, clean layouts, and instant setup — no design or coding required.">
-    <link rel="stylesheet" href="./assets/css/style.css?v=1.0">
-    <link rel="stylesheet" href="./assets/css/responsive.css?v=1.0">
+    <title>CodeCanvas v2 — AI-Powered Portfolio Generator</title>
+    <meta name="description" content="Generate a unique, premium portfolio website from a single text prompt. CodeCanvas v2 uses advanced AI to build structure, content, and design.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css?v=2.0">
+    <link rel="stylesheet" href="./assets/css/responsive.css?v=2.0">
+
+    <style>
+        /* Premium V2 Landing Page Overrides */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Canvas Pattern */
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+            z-index: -1;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Glass Header */
+        .header {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-v2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .badge-v2 {
+            font-size: 10px;
+            font-weight: 800;
+            background: transparent;
+            color: #0a0a0a;
+            border: 1.5px solid #0a0a0a;
+            padding: 2px 8px;
+            border-radius: 99px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 140px 0 100px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f4f4f4;
+            border: 1px solid #e5e5e5;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b6b6b;
+            margin-bottom: 32px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .hero-badge span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+        }
+
+        .hero-headline {
+            font-family: 'Outfit', sans-serif;
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: #0a0a0a;
+            max-width: 900px;
+            margin: 0 auto 24px;
+            animation: fadeUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero-headline span {
+            color: #6b6b6b;
+        }
+
+        .hero-subheadline {
+            font-size: 20px;
+            color: #6b6b6b;
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+            animation: fadeUp 0.8s ease-out 0.2s backwards;
+        }
+
+        /* Mockup Prompt Terminal */
+        .prompt-showcase {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 24px;
+            padding: 12px;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.08);
+            animation: fadeUp 1s ease-out 0.3s backwards;
+            position: relative;
+        }
+
+        .prompt-input-fake {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 16px;
+            padding: 16px 24px;
+            text-align: left;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .prompt-input-fake:hover {
+            border-color: #0a0a0a;
+            background: #ffffff;
+        }
+
+        .prompt-input-fake .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 24px;
+            background: #0a0a0a;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+
+        .prompt-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #0a0a0a;
+        }
+
+        .generate-btn-fake {
+            margin-left: auto;
+            background: #0a0a0a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .generate-btn-fake:hover {
+            transform: scale(1.05);
+        }
+
+        /* Bento Grid Section */
+        .bento-section {
+            padding: 120px 0;
+            background: #f9f9f9;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .section-header-v2 {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        
+        .section-header-v2 h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
+            transform: translateY(-4px);
+            border-color: #0a0a0a;
+        }
+
+        .bento-large {
+            grid-column: span 2;
+        }
+
+        .bento-icon {
+            width: 48px;
+            height: 48px;
+            background: #0a0a0a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .bento-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .bento-desc {
+            color: #6b6b6b;
+            line-height: 1.6;
+        }
+
+        /* Dark Section Engine Details */
+        .dark-section {
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .dark-section h2 {
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            margin-bottom: 24px;
+        }
+
+        .dark-section p {
+            color: #a0a0a0;
+            font-size: 20px;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .engine-stats {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            margin-top: 64px;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-size: 14px;
+            color: #6b6b6b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        /* Final CTA */
+        .bottom-cta {
+            padding: 120px 0;
+            text-align: center;
+            background: white;
+        }
+        
+        .bottom-cta h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 48px;
+            margin-bottom: 32px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @media (max-width: 900px) {
+            .hero-headline { font-size: 48px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-large { grid-column: span 1; }
+            .engine-stats { flex-direction: column; gap: 32px; }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Header -->
-                <header class="header">
+    <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">
+                <a href="index.html" class="logo-v2">
                     CodeCanvas
+                    <span class="badge-v2">v2</span>
                 </a>
                 <nav class="nav">
-                    <div class="nav-item" data-dropdown="solutions">
-                        <span class="nav-link">Solutions</span>
-                        <div class="dropdown">
-                            <a href="personal-website.html" class="dropdown-item">
-                                <strong>Personal Website</strong>
-                                <span>Simple personal presence online.</span>
-                            </a>
-                            <a href="portfolio-website.html" class="dropdown-item">
-                                <strong>Portfolio Website</strong>
-                                <span>Showcase skills, projects, and experience.</span>
-                            </a>
-                            <a href="business-landing.html" class="dropdown-item">
-                                <strong>Business Landing Page</strong>
-                                <span>One-page site for businesses and services.</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="nav-item" data-dropdown="templates">
-                        <a href="templates.html" class="nav-link">Templates</a>
-                    </div>
-                    <div class="nav-item" data-dropdown="resources">
-                        <span class="nav-link">Help & Resources</span>
-                        <div class="dropdown">
-                            <a href="how-it-works.html" class="dropdown-item">
-                                <strong>How CodeCanvas Works</strong>
-                            </a>
-                            <a href="getting-started.html" class="dropdown-item">
-                                <strong>Getting Started</strong>
-                            </a>
-                            <a href="faqs.html" class="dropdown-item">
-                                <strong>FAQs</strong>
-                            </a>
-                            <a href="contact.html" class="dropdown-item">
-                                <strong>Contact Support</strong>
-                            </a>
-                        </div>
-                    </div>
+                    <a href="#how-it-works" class="nav-link">How it Works</a>
+                    <a href="#features" class="nav-link">Features</a>
                 </nav>
                 <div class="header-actions">
-                    <a href="login.html" class="btn btn-secondary">Log In</a>
-                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                    <a href="login.html" class="btn" style="background: transparent; color: #0a0a0a; border: 1px solid #e5e5e5;">Log In</a>
+                    <a href="signup.html" class="btn" style="background: #0a0a0a; color: #fff;">Start Building</a>
                 </div>
             </div>
         </div>
@@ -69,119 +360,147 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-pattern"></div>
         <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-headline">Turn Your Details Into a Clean, Live Website in Minutes</h1>
-                <p class="hero-subheadline">AI-generated content, clean layouts, and instant setup — no design or coding
-                    required.</p>
-                <a href="signup.html" class="btn btn-primary btn-large">Get Started</a>
+            <div class="hero-badge">
+                <span></span> CodeCanvas V2 Intelligence is Live
+            </div>
+            <h1 class="hero-headline">
+                Design your portfolio with words.<br>
+                <span>We handle the code.</span>
+            </h1>
+            <p class="hero-subheadline">
+                Stop tweaking templates. Describe your vibe, and our advanced AI engine builds a production-ready, uniquely designed portfolio in seconds.
+            </p>
+
+            <div class="prompt-showcase">
+                <a href="signup.html" style="text-decoration: none;">
+                <div class="prompt-input-fake">
+                    <span class="prompt-text" id="typewriter"></span><span class="cursor"></span>
+                    <div class="generate-btn-fake">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        Generate
+                    </div>
+                </div>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features">
+    <!-- Bento Grid Features -->
+    <section class="bento-section" id="features">
         <div class="container">
-            <div class="section-header">
-                <h2>Everything You Need to Build a Strong Online Presence</h2>
-                <p class="section-subheadline">From simple details to a complete website. AI handles the structure,
-                    content, and layout.</p>
+            <div class="section-header-v2">
+                <h2>The end of identical portfolios.</h2>
+                <p style="font-size: 20px; color: #6b6b6b;">Every output is a completely unique frontend architecture.</p>
             </div>
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>AI Content Builder</h3>
-                    <p>Generate professional content tailored to your industry and style automatically.</p>
+            <div class="bento-grid">
+                <div class="bento-card bento-large">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3 class="bento-title">Unbound Creativity Engine</h3>
+                    <p class="bento-desc">We removed the templates. Our new AI pipeline acts as a senior UI designer, generating unique layouts, typography pairs, and color palettes specific to your prompt.</p>
                 </div>
-
-                <div class="feature-card">
-                    <h3>Smart Website Templates</h3>
-                    <p>Choose from clean, purpose-built templates designed for portfolios and businesses.</p>
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3 class="bento-title">Zero Friction</h3>
+                    <p class="bento-desc">Go from an idea to a live link in under 60 seconds. No hosting configuration, no dragging blocks.</p>
                 </div>
-
-                <div class="feature-card">
-                    <h3>Instant Website Generation</h3>
-                    <p>Go from information to live website in minutes, not days or weeks.</p>
+                <div class="bento-card">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <h3 class="bento-title">Fully Editable</h3>
+                    <p class="bento-desc">Don't like a specific word? Just click and type. Our proprietary live-editor parses AI code and makes it instantly editable.</p>
                 </div>
-
-                <div class="feature-card">
-                    <h3>Customizable Sections</h3>
-                    <p>Adjust layouts, add sections, and refine content to match your needs.</p>
-                </div>
-
-                <div class="feature-card">
-                    <h3>Live Preview</h3>
-                    <p>See exactly how your website looks before publishing. No surprises.</p>
-                </div>
-
-                <div class="feature-card">
-                    <h3>No Coding Required</h3>
-                    <p>Built for everyone. No technical knowledge or development skills needed.</p>
+                <div class="bento-card bento-large">
+                    <div class="bento-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                    </div>
+                    <h3 class="bento-title">Premium Aesthetics by Default</h3>
+                    <p class="bento-desc">Whether you request Glassmorphism, Brutalism, or a Minimal Apple aesthetic, CodeCanvas generates mathematically perfect spacing and contrast.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works">
+    <!-- Dark Section -->
+    <section class="dark-section" id="how-it-works">
         <div class="container">
-            <div class="section-header">
-                <h2>How It Works</h2>
+            <h2 style="font-size: 56px;">Powered by your local AI.</h2>
+            <p>CodeCanvas v2 relies on your local <strong>Ollama</strong> instance. You have complete control to use Gemma, Llama 3, DeepSeek, or any open-source model of your choice.</p>
+            
+            <div class="engine-stats">
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Private Gen-AI</p>
+                </div>
+                <div class="stat-item">
+                    <h3>0.0s</h3>
+                    <p>Cloud Latency</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p>Model Choices</p>
+                </div>
             </div>
 
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">01</div>
-                    <h3>Enter Your Details</h3>
-                    <p>Provide basic information about yourself or your business — name, role, background, and goals.
-                    </p>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">02</div>
-                    <h3>AI Builds Your Website</h3>
-                    <p>Our AI generates content, selects layouts, and structures everything into a professional website.
-                    </p>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">03</div>
-                    <h3>Preview & Use</h3>
-                    <p>Review your website, make adjustments if needed, and publish when ready.</p>
-                </div>
+            <div style="margin-top: 48px;">
+                <a href="local-setup.html" class="btn" style="background: white; color: #0a0a0a; padding: 14px 28px; border-radius: 99px; font-weight: 600; text-decoration: none;">View Local Setup Guide</a>
             </div>
         </div>
     </section>
 
     <!-- Final CTA Section -->
-    <section class="final-cta">
+    <section class="bottom-cta">
         <div class="container">
-            <div class="cta-content">
-                <h2>Start building your online presence today.</h2>
-                <a href="signup.html" class="btn btn-primary btn-large">Get Started</a>
-            </div>
+            <h2>Ready to stand out?</h2>
+            <a href="signup.html" class="btn" style="background: #0a0a0a; color: white; padding: 16px 32px; font-size: 18px; border-radius: 99px;">Start Generation Engine</a>
         </div>
     </section>
 
     <!-- Footer -->
-                <footer class="footer">
+    <footer class="footer" style="background: #f9f9f9; border-top: 1px solid #e5e5e5; padding: 64px 0 32px;">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">CodeCanvas</div>
-                <div class="footer-links">
-                    <a href="how-it-works.html">Privacy</a>
-                    <a href="faqs.html">Terms</a>
-                    <a href="contact.html">Contact</a>
+            <div class="footer-content" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="logo-v2" style="color: #0a0a0a;">CodeCanvas <span class="badge-v2">v2</span></div>
+                <div class="footer-links" style="display: flex; gap: 24px;">
+                    <a href="privacy.html" style="color: #6b6b6b;font-weight:500;">Privacy</a>
+                    <a href="terms.html" style="color: #6b6b6b;font-weight:500;">Terms</a>
+                    <a href="contact.html" style="color: #6b6b6b;font-weight:500;">Contact</a>
                 </div>
-                <div class="footer-copyright">
-                    &copy; 2026 CodeCanvas. All rights reserved.
-                </div>
+            </div>
+            <div style="text-align: center; color: #a0a0a0; font-size: 14px; margin-top: 48px;">
+                &copy; 2026 CodeCanvas. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <script src="./assets/js/main.js?v=1.0"></script>
-    <script src="./assets/js/mobile-nav.js?v=1.0"></script>
+    <script>
+        // Simple Typewriter Effect for Hero
+        const text = "A dark neon portfolio for a fullstack developer...";
+        const element = document.getElementById('typewriter');
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                setTimeout(() => {
+                    element.innerHTML = '';
+                    i = 0;
+                    typeWriter();
+                }, 4000);
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+    </script>
 </body>
-
 </html>

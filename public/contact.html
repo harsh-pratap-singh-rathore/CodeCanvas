@@ -4,129 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Support — CodeCanvas</title>
-    <meta name="description" content="Get in touch with the CodeCanvas support team.">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <title>Contact Us — CodeCanvas v2</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css?v=2.0">
+    <link rel="stylesheet" href="./assets/css/responsive.css?v=2.0">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0a0a0a; line-height: 1.6; }
+        .header { background: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05) !important; position: sticky; top: 0; z-index: 100; }
+        .logo-v2 { display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+        .badge-v2 { font-size: 10px; font-weight: 800; background: transparent; color: #0a0a0a; border: 1.5px solid #0a0a0a; padding: 2px 8px; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; }
+        
+        .doc-container { max-width: 600px; margin: 0 auto; padding: 100px 24px 160px; text-align: center; }
+        .doc-header { margin-bottom: 48px; }
+        .doc-header h1 { font-family: 'Outfit', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+        .doc-header p { font-size: 18px; color: #6b6b6b; }
+        
+        .contact-box { background: #f9f9f9; border: 1px solid #e5e5e5; padding: 48px; border-radius: 24px; text-align: left; }
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid #e5e5e5; border-radius: 12px; font-family: 'Inter'; box-sizing: border-box; }
+        .btn-submit { width: 100%; padding: 16px; background: #0a0a0a; color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-submit:hover { opacity: 0.9; transform: scale(1.02); }
+    </style>
 </head>
 
 <body>
     <!-- Header -->
-                <header class="header">
+    <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">CodeCanvas</a>
-                <nav class="nav">
-                    <div class="nav-item" data-dropdown="solutions">
-                        <span class="nav-link">Solutions</span>
-                        <div class="dropdown">
-                            <a href="personal-website.html" class="dropdown-item">
-                                <strong>Personal Website</strong>
-                                <span>Simple personal presence online.</span>
-                            </a>
-                            <a href="portfolio-website.html" class="dropdown-item">
-                                <strong>Portfolio Website</strong>
-                                <span>Showcase skills, projects, and experience.</span>
-                            </a>
-                            <a href="business-landing.html" class="dropdown-item">
-                                <strong>Business Landing Page</strong>
-                                <span>One-page site for businesses and services.</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="nav-item" data-dropdown="templates">
-                        <a href="templates.html" class="nav-link">Templates</a>
-                    </div>
-                    <div class="nav-item" data-dropdown="resources">
-                        <span class="nav-link">Help & Resources</span>
-                        <div class="dropdown">
-                            <a href="how-it-works.html" class="dropdown-item">
-                                <strong>How CodeCanvas Works</strong>
-                            </a>
-                            <a href="getting-started.html" class="dropdown-item">
-                                <strong>Getting Started</strong>
-                            </a>
-                            <a href="faqs.html" class="dropdown-item">
-                                <strong>FAQs</strong>
-                            </a>
-                            <a href="contact.html" class="dropdown-item">
-                                <strong>Contact Support</strong>
-                            </a>
-                        </div>
-                    </div>
-                </nav>
+                <a href="index.html" class="logo-v2">
+                    CodeCanvas
+                    <span class="badge-v2">v2</span>
+                </a>
                 <div class="header-actions">
-                    <a href="login.html" class="btn btn-secondary">Log In</a>
-                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                    <a href="index.html" class="btn" style="background: transparent; color: #0a0a0a; border: 1px solid #e5e5e5; border-radius: 99px; padding: 8px 16px; font-weight: 600;">Back to Home</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Contact Support</h1>
-            <p>We respond to all inquiries within 24 hours.</p>
+    <main class="doc-container">
+        <div class="doc-header">
+            <h1>Get in touch</h1>
+            <p>Connect with the developer team or submit an issue.</p>
         </div>
-    </section>
-
-    <!-- Page Content -->
-    <section class="page-content">
-        <div class="container">
-            <form class="contact-form">
+        
+        <div class="contact-box">
+            <form onsubmit="alert('Thank you! Your message has been received.'); return false;">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
+                    <label>Name</label>
+                    <input type="text" required placeholder="John Doe">
                 </div>
-
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="name@company.com">
                 </div>
-
                 <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required>
+                    <label>How can we help?</label>
+                    <textarea rows="4" required placeholder="I found a bug with the Ollama integration..."></textarea>
                 </div>
-
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="6" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Send Message</button>
-                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
             </form>
-
-            <div class="content-section" style="text-align: center; margin-top: 64px;">
-                <h2>Other Ways to Reach Us</h2>
-                <p>Email: support@codecanvas.com</p>
-                <p>Response time: Within 24 hours</p>
+            <div style="margin-top: 32px; text-align: center; color: #6b6b6b; font-size: 14px;">
+                Or email us directly at <strong>hello@codecanvas.com</strong>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-                <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">CodeCanvas</div>
-                <div class="footer-links">
-                    <a href="how-it-works.html">Privacy</a>
-                    <a href="faqs.html">Terms</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-                <div class="footer-copyright">
-                    &copy; 2026 CodeCanvas. All rights reserved.
-                </div>
-            </div>
+    <footer class="footer" style="background: #f9f9f9; border-top: 1px solid #e5e5e5; padding: 48px 0 32px;">
+        <div class="container" style="text-align: center; color: #a0a0a0; font-size: 14px;">
+            &copy; 2026 CodeCanvas. Available on GitHub.
         </div>
     </footer>
-
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/mobile-nav.js"></script>
 </body>
-
 </html>

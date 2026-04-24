@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sdsss</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+<script>
+        window.CODECANVAS_PROJECT_ID = 15;
+        window.CODECANVAS_API_BASE   = "http:\/\/localhost\/CodeCanvas\/app\/api";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var contactForm = document.querySelector('#contact form');
+            if (!contactForm) return;
+            var submitBtn = contactForm.querySelector('button[type="submit"], button:not([type="button"])');
+            if (!submitBtn) submitBtn = contactForm.querySelector('button');
+            var originalText = submitBtn ? submitBtn.innerText : 'SEND';
+
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'SENDING...'; }
+                var formData = {
+                    project_id: window.CODECANVAS_PROJECT_ID,
+                    name:    (contactForm.querySelector('[name="name"],#name') || {}).value || '',
+                    email:   (contactForm.querySelector('[name="email"],#email') || {}).value || '',
+                    subject: (contactForm.querySelector('[name="subject"],#subject') || {}).value || 'Portfolio Contact',
+                    message: (contactForm.querySelector('[name="message"],#message') || {}).value || ''
+                };
+                try {
+                    var res = await fetch(window.CODECANVAS_API_BASE + '/contact.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    var data = await res.json();
+                    if (data.success) {
+                        contactForm.reset();
+                        alert('Message sent successfully! The portfolio owner will be notified.');
+                    } else {
+                        alert(data.message || 'Failed to send message. Please try again.');
+                    }
+                } catch (err) {
+                    alert('Network error. Please check your connection and try again.');
+                } finally {
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = originalText; }
+                }
+            });
+        });
+    </script>
+  <link rel="stylesheet" href="assets/css/style.min.css">
+</head>
+<body>
+
+    <!-- Soft Blob Backgrounds -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <div class="floating-symbol" style="top:20%; left:10%;">&lt;/&gt;</div>
+    <div class="floating-symbol" style="top:70%; left:5%;">{ }</div>
+    <div class="floating-symbol" style="top:40%; right:8%;">( )</div>
+
+    <!-- 1. NAVBAR -->
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo" data-edit="nav_logo" data-edit-link="nav_home_link">Port<span>folio.</span></a>
+            <ul class="nav-links">
+                <li><a href="#home" data-edit="nav_link_1" data-edit-link="nav_link_href_1">Home</a></li>
+                <li><a href="#about" data-edit="nav_link_2" data-edit-link="nav_link_href_2">About</a></li>
+                <li><a href="#skills" data-edit="nav_link_3" data-edit-link="nav_link_href_3">Skills</a></li>
+                <li><a href="#projects" data-edit="nav_link_4" data-edit-link="nav_link_href_4">Projects</a></li>
+                <li><a href="#experience" data-edit="nav_link_5" data-edit-link="nav_link_href_5">Experience</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 data-edit="hero_title">Hi, I'm Alex.</h1>
+            <div class="hero-role" data-edit="hero_role">Full Stack Developer</div>
+            <p class="hero-desc" data-edit="hero_description">I build premium web applications with clean code, scalable architecture, and pixel-perfect design. Specialized in modern modern tech stacks.</p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary" data-edit="hero_btn_1" data-edit-link="hero_btn_link_1">View Projects</a>
+                <a href="#contact" class="btn btn-outline" data-edit="hero_btn_2" data-edit-link="hero_btn_link_2">Contact Me</a>
+            </div>
+        </div>
+        <div class="hero-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=800&auto=format&fit=crop" alt="Developer" data-edit-img="hero_image">
+        </div>
+    </section>
+
+    <!-- 3. ABOUT SECTION -->
+    <section id="about">
+        <div class="about-card">
+            <div class="about-text">
+                <h3 data-edit="about_title">About Me</h3>
+                <p data-edit="about_description">I'm a passionate software engineer dedicated to crafting high-performance, aesthetically pleasing web experiences. I bridge the gap between design and robust backend architecture, ensuring every project is not only beautiful but also scalable algorithmically.</p>
+            </div>
+            
+            <div class="about-stats" data-edit-repeat="stats">
+                <div class="stat-item">
+                    <h4 data-edit="stat_value">5+</h4>
+                    <p data-edit="stat_label">Years Experience</p>
+                </div>
+                <!-- Adding a dummy second element for visual structure, will be replaced in CMS if needed -->
+                <div class="stat-item">
+                    <h4 data-edit="stat_value_2">40+</h4>
+                    <p data-edit="stat_label_2">Projects Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h4 data-edit="stat_value_3">15</h4>
+                    <p data-edit="stat_label_3">Tech Stack</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SKILLS SECTION -->
+    <section id="skills">
+        <div class="section-head">
+            <h2 data-edit="skills_section_title">Technical Skills</h2>
+            <p data-edit="skills_section_desc">A comprehensive list of the technologies, tools, and frameworks I use on a daily basis.</p>
+        </div>
+        
+        <div class="skills-grid" data-edit-repeat="skills_group">
+            <div class="skill-group">
+                <h3 data-edit="skill_group_title">Frontend Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag" data-edit="skill_name">React.js</span>
+                    <span class="skill-tag" data-edit="skill_name_2">Vue.js</span>
+                    <span class="skill-tag" data-edit="skill_name_3">TypeScript</span>
+                    <span class="skill-tag" data-edit="skill_name_4">TailwindCSS</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h3 data-edit="skill_group_title_2">Backend & API</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag" data-edit="skill_name_5">Node.js</span>
+                    <span class="skill-tag" data-edit="skill_name_6">Python</span>
+                    <span class="skill-tag" data-edit="skill_name_7">GraphQL</span>
+                    <span class="skill-tag" data-edit="skill_name_8">PHP</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h3 data-edit="skill_group_title_3">Database & Tools</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag" data-edit="skill_name_9">PostgreSQL</span>
+                    <span class="skill-tag" data-edit="skill_name_10">MongoDB</span>
+                    <span class="skill-tag" data-edit="skill_name_11">Docker</span>
+                    <span class="skill-tag" data-edit="skill_name_12">AWS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PROJECTS SECTION -->
+    <section id="projects">
+        <div class="section-head">
+            <h2 data-edit="projects_section_title">Featured Projects</h2>
+            <p data-edit="projects_section_desc">Selection of my recent high-impact work.</p>
+        </div>
+
+        <div class="projects-grid" data-edit-repeat="projects">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" alt="Project 1" data-edit-img="project_image">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-edit="project_title">SaaS Analytics Dashboard</h3>
+                    <p class="project-desc" data-edit="project_description">A comprehensive data analytics platform tracking user retention, revenue metrics, and custom funnels for modern startups.</p>
+                    <div class="project-tech" data-edit="project_stack">React • Node.js • PostgreSQL</div>
+                    <div class="project-links">
+                        <a href="#" data-edit-link="project_github">GitHub →</a>
+                        <a href="#" data-edit-link="project_live">Live Demo →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Project 2" data-edit-img="project_image_2">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-edit="project_title_2">Fintech Mobile App</h3>
+                    <p class="project-desc" data-edit="project_description_2">Secure, fast, and feature-rich cross-platform mobile application for personal finance management.</p>
+                    <div class="project-tech" data-edit="project_stack_2">React Native • GraphQL • AWS</div>
+                    <div class="project-links">
+                        <a href="#" data-edit-link="project_github_2">GitHub →</a>
+                        <a href="#" data-edit-link="project_live_2">Live Demo →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=600&auto=format&fit=crop" alt="Project 3" data-edit-img="project_image_3">
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title" data-edit="project_title_3">E-commerce Headless API</h3>
+                    <p class="project-desc" data-edit="project_description_3">High-throughput microservices handling catalog, cart, and payment processing for a major retail brand.</p>
+                    <div class="project-tech" data-edit="project_stack_3">Go • Redis • Kubernetes</div>
+                    <div class="project-links">
+                        <a href="#" data-edit-link="project_github_3">GitHub →</a>
+                        <a href="#" data-edit-link="project_live_3">Live Demo →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6 & 7. EXPERIENCE & EDUCATION -->
+    <section id="experience">
+        <div class="section-head">
+            <h2 data-edit="resume_title">Resume</h2>
+            <p data-edit="resume_desc">My professional journey and academic background.</p>
+        </div>
+
+        <div class="resume-grid">
+            
+            <!-- EXPRERIENCE -->
+            <div>
+                <h3 style="margin-bottom: 32px; font-size: 1.8rem;">Experience</h3>
+                <div class="timeline" data-edit-repeat="experience">
+                    <div class="timeline-item">
+                        <div class="exp-role" data-edit="experience_role">Senior Developer</div>
+                        <div class="exp-company" data-edit="experience_company">TechNova Solutions</div>
+                        <div class="exp-duration" data-edit="experience_duration">Jan 2021 - Present</div>
+                        <p class="exp-desc" data-edit="experience_description">Led a team of 5 engineers to refactor the core monolithic app into microservices, reducing server cost by 40%.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="exp-role" data-edit="experience_role_2">Full Stack Engineer</div>
+                        <div class="exp-company" data-edit="experience_company_2">Creative Nexus</div>
+                        <div class="exp-duration" data-edit="experience_duration_2">Jun 2018 - Dec 2020</div>
+                        <p class="exp-desc" data-edit="experience_description_2">Developed dynamic interactive UI components and built REST APIs serving 50k+ daily active users.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDUCATION -->
+            <div>
+                <h3 style="margin-bottom: 32px; font-size: 1.8rem;">Education</h3>
+                <div class="timeline" data-edit-repeat="education">
+                    <div class="timeline-item">
+                        <div class="edu-degree" data-edit="education_degree">M.S. Computer Science</div>
+                        <div class="edu-college" data-edit="education_college">Stanford University</div>
+                        <div class="edu-year" data-edit="education_year">2016 - 2018</div>
+                        <p class="exp-desc" data-edit="education_desc">Specialized in scalable infrastructure and advanced algorithms.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="edu-degree" data-edit="education_degree_2">B.S. Software Engineering</div>
+                        <div class="edu-college" data-edit="education_college_2">MIT</div>
+                        <div class="edu-year" data-edit="education_year_2">2012 - 2016</div>
+                        <p class="exp-desc" data-edit="education_desc_2">Graduated with High Honors. Member of the advanced robotics club.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. CONTACT SECTION -->
+    <section id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2 data-edit="contact_title">Let's build something beautiful.</h2>
+                <p data-edit="contact_description">Currently available for freelance opportunities. If you have a digital product idea, feel free to reach out and say hello.</p>
+                
+                <div class="contact-details">
+                    <div>
+                        <span style="font-size: 0.9rem; color: var(--text-light); text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px;">Email Me</span>
+                        <a href="mailto:hello@example.com" class="contact-email" data-edit="contact_email">hello@example.com</a>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-icon" data-edit-link="social_github">
+                        GH
+                    </a>
+                    <a href="#" class="social-icon" data-edit-link="social_linkedin">
+                        IN
+                    </a>
+                    <a href="#" class="social-icon" data-edit-link="social_twitter">
+                        TW
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-input" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="font-size: 1.25rem;">Port<span>folio.</span></div>
+            <p class="footer-text" data-edit="footer_text">© 2024 Developer. All rights reserved.</p>
+        </div>
+    </footer>
+
+  <script src="assets/js/mobile-nav.js"></script>
+</body>
+</html>

@@ -1,107 +1,69 @@
-# 🎨 CodeCanvas — Beautiful, AI-Powered Portfolio Platform
-
 <div align="center">
-  <img src="./codecanvas_banner_1775318869366.png" alt="CodeCanvas Banner" width="100%">
-  
-  <p align="center">
-    <b>Empower Your Creativity. Build, Customize, and Deploy Professional Portfolios in Minutes.</b>
-  </p>
-
-  <p align="center">
-    <img src="https://img.shields.io/badge/PHP-7.4+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP Badge">
-    <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL Badge">
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JS Badge">
-    <img src="https://img.shields.io/badge/AI_Powered-GEMINI-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" alt="AI Badge">
-    <img src="https://img.shields.io/badge/Deployment-VERCEL-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Badge">
-  </p>
+    <br>
+    <h1>CodeCanvas v2</h1>
+    <p><b>Intelligent Design Engine. Zero cloud costs. 100% Local AI Frontend Generation.</b></p>
+    <br>
 </div>
 
----
+CodeCanvas v2 is an open-source, mathematically structured web application that turns plain text prompts into completely unique, beautifully designed, and structurally sound portfolio websites. It operates completely **locally**, leveraging open-source large language models through Ollama instead of relying on expensive cloud proxies.
 
-## ✨ Overview
+Forget templates. Forget dragging blocks. Type your aesthetic, and let the intelligence engine build your frontend architecture in 60 seconds.
 
-**CodeCanvas** is a full-stack SaaS platform designed to bridge the gap between complex coding and simple website building. It allows users to browse high-quality templates, customize them through an intuitive **Visual Form-Based Editor**, and deploy their brand-new portfolios or business sites directly to the web with a single click.
+## ✨ Features (v2 Core)
 
-Whether you're a developer looking for a quick portfolio or a business owner needing a modern landing page, CodeCanvas provides the tools to make it happen without touching a line of code.
+- **The Unbound Engine:** CodeCanvas v2 uses a strictly controlled prompt architecture that enforces user-intent (colors, typography, layout) while introducing controlled creative variation to guarantee that **no two outputs are structurally identical**.
+- **Bring Your Own Intelligence:** Fully decoupled from restrictive commercial APIs. Plugs directly into your local **Ollama** server.
+- **Auto-Responsive Layouts:** Employs advanced CSS grid and flexbox logic generated dynamically by the LLM. 
+- **Premium Aesthetics by Default:** Built heavily around polished, modern web principles. Whether generating Brutalism, Apple Minimal, or Neon Glassmorphism, CodeCanvas respects padding, contrast, and layout weight.
+- **100% Live-Editable:** A proprietary HTML parsing system that preserves `data-edit` attributes, meaning every pixel of generated code is instantly editable in the integrated graphical builder without touching the raw HTML.
+- **Zero Vender Lock-in:** 100% ownership. Export your static assets and host them anywhere for free.
 
----
+## ⚙️ Tech Stack
 
-## 🛠️ Key Features
-
-### 🔍 Intelligent Template Scanner
-Automatically extracts `{{placeholders}}` from any HTML template, transforming raw code into a structured, editable interface. No manual configuration required!
-
-### ✍️ Dynamic Visual Editor
-A real-time editing experience. As you fill out the categorized forms (Basic Info, Social Links, Image Uploads), the live preview iframe updates instantly on your screen.
-
-### 🤖 AI Content Writer
-Struggle with writing? Use our built-in AI assistant powered by **Gemini**, **Groq**, or **NVIDIA** to generate professional copy for your hero sections, services, and about pages.
-
-### 🚀 One-Click Deployment
-Integrated with the **Vercel API**, CodeCanvas allows you to ship your site to a live URL instantly. Fast, global, and reliable.
-
-### 🔐 Secure & Scalable
-- **Google OAuth**: Fast and secure login for all users.
-- **Bcrypt Hashing**: Industry-standard security for local accounts.
-- **PDO Prepared Statements**: Built-in protection against SQL injection.
+- **Backend:** PHP 8.2 (Secure PDO, Strict JSON Routing)
+- **Database:** MySQL
+- **Frontend / Dashboard:** Vanilla JavaScript, Glassmorphic CSS Engine
+- **Generative Intelligence:** Any code-optimized open source model (Default: Gemma 4 / DeepSeek-Coder-V2) via Groq and Ollama.
 
 ---
 
-## 🏗️ Architecture
+## 🚀 How to Run Locally
 
-```mermaid
-graph TD
-    User((User)) --> Dashboard[CodeCanvas Dashboard]
-    Dashboard --> TemplatePicker[Template Selection]
-    TemplatePicker --> Editor[Project Visual Editor]
-    Editor --> Scanner[Template Scanner Logic]
-    Editor --> AIWriter[AI Content Writer]
-    Editor --> Storage[(MySQL DB)]
-    Editor --> VercelAPI[Vercel Deployment]
-    VercelAPI --> LiveSite((Live URL))
-    AdminPanel[Admin Panel] --> Templates[(Template Repo)]
-```
+CodeCanvas v2 is designed to run locally on your own machine. 
 
----
+### Step 1: Environment Setup
+1. Download identifying web-server software like **XAMPP**, **MAMP**, or **Herd**.
+2. Clone this repository into your local webroot directory (e.g., `C:\xampp\htdocs\CodeCanvas`).
+3. Start the **Apache** and **MySQL** server processes.
 
-## 🚦 Getting Started
+### Step 2: Database Initialization
+1. Navigate to your MySQL client (like phpMyAdmin at `http://localhost/phpmyadmin`).
+2. Create a new database named `v2db`.
+3. Import the SQL file located at `storage/docs/database/AI_BUILDER_SCHEMA.sql` to construct the tables.
+4. Open the `config/database.php` script and verify identical connection parameters.
 
-### Prerequisites
-- **PHP** 7.4 or higher
-- **MySQL** 5.7+ / MariaDB
-- **XAMPP/WAMP/MAMP** or a local server environment
-- **Composer** (optional, for dependencies)
-
-### Installation
-1. **Clone the repository:**
+### Step 3: Local AI Configuration
+CodeCanvas generates massive architectural strings on the fly. To prevent network costs, it uses **Ollama**.
+1. Install [Ollama](https://ollama.com) on your machine.
+2. Pull a highly capable code model in your terminal. We highly recommend Gemma or DeepSeek:
    ```bash
-   git clone https://github.com/harsh-pratap-singh-rathore/CodeCanvas.git
+   ollama run gemma:7b
    ```
-2. **Setup Database:**
-   - Create a database named `codecanvas`.
-   - Import the schema from `database/schema.sql` (if available) or use the setup script.
-3. **Configure Environment:**
-   - Copy `.env.example` to `.env`.
-   - Fill in your database credentials and API keys (Google AI, Vercel, Resend).
-4. **Launch:**
-   - Open your browser and navigate to `http://localhost/CodeCanvas/index.php`.
+3. In `api/generate.php`, around line 90, modify the `model` parameter inside `ollamaRequest()` to exactly match the model you just pulled:
+   ```php
+   'model' => 'gemma:7b',
+   ```
 
----
+*(Note: The first stage enhancement pipeline uses Groq for instant-JSON processing. Ensure `GROQ_API_KEY` is present in your `.env` configuration file to process the structural blueprints).*
 
-## 🎨 Design Aesthetics
-CodeCanvas follows a **Modern Glassmorphism** design language:
-- **Neon Accents**: A vibrant mix of Cyan and Purple for interactive elements.
-- **Dark Mode First**: Sleek, high-contrast interfaces for a premium feel.
-- **Responsive Layouts**: Designed to look stunning on every device.
-
----
-
-## 🤝 Contributing
-Contributions are welcome! If you have a template you'd like to share or a feature idea, feel free to fork the repo and submit a PR.
+### Step 4: Launch
+Navigate to `http://localhost/CodeCanvas/public/index.html` in your browser. 
+Sign up via standard email or Google OAuth, load the dashboard, input a prompt, and watch your intelligence engine build.
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <b>Harsh Pratap Singh Rathore</b></p>
-  <p><i>Empowering creators, one canvas at a time.</i></p>
+    <i>Built with extreme attention to detail. Open Source under the MIT License.</i>
+    <br>
+    &copy; 2026 CodeCanvas Team.
 </div>

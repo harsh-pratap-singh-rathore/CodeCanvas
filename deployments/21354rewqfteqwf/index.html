@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Software Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #333333;
+            --accent-color: #FF9900;
+            --background-color: #FFFFFF;
+            --text-color: #666666;
+            --font-family: 'Montserrat', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--background-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #e68a00;
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+        }
+        
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .project-card p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .skill {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 1rem;
+            text-align: left;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e68a00;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .section-heading {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="portfolio-root">
+        <!-- Navigation -->
+        <nav>
+            <div class="container nav-container">
+                <a href="#" class="brand" data-edit="navbar.brand">Freelance Software Engineer</a>
+                <ul class="nav-links">
+                    <li><a href="#about" data-edit="navbar.links.0">About</a></li>
+                    <li><a href="#projects" data-edit="navbar.links.1">Projects</a></li>
+                    <li><a href="#skills" data-edit="navbar.links.2">Skills</a></li>
+                    <li><a href="#contact" data-edit="navbar.links.3">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 data-edit="hero.name">Freelance Software Engineer</h1>
+                <h2 data-edit="hero.title">Expert Software Engineer</h2>
+                <p data-edit="hero.subtitle">Delivering high-quality software solutions</p>
+                <a href="#contact" class="cta-button" data-edit="hero.cta">Get in Touch</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2 class="section-heading" data-edit="about.heading">About Me</h2>
+                <div class="about-content">
+                    <p data-edit="about.description">As a highly skilled and experienced freelance software engineer, I specialize in developing innovative and efficient software solutions. With a strong background in computer science and a passion for staying up-to-date with the latest technologies, I am dedicated to delivering high-quality products that meet and exceed client expectations. My expertise includes a range of programming languages, frameworks, and tools, allowing me to tackle complex projects and provide effective solutions. Whether you need a custom software application, a website, or a mobile app, I have the skills and knowledge to bring your vision to life.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-heading" data-edit="projects.heading">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 data-edit="projects.0.title">Project 1</h3>
+                        <p data-edit="projects.0.description">A web application built using React and Node.js, featuring a user-friendly interface and a robust backend. The project involved designing and implementing a database schema, creating API endpoints, and developing a responsive UI.</p>
+                        <div class="project-tags">
+                            <span class="tag" data-edit="projects.0.tags.0">React</span>
+                            <span class="tag" data-edit="projects.0.tags.1">Node.js</span>
+                            <span class="tag" data-edit="projects.0.tags.2">Web Development</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-edit="projects.1.title">Project 2</h3>
+                        <p data-edit="projects.1.description">A mobile app developed using Java and Android Studio, providing a seamless user experience and a range of features. The project involved designing and implementing the app's architecture, developing the UI, and testing the app for functionality and performance.</p>
+                        <div class="project-tags">
+                            <span class="tag" data-edit="projects.1.tags.0">Java</span>
+                            <span class="tag" data-edit="projects.1.tags.1">Android</span>
+                            <span class="tag" data-edit="projects.1.tags.2">Mobile App Development</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 data-edit="projects.2.title">Project 3</h3>
+                        <p data-edit="projects.2.description">A machine learning model built using Python and TensorFlow, capable of predicting user behavior and providing personalized recommendations. The project involved collecting and preprocessing data, designing and training the model, and evaluating its performance.</p>
+                        <div class="project-tags">
+                            <span class="tag" data-edit="projects.2.tags.0">Python</span>
+                            <span class="tag" data-edit="projects.2.tags.1">TensorFlow</span>
+                            <span class="tag" data-edit="projects.2.tags.2">Machine Learning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-heading" data-edit="skills.heading">My Skills</h2>
+                <div class="skills-container">
+                    <span class="skill" data-edit="skills.0">JavaScript</span>
+                    <span class="skill" data-edit="skills.1">React</span>
+                    <span class="skill" data-edit="skills.2">Node.js</span>
+                    <span class="skill" data-edit="skills.3">Java</span>
+                    <span class="skill" data-edit="skills.4">Android</span>
+                    <span class="skill" data-edit="skills.5">Python</span>
+                    <span class="skill" data-edit="skills.6">TensorFlow</span>
+                    <span class="skill" data-edit="skills.7">Machine Learning</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <h2 class="section-heading" data-edit="contact.heading">Get in Touch</h2>
+                <div class="contact-content">
+                    <p data-edit="contact.description">If you have a project in mind or would like to discuss your software needs, please don't hesitate to contact me. I am always eager to collaborate with clients and bring their ideas to life.</p>
+                    
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p data-edit="footer.text">Copyright 2024 Freelance Software Engineer. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

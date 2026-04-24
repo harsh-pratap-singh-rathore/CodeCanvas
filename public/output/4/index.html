@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Smith - Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #4567b7;
+            --accent-color: #87ceeb;
+            --background-color: #f7f7f7;
+            --text-color: #333333;
+            --font-family: 'Arial', 'Helvetica', sans-serif;
+            --container-width: 1200px;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+        }
+
+        .navbar-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.9;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        .section {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .project-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--primary-color);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .tag {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-platforms {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .platform {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-lg) 0;
+            margin-top: var(--spacing-xl);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .navbar-container {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .navbar-links {
+                gap: var(--spacing-md);
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="portfolio-root">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container navbar-container">
+                <a href="#" class="navbar-brand" data-edit="navbar.brand">Sarah Smith</a>
+                <ul class="navbar-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 data-edit="hero.name">Sarah Smith</h1>
+                <p class="hero-title" data-edit="hero.title">Python Developer</p>
+                <p class="hero-subtitle" data-edit="hero.subtitle">Skilled Python developer with a passion for creating innovative solutions</p>
+                <a href="#projects" class="cta-button" data-edit="hero.cta">Explore My Portfolio</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-heading" data-edit="about.heading">About Me</h2>
+                <div class="about-content">
+                    <p data-edit="about.description">As a skilled Python developer, I have a strong passion for creating innovative solutions that make a real impact. With a solid foundation in computer science and a keen eye for detail, I have developed a wide range of skills that enable me to tackle complex problems with ease. My experience spans multiple industries, including finance, healthcare, and education, and I am always looking for new challenges to take on. I am a strong believer in the importance of collaboration and communication, and I am always eager to work with others to achieve a common goal. Whether it's developing a new application or improving an existing one, I am dedicated to delivering high-quality solutions that meet the needs of my clients and exceed their expectations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-heading" data-edit="projects.heading">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3 class="project-title" data-edit="projects.0.title">Project 1</h3>
+                        <p data-edit="projects.0.description">This project involved developing a web application using Python and Django, with a focus on creating a user-friendly interface and a robust backend. The application allowed users to create and manage their own profiles, and included features such as authentication and authorization.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Django</span>
+                            <span class="tag">Web Development</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title" data-edit="projects.1.title">Project 2</h3>
+                        <p data-edit="projects.1.description">This project involved developing a machine learning model using Python and scikit-learn, with a focus on predicting customer churn for a telecommunications company. The model was trained on a large dataset and achieved a high level of accuracy, allowing the company to target its marketing efforts more effectively.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">scikit-learn</span>
+                            <span class="tag">Machine Learning</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 class="project-title" data-edit="projects.2.title">Project 3</h3>
+                        <p data-edit="projects.2.description">This project involved developing a data visualization application using Python and Matplotlib, with a focus on creating interactive and dynamic visualizations. The application allowed users to explore and analyze large datasets, and included features such as filtering and sorting.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Matplotlib</span>
+                            <span class="tag">Data Visualization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-heading" data-edit="skills.heading">My Skills</h2>
+                <div class="skills-container">
+                    <div class="skills-grid">
+                        <span class="skill-tag" data-edit="skills.0">Python</span>
+                        <span class="skill-tag" data-edit="skills.1">Django</span>
+                        <span class="skill-tag" data-edit="skills.2">Flask</span>
+                        <span class="skill-tag" data-edit="skills.3">scikit-learn</span>
+                        <span class="skill-tag" data-edit="skills.4">Matplotlib</span>
+                        <span class="skill-tag" data-edit="skills.5">JavaScript</span>
+                        <span class="skill-tag" data-edit="skills.6">HTML/CSS</span>
+                        <span class="skill-tag" data-edit="skills.7">SQL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-heading" data-edit="contact.heading">Get in Touch</h2>
+                <div class="contact-content">
+                    <p data-edit="contact.description">If you're interested in learning more about my services or would like to discuss a potential project, please don't hesitate to contact me. I am always eager to hear from new people and explore new opportunities.</p>
+                    <div class="contact-platforms">
+                        <span class="platform">Email</span>
+                        <span class="platform">LinkedIn</span>
+                        <span class="platform">GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p data-edit="footer.text">Copyright 2024 Sarah Smith. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local AI Setup — CodeCanvas v2</title>
+    <link rel="icon" type="image/png" href="./assets/images/logo.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css?v=2.0">
+    <link rel="stylesheet" href="./assets/css/responsive.css?v=2.0">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #0a0a0a;
+            line-height: 1.6;
+        }
+
+        /* Glass Header */
+        .header {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-v2 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .badge-v2 {
+            font-size: 10px;
+            font-weight: 800;
+            background: transparent;
+            color: #0a0a0a;
+            border: 1.5px solid #0a0a0a;
+            padding: 2px 8px;
+            border-radius: 99px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .doc-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .doc-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .doc-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .doc-header p {
+            font-size: 18px;
+            color: #6b6b6b;
+        }
+
+        .step-block {
+            margin-bottom: 56px;
+            animation: fadeUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: #0a0a0a;
+            color: #ffffff;
+            border-radius: 50%;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 16px;
+        }
+
+        .step-block h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .step-block p {
+            color: #4a4a4a;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .terminal-box {
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 20px 24px;
+            color: #f8f8f2;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            position: relative;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .terminal-header span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4a4a4a;
+        }
+
+        .terminal-header span:nth-child(1) { background: #ff5f56; }
+        .terminal-header span:nth-child(2) { background: #ffbd2e; }
+        .terminal-header span:nth-child(3) { background: #27c93f; }
+
+        .model-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .model-card {
+            border: 1px solid #e5e5e5;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .model-card:hover {
+            border-color: #0a0a0a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .model-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .model-card code {
+            background: #f4f4f4;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #db2777;
+            font-weight: 600;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-block:nth-child(1) { animation-delay: 0.1s; }
+        .step-block:nth-child(2) { animation-delay: 0.2s; }
+        .step-block:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo-v2">
+                    CodeCanvas
+                    <span class="badge-v2">v2</span>
+                </a>
+                <div class="header-actions">
+                    <a href="index.html" class="btn" style="background: transparent; color: #0a0a0a; border: 1px solid #e5e5e5; border-radius: 99px; padding: 8px 16px; font-weight: 600;">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="doc-container">
+        <div class="doc-header">
+            <h1>Bring Your Own Model</h1>
+            <p>CodeCanvas v2 is open-source and architected to work entirely offline. Here is how to link your local AI environment.</p>
+        </div>
+
+        <div class="step-block">
+            <div class="step-number">1</div>
+            <h3>Install Ollama</h3>
+            <p>Ollama allows you to run large language models locally on your Mac, Windows, or Linux machine without relying on corporate clouds or APIs.</p>
+            <p>Visit <a href="https://ollama.com" target="_blank" style="color: #0A0A0A; font-weight: 600; text-decoration: underline;">Ollama.com</a>, download the installer for your OS, and run the setup.</p>
+        </div>
+
+        <div class="step-block">
+            <div class="step-number">2</div>
+            <h3>Pull Your Preferred Model</h3>
+            <p>Open your terminal and pull the foundational model you want the CodeCanvas AI Pipeline to use. We highly recommend models optimized for code generation.</p>
+            
+            <div class="terminal-box">
+                <div class="terminal-header"><span></span><span></span><span></span></div>
+                $ ollama run gemma:7b
+            </div>
+
+            <div class="model-grid">
+                <div class="model-card">
+                    <h4>Gemma (Google)</h4>
+                    <p style="font-size: 14px; color: #6b6b6b; margin-bottom: 12px;">Fast, accurate, and lightweight. Excellent for prompt interpretation.</p>
+                    <code>ollama run gemma</code>
+                </div>
+                <div class="model-card">
+                    <h4>CodeLlama (Meta)</h4>
+                    <p style="font-size: 14px; color: #6b6b6b; margin-bottom: 12px;">The industry standard for generating strict HTML/CSS formats.</p>
+                    <code>ollama run codellama</code>
+                </div>
+                <div class="model-card">
+                    <h4>DeepSeek Coder</h4>
+                    <p style="font-size: 14px; color: #6b6b6b; margin-bottom: 12px;">Advanced logic capabilities for complex creative structures.</p>
+                    <code>ollama run deepseek-coder</code>
+                </div>
+                <div class="model-card">
+                    <h4>Llama 3</h4>
+                    <p style="font-size: 14px; color: #6b6b6b; margin-bottom: 12px;">Incredibly capable conversational model for rich text generation.</p>
+                    <code>ollama run llama3</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-block" style="margin-top: 64px;">
+            <div class="step-number">3</div>
+            <h3>Configure CodeCanvas</h3>
+            <p>Once your chosen model is running in your terminal, open your CodeCanvas project directory and navigate to <code>api/generate.php</code>.</p>
+            <p>Locate the <code>ollamaRequest</code> function around line 90 and update the model string to map exactly to the model you pulled.</p>
+            
+            <div class="terminal-box" style="background: #f4f4f4; color: #0a0a0a; border: 1px solid #e5e5e5; box-shadow: none;">
+<pre style="margin:0;"><code>curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+    <span style="color: #db2777;">'model' => 'gemma:7b',</span> // Change this to match your local model
+    'prompt' => $prompt_text,
+    'stream' => false,
+]));</code></pre>
+            </div>
+            
+            <p style="margin-top: 24px; font-weight: 600;">You are now running a 100% private, locally deployed AI portfolio generator.</p>
+        </div>
+
+    </main>
+
+    <footer class="footer" style="background: #f9f9f9; border-top: 1px solid #e5e5e5; padding: 48px 0 32px;">
+        <div class="container" style="text-align: center; color: #a0a0a0; font-size: 14px;">
+            &copy; 2026 CodeCanvas. Available on GitHub. Open Source under MIT License.
+        </div>
+    </footer>
+</body>
+</html>
+

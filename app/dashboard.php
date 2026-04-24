@@ -8,7 +8,6 @@ session_start();
 require_once __DIR__ . '/../config/bootstrap.php';
 require_once APP_ROOT . '/config/database.php';
 require_once APP_ROOT . '/app/core/auth.php';
-require_once APP_ROOT . '/app/core/TemplatePreview.php';
 
 $user = [
     'id'       => $_SESSION['user_id'],
@@ -51,18 +50,21 @@ try {
     $unreadCount = $stmt->fetchColumn();
 } catch (PDOException $e) {}
 
+// ── GET PROJECT STATS ─────────────────────────────────
+$totalProjects = 0;
+$liveProjects = 0;
+$draftProjects = 0;
+try {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM projects WHERE user_id = ? AND status != 'archived'");
+    $stmt->execute([$user['id']]);
+    $totalProjects = (int) $stmt->fetchColumn();
 
-/**
- * Derives a human-readable category label from a template folder_path.
- * e.g. "templates/business/" → "Business Portfolio"
- *      "templates/developer/" → "Developer Portfolio"
- */
-function getCategoryLabel(string $folderPath): string {
-    $parts    = explode('/', trim($folderPath, '/'));
-    // folder_path is like "templates/business" — second segment is category
-    $category = count($parts) >= 2 ? $parts[1] : ($parts[0] ?? 'portfolio');
-    return ucfirst($category) . ' Portfolio';
-}
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM projects WHERE user_id = ? AND (publish_status = 'deployed' OR publish_status = 'published' OR live_url IS NOT NULL AND live_url != '') AND status != 'archived'");
+    $stmt->execute([$user['id']]);
+    $liveProjects = (int) $stmt->fetchColumn();
+
+    $draftProjects = $totalProjects - $liveProjects;
+} catch (PDOException $e) {}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,47 +75,52 @@ function getCategoryLabel(string $folderPath): string {
     <title><?php echo $pageTitle; ?> — CodeCanvas</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/public/assets/css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Active Link */
+        /* ── Premium White Dashboard Overrides ─────────────── */
+
+        /* Sidebar active (white premium) */
         .sidebar-link.active {
             font-weight: 600;
-            color: #000;
-            background: #F5F5F5;
+            color: #0a0a0a;
+            background: #f0f0f0;
         }
         .sidebar-badge {
-            background: #000;
+            background: #0a0a0a;
             color: #fff;
             font-size: 10px;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 10px;
+            padding: 2px 7px;
+            border-radius: 99px;
             margin-left: auto;
         }
-
 
         /* ── Project Card ───────────────────────────────────── */
         .project-card {
             position: relative;
             background: #fff;
-            border: 1px solid #E5E5E5;
-            border-radius: 8px;
-            overflow: visible; /* allow context menu to overflow */
-            transition: border-color .15s, box-shadow .15s;
+            border: 1px solid #e8e8e8;
+            border-radius: 14px;
+            overflow: visible;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .project-card:hover {
-            border-color: #000;
-            box-shadow: 0 4px 16px rgba(0,0,0,.08);
+            border-color: #d0d0d0;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03);
+            transform: translateY(-2px);
         }
         .project-card-inner {
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 14px;
         }
 
         .project-card-visual {
             width: 100%;
             aspect-ratio: 16/10;
-            background: #f9f9f9;
-            border-bottom: 1px solid #F0F0F0;
+            background: #fafafa;
+            border-bottom: 1px solid #f0f0f0;
             overflow: hidden;
             position: relative;
         }
@@ -133,16 +140,18 @@ function getCategoryLabel(string $folderPath): string {
             z-index: 2;
         }
 
-        /* ── 3-dot Menu ─────────────────────────────────────── */
+        /* ── 3-dot Menu (Premium) ──────────────────────────── */
         .card-menu-btn {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 28px;
-            height: 28px;
-            border-radius: 5px;
-            border: 1px solid #E5E5E5;
-            background: #fff;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            border: 1px solid #e8e8e8;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #555;
             font-size: 16px;
             line-height: 1;
@@ -150,26 +159,31 @@ function getCategoryLabel(string $folderPath): string {
             display: none;
             align-items: center;
             justify-content: center;
-            transition: border-color .15s, background .15s;
+            transition: all .2s ease;
             z-index: 20;
             font-weight: 700;
             letter-spacing: 1px;
         }
         .project-card:hover .card-menu-btn { display: flex; }
-        .card-menu-btn:hover { border-color: #000; background: #FAFAFA; }
+        .card-menu-btn:hover { 
+            border-color: #0a0a0a; 
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
 
         .card-dropdown {
             display: none;
             position: absolute;
-            top: 40px;
-            right: 8px;
+            top: 44px;
+            right: 10px;
             background: #fff;
-            border: 1px solid #E5E5E5;
-            border-radius: 6px;
-            box-shadow: 0 8px 24px rgba(0,0,0,.12);
-            min-width: 168px;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+            min-width: 180px;
             z-index: 100;
             overflow: hidden;
+            padding: 4px;
         }
         .card-dropdown.open { display: block; }
 
@@ -177,20 +191,22 @@ function getCategoryLabel(string $folderPath): string {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 13px;
+            padding: 10px 14px;
             font-size: 13px;
-            color: #222;
+            font-weight: 500;
+            color: #333;
             cursor: pointer;
             border: none;
             background: none;
             width: 100%;
             text-align: left;
-            transition: background .1s;
+            border-radius: 8px;
+            transition: background .12s ease;
         }
-        .card-dd-item:hover { background: #F5F5F5; }
-        .card-dd-item.danger { color: #c00; }
-        .card-dd-item.danger:hover { background: #fff5f5; }
-        .card-dd-sep { border: none; border-top: 1px solid #F0F0F0; margin: 3px 0; }
+        .card-dd-item:hover { background: #f5f5f5; }
+        .card-dd-item.danger { color: #e00; }
+        .card-dd-item.danger:hover { background: #fef2f2; }
+        .card-dd-sep { border: none; border-top: 1px solid #f0f0f0; margin: 4px 0; }
 
         /* ── Inline Rename ──────────────────────────────────── */
         .project-card-title-wrap {
@@ -200,101 +216,136 @@ function getCategoryLabel(string $folderPath): string {
         }
         .project-card-title {
             font-size: 15px;
-            font-weight: 700;
-            color: #0F0F0F;
+            font-weight: 600;
+            color: #0a0a0a;
             flex: 1;
             min-width: 0;
+            letter-spacing: -0.01em;
         }
 
-        /* ── Modals (shared) ────────────────────────────────── */
+        /* ── Modals (Premium Glass) ────────────────────────── */
         .modal-backdrop {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.45);
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
         }
-        .modal-backdrop.open { display: flex; }
+        .modal-backdrop.open { 
+            display: flex;
+            animation: modalFadeIn 0.2s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         .modal-box {
             background: #fff;
-            border-radius: 10px;
+            border-radius: 16px;
             width: 100%;
-            max-width: 400px;
-            padding: 28px;
-            box-shadow: 0 24px 64px rgba(0,0,0,.18);
+            max-width: 420px;
+            padding: 32px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+            border: 1px solid #e8e8e8;
+            animation: modalPopIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        @keyframes modalPopIn {
+            from { opacity: 0; transform: scale(0.96) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-box h3 {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             margin: 0 0 6px;
+            letter-spacing: -0.02em;
+            color: #0a0a0a;
         }
         .modal-box p {
-            font-size: 13px;
-            color: #666;
-            margin: 0 0 18px;
+            font-size: 14px;
+            color: #888;
+            margin: 0 0 24px;
+            line-height: 1.5;
         }
         .modal-input {
             width: 100%;
-            padding: 9px 11px;
-            border: 1px solid #E5E5E5;
-            border-radius: 5px;
+            padding: 11px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 14px;
             font-family: inherit;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .modal-input:focus { outline: none; border-color: #000; }
+        .modal-input:focus { 
+            outline: none; 
+            border-color: #0a0a0a;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+        }
         .modal-actions {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
         }
         .modal-btn {
-            padding: 9px 18px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            border: 1px solid #E5E5E5;
+            border: 1px solid #e0e0e0;
             background: #fff;
             color: #333;
-            transition: background .15s;
+            transition: all .2s ease;
         }
-        .modal-btn:hover { background: #F5F5F5; }
+        .modal-btn:hover { 
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
         .modal-btn-primary {
-            background: #0F0F0F;
+            background: #0a0a0a;
             color: #fff;
-            border-color: #0F0F0F;
+            border-color: #0a0a0a;
         }
-        .modal-btn-primary:hover { background: #333; }
-        .modal-btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+        .modal-btn-primary:hover { background: #222; }
+        .modal-btn-primary:disabled { opacity: .4; cursor: not-allowed; }
         .modal-btn-danger {
-            background: #0F0F0F;
+            background: #0a0a0a;
             color: #fff;
-            border-color: #0F0F0F;
+            border-color: #0a0a0a;
         }
-        .modal-btn-danger:hover { background: #c00; border-color: #c00; }
-        .modal-btn-danger:disabled { opacity: .5; cursor: not-allowed; }
+        .modal-btn-danger:hover { background: #dc2626; border-color: #dc2626; }
+        .modal-btn-danger:disabled { opacity: .4; cursor: not-allowed; }
 
         /* Category badge */
-        .project-type { text-transform: uppercase; font-size: 10px; font-weight: 700; letter-spacing: .06em; color: #6B6B6B; }
+        .project-type { 
+            text-transform: uppercase; 
+            font-size: 10px; 
+            font-weight: 700; 
+            letter-spacing: .08em; 
+            color: #999; 
+        }
 
         /* Published download bar */
         .card-published-bar {
-            padding: 10px 16px;
-            background: #FAFDF7;
-            border-top: 1px solid #D4EDDA;
+            padding: 12px 18px;
+            background: #fafafa;
+            border-top: 1px solid #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 8px;
+            border-radius: 0 0 14px 14px;
         }
         .card-published-label {
             font-size: 11px;
             font-weight: 600;
-            color: #2e7d32;
+            color: #0a0a0a;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -302,18 +353,21 @@ function getCategoryLabel(string $folderPath): string {
         .card-download-btn {
             font-size: 11px;
             font-weight: 700;
-            padding: 5px 12px;
-            background: #0F0F0F;
+            padding: 6px 14px;
+            background: #0a0a0a;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
-            transition: background .15s;
+            transition: all .2s ease;
         }
-        .card-download-btn:hover { background: #333; }
+        .card-download-btn:hover { 
+            background: #222;
+            transform: translateY(-1px);
+        }
 
-        /* ── Visit Site hover overlay on live cards ─────────── */
+        /* ── Visit Site hover overlay ─────────────────────── */
         .card-visit-overlay {
             position: absolute;
             inset: 0;
@@ -322,66 +376,74 @@ function getCategoryLabel(string $folderPath): string {
             align-items: center;
             justify-content: center;
             z-index: 3;
-            transition: background .2s;
+            transition: background .25s ease;
+            border-radius: 14px 14px 0 0;
         }
         .project-card:hover .card-visit-overlay {
-            background: rgba(0,0,0,0.38);
+            background: rgba(0,0,0,0.35);
         }
         .card-visit-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 9px 20px;
+            padding: 10px 22px;
             background: #fff;
-            color: #0F0F0F;
+            color: #0a0a0a;
             font-size: 13px;
             font-weight: 700;
-            border-radius: 6px;
+            border-radius: 10px;
             text-decoration: none;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             opacity: 0;
-            transform: translateY(6px);
-            transition: opacity .2s, transform .2s;
+            transform: translateY(8px);
+            transition: all .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             white-space: nowrap;
+            letter-spacing: -0.01em;
         }
         .project-card:hover .card-visit-btn {
             opacity: 1;
             transform: translateY(0);
         }
         .card-visit-btn:hover {
-            background: #0F0F0F;
+            background: #0a0a0a;
             color: #fff;
         }
+
         /* Visit button in bottom bar */
         .card-visit-bar-btn {
             font-size: 11px;
             font-weight: 700;
-            padding: 5px 12px;
-            background: #1a7f37;
+            padding: 6px 14px;
+            background: #0a0a0a;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
-            transition: background .15s;
+            transition: all .2s ease;
             display: inline-flex;
             align-items: center;
             gap: 4px;
         }
-        .card-visit-bar-btn:hover { background: #145d28; }
+        .card-visit-bar-btn:hover { 
+            background: #222;
+            transform: translateY(-1px);
+        }
 
         /* ── New Project Card Styles ────────────────────────── */
         .project-card-new {
-            border: 2px dashed #A0A0A0;
-            background: #FAFAFA;
-            opacity: 0.8;
-            transition: all 0.2s;
+            border: 2px dashed #d8d8d8;
+            background: #fafafa;
+            opacity: 1;
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         .project-card-new:hover {
             opacity: 1;
-            background: #fff;
-            border-style: solid;
-            border-color: #000;
+            background: #f5f5f5;
+            border-style: dashed;
+            border-color: #0a0a0a;
+            transform: none;
         }
         .project-card-new .project-card-link {
             display: block;
@@ -395,25 +457,84 @@ function getCategoryLabel(string $folderPath): string {
             border-bottom: none;
         }
         .project-card-new .project-card-icon {
-            font-size: 54px;
-            color: #bbb;
-            font-weight: 300;
+            font-size: 40px;
+            color: #ccc;
+            font-weight: 200;
+            transition: all 0.25s ease;
+        }
+        .project-card-new:hover .project-card-icon {
+            color: #0a0a0a;
+            transform: scale(1.1);
         }
         .project-card-new .project-card-title {
-            font-size: 16px;
-            color: #888;
+            font-size: 12px;
+            color: #aaa;
             font-weight: 600;
             margin: 0;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .project-card-new:hover .project-card-title {
+            color: #0a0a0a;
         }
         .spinner-small {
             width: 14px;
             height: 14px;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-top: 2px solid #000;
+            border: 2px solid rgba(0,0,0,0.08);
+            border-top: 2px solid #0a0a0a;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
+        /* ── Status Badges (Monochrome Pills) ──────────────── */
+        .status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .publish-status-draft { background: #f0f0f0; color: #888; }
+        .publish-status-building { 
+            background: #f5f5f5; 
+            color: #0a0a0a;
+            animation: pulse 1.5s infinite;
+        }
+        .publish-status-deployed { background: #0a0a0a; color: #fff; }
+        .publish-status-failed { background: #fef2f2; color: #dc2626; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* ── AI Generator Section (Premium White) ──────────── */
+        .ai-generator-section {
+            background: #fff !important;
+            border: 1px solid #e8e8e8 !important;
+            border-radius: 16px !important;
+            padding: 28px 32px !important;
+            transition: box-shadow 0.3s ease;
+        }
+        .ai-generator-section:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+        .ai-generator-section h2 {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.01em;
+            color: #0a0a0a;
+        }
+
+        /* Loading state refinement */
+        .loading-state {
+            margin-top: 20px !important;
+        }
+        .stage.active { color: #0a0a0a !important; font-weight: 700; }
+        .stage.completed { color: #666 !important; }
     </style>
 </head>
 <body class="dashboard-layout">
@@ -421,8 +542,9 @@ function getCategoryLabel(string $folderPath): string {
     <!-- Top Bar -->
     <header class="dashboard-header">
         <div class="dashboard-header-content">
-            <a href="<?= BASE_URL ?>/dashboard.php" class="logo">
+            <a href="<?= BASE_URL ?>/app/dashboard.php" class="logo" style="display: flex; align-items: center; gap: 8px;">
                 CodeCanvas
+                <span style="font-size: 9px; font-weight: 800; background: transparent; color: #0a0a0a; border: 1.5px solid #0a0a0a; padding: 2px 8px; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4;">v2</span>
             </a>
             <div class="user-menu">
                 <div class="user-avatar" data-dropdown="user">
@@ -432,7 +554,7 @@ function getCategoryLabel(string $folderPath): string {
                             <strong><?php echo htmlspecialchars($user['name']); ?></strong>
                             <span style="font-size:12px;color:#6B6B6B;"><?php echo htmlspecialchars($user['email']); ?></span>
                         </div>
-                        <a href="<?= BASE_URL ?>/profile.php" class="dropdown-item"><strong>Profile</strong></a>
+                        <a href="<?= BASE_URL ?>/app/profile.php" class="dropdown-item"><strong>Profile</strong></a>
                         <div class="dropdown-divider"></div>
                         <a href="<?= BASE_URL ?>/auth/logout.php" class="dropdown-item" onclick="openLogout(event)"><strong>Logout</strong></a>
                     </div>
@@ -445,28 +567,17 @@ function getCategoryLabel(string $folderPath): string {
         <!-- Left Sidebar -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-section">
-                <a href="<?= BASE_URL ?>/new-project.php" class="btn btn-primary" style="width:100%;margin-bottom:24px;">+ New Project</a>
+                <a href="#prompt-input" class="btn btn-primary" style="width:100%;margin-bottom:24px;">+ New Project</a>
             </div>
             <div class="sidebar-section">
                 <div class="sidebar-label">Projects</div>
                 <nav class="sidebar-nav">
-                    <a href="<?= BASE_URL ?>/dashboard.php?view=all"      class="sidebar-link <?php echo ($view === 'all')      ? 'active' : ''; ?>">All Projects</a>
-                    <a href="<?= BASE_URL ?>/dashboard.php?view=yours"    class="sidebar-link <?php echo ($view === 'yours')    ? 'active' : ''; ?>">Your Projects</a>
-                    <a href="<?= BASE_URL ?>/dashboard.php?view=archived" class="sidebar-link <?php echo ($view === 'archived') ? 'active' : ''; ?>">Archived</a>
+                    <a href="<?= BASE_URL ?>/app/dashboard.php?view=all"      class="sidebar-link <?php echo ($view === 'all')      ? 'active' : ''; ?>">All Projects</a>
+                    <a href="<?= BASE_URL ?>/app/dashboard.php?view=yours"    class="sidebar-link <?php echo ($view === 'yours')    ? 'active' : ''; ?>">Your Projects</a>
+                    <a href="<?= BASE_URL ?>/app/dashboard.php?view=archived" class="sidebar-link <?php echo ($view === 'archived') ? 'active' : ''; ?>">Archived</a>
                 </nav>
             </div>
-            <div class="sidebar-section">
-                <div class="sidebar-label">Communication</div>
-                <nav class="sidebar-nav">
-                    <a href="<?= BASE_URL ?>/messages.php" class="sidebar-link">
-                        Messages
-                        <?php if ($unreadCount > 0): ?>
-                            <span class="sidebar-badge"><?php echo $unreadCount; ?></span>
-                        <?php endif; ?>
-                    </a>
-                    <a href="<?= BASE_URL ?>/notifications.php" class="sidebar-link">Notifications</a>
-                </nav>
-            </div>
+            <!-- Removed Communication Section to keep only Project List as per V2 requirements -->
 
         </aside>
 
@@ -479,35 +590,177 @@ function getCategoryLabel(string $folderPath): string {
                 </div>
             </div>
 
-            <div class="projects-grid" id="projects-grid">
-
-                <?php if ($view !== 'archived'): ?>
-                <!-- New Project Card -->
-                <div class="project-card project-card-new">
-                    <div class="project-card-inner">
-                        <a href="<?= BASE_URL ?>/new-project.php" class="project-card-link">
-                            <div class="project-card-visual">
-                                <div class="project-card-icon">+</div>
+            <!-- AI Portfolio Generator Bar -->
+            <div class="ai-generator-section" style="margin-bottom: 28px;">
+                <h2 style="margin-top: 0; margin-bottom: 18px;">Create New Portfolio with AI</h2>
+                <div class="search-container" style="display: flex; gap: 12px; align-items: center; position: relative;">
+                    <div class="ai-glow-box" style="flex: 1; position: relative;">
+                        <div class="ai-glow-box-inner" id="ai-pulse-bar" style="display: flex; align-items: center; padding: 0 16px; background: #fff; border-radius: 12px; position: relative; z-index: 2;">
+                            <!-- Liquid AI Loader -->
+                            <div class="ai-liquid-wrap" style="position: relative; width: 22px; height: 22px; margin-right: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                <!-- Idle dot -->
+                                <div class="ai-idle-dot"></div>
+                                <!-- Liquid ring (hidden until generating) -->
+                                <div class="ai-liquid-loader">
+                                    <div class="ai-liquid-ring"></div>
+                                    <div class="ai-liquid-ring ai-liquid-ring-2"></div>
+                                    <div class="ai-liquid-glow"></div>
+                                </div>
                             </div>
-                            <div class="project-card-header" style="visibility:hidden; padding: 12px 16px;">
-                                <span class="project-type">&nbsp;</span>
-                            </div>
-                            <div class="project-card-body" style="padding:16px; border-top:1px solid #F0F0F0;">
-                                <h3 class="project-card-title">New Project</h3>
-                                <p class="project-card-meta">&nbsp;</p>
-                            </div>
-                        </a>
+                            <!-- SVG filter for liquid distortion -->
+                            <svg style="position:absolute;width:0;height:0;">
+                                <defs>
+                                    <filter id="liquid-filter">
+                                        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" seed="2" result="noise"/>
+                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+                                    </filter>
+                                </defs>
+                            </svg>
+                            <input type="text" id="prompt-input" placeholder="Describe your portfolio..." style="flex: 1; border: none; background: transparent; padding: 13px 0; font-size: 14px; outline: none; color: #0a0a0a; font-family: inherit;">
+                        </div>
+                    </div>
+                    <button id="enhance-btn" style="padding: 12px 24px; background: #fff; color: #0a0a0a; border: 1px solid #e0e0e0; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s ease; font-family: inherit;">Enhance</button>
+                    <button id="generate-btn" style="padding: 12px 24px; background: #0a0a0a; color: #fff; border: none; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s ease; font-family: inherit;">Generate</button>
+                </div>
+                
+                <div class="loading-state" id="loading-state" style="display: none; margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #888; margin-bottom: 10px;">
+                        <span id="loading-text">Designing layout...</span>
+                        <span id="loading-time" style="font-variant-numeric: tabular-nums;">~0s</span>
+                    </div>
+                    <div style="width: 100%; height: 4px; background: #f0f0f0; border-radius: 99px; overflow: hidden; margin-bottom: 14px;">
+                        <div id="progress-bar" style="width: 0%; height: 100%; background: #0a0a0a; border-radius: 99px; transition: width 0.3s ease;"></div>
+                    </div>
+                    <div class="progress-stages" style="display: flex; gap: 16px; font-size: 11px; font-weight: 600; color: #bbb;">
+                        <span class="stage active" id="stage-1" style="display: flex; align-items: center; gap: 4px;">⚡ Blueprint</span>
+                        <span class="stage" id="stage-2" style="display: flex; align-items: center; gap: 4px;">🔨 Building HTML</span>
+                        <span class="stage" id="stage-3" style="display: flex; align-items: center; gap: 4px;">✅ Done</span>
                     </div>
                 </div>
-                <?php endif; ?>
+            </div>
+
+            <style>
+                /* ── Liquid AI Loader ─────────────────────────────── */
+                .ai-idle-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: #ccc;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                }
+
+                .ai-liquid-loader {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transform: scale(0.5);
+                    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    pointer-events: none;
+                }
+
+                .ai-liquid-ring {
+                    position: absolute;
+                    width: 18px;
+                    height: 18px;
+                    border: 2px solid #0a0a0a;
+                    border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
+                    opacity: 0;
+                    filter: url(#liquid-filter);
+                    animation: none;
+                }
+
+                .ai-liquid-ring-2 {
+                    width: 14px;
+                    height: 14px;
+                    border-color: rgba(0,0,0,0.3);
+                }
+
+                .ai-liquid-glow {
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background: radial-gradient(circle, rgba(0,0,0,0.08) 0%, transparent 70%);
+                    opacity: 0;
+                    animation: none;
+                }
+
+                /* ── Active: generating state ─────────────────────── */
+                .ai-glow-box.generating-active .ai-idle-dot {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0);
+                }
+
+                .ai-glow-box.generating-active .ai-liquid-loader {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                .ai-glow-box.generating-active .ai-liquid-ring {
+                    opacity: 1;
+                    animation: liquidMorph 3s ease-in-out infinite, liquidRotate 6s linear infinite, liquidBreath 2s ease-in-out infinite;
+                }
+
+                .ai-glow-box.generating-active .ai-liquid-ring-2 {
+                    opacity: 0.5;
+                    animation: liquidMorph2 3.5s ease-in-out infinite, liquidRotateReverse 5s linear infinite, liquidBreath 2.4s ease-in-out infinite;
+                }
+
+                .ai-glow-box.generating-active .ai-liquid-glow {
+                    opacity: 1;
+                    animation: liquidGlow 2s ease-in-out infinite;
+                }
+
+                /* ── Keyframes ────────────────────────────────────── */
+                @keyframes liquidMorph {
+                    0%   { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
+                    25%  { border-radius: 55% 45% 40% 60% / 45% 55% 45% 55%; }
+                    50%  { border-radius: 45% 55% 60% 40% / 60% 45% 55% 40%; }
+                    75%  { border-radius: 60% 40% 45% 55% / 40% 60% 40% 60%; }
+                    100% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
+                }
+
+                @keyframes liquidMorph2 {
+                    0%   { border-radius: 55% 45% 40% 60% / 40% 55% 45% 60%; }
+                    33%  { border-radius: 40% 60% 55% 45% / 60% 40% 55% 45%; }
+                    66%  { border-radius: 60% 40% 45% 55% / 45% 60% 40% 55%; }
+                    100% { border-radius: 55% 45% 40% 60% / 40% 55% 45% 60%; }
+                }
+
+                @keyframes liquidRotate {
+                    from { transform: rotate(0deg); }
+                    to   { transform: rotate(360deg); }
+                }
+
+                @keyframes liquidRotateReverse {
+                    from { transform: rotate(360deg); }
+                    to   { transform: rotate(0deg); }
+                }
+
+                @keyframes liquidBreath {
+                    0%, 100% { transform: scale(1) rotate(var(--r, 0deg)); opacity: 0.8; }
+                    50%      { transform: scale(1.15) rotate(var(--r, 0deg)); opacity: 1; }
+                }
+
+                @keyframes liquidGlow {
+                    0%, 100% { transform: scale(0.8); opacity: 0.3; }
+                    50%      { transform: scale(1.3); opacity: 0.6; }
+                }
+            </style>
+
+            <div class="projects-grid" id="projects-grid">
+
 
                 <?php
                 try {
-                    $sql = "SELECT p.*, t.folder_path, t.slug, t.preview_image_path, t.preview_fallback_path, t.name as template_name
-                            FROM projects p
-                            LEFT JOIN templates t ON p.template_id = t.id
-                            WHERE p.user_id = ? $filterQuery
-                            ORDER BY p.updated_at DESC";
+                    $sql = "SELECT p.* FROM projects p WHERE p.user_id = ? $filterQuery ORDER BY p.updated_at DESC";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([$user['id']]);
                     $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -517,7 +770,7 @@ function getCategoryLabel(string $folderPath): string {
                             $statusClass = 'publish-status-draft';
                             $statusLabel = ucfirst($project['publish_status'] ?? 'draft');
                             
-                            if ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published') {
+                            if ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published' || !empty($project['live_url'])) {
                                 $statusClass = 'publish-status-deployed';
                                 $statusLabel = 'Live';
                             } elseif ($project['publish_status'] === 'publishing' || $project['publish_status'] === 'deploying') {
@@ -531,10 +784,7 @@ function getCategoryLabel(string $folderPath): string {
                             $updated = new DateTime($project['updated_at']);
                             $timeAgo = $updated->format('M j, Y');
 
-                            // ── Category-aware label ──────────────────────────
-                            $folderPath    = $project['folder_path'] ?? 'templates/developer/';
-                            $categoryLabel = getCategoryLabel($folderPath);
-
+                            $categoryLabel = "AI Generated";
                             $isArchived = ($project['status'] === 'archived');
                 ?>
                 <div class="project-card"
@@ -552,21 +802,18 @@ function getCategoryLabel(string $folderPath): string {
                         <button class="card-dd-item" onclick="openRename(<?php echo $project['id']; ?>, <?php echo htmlspecialchars(json_encode($project['project_name'])); ?>)">
                             Rename
                         </button>
-                        <a href="<?= BASE_URL ?>/project-settings.php?id=<?php echo $project['id']; ?>" class="card-dd-item" style="text-decoration:none;">
-                            Settings
-                        </a>
                         <?php endif; ?>
+                        
+                        <a href="<?= BASE_URL ?>/api/export-project.php?id=<?php echo $project['id']; ?>" class="card-dd-item" style="text-decoration:none;">
+                            Export ZIP
+                        </a>
+
                         <button class="card-dd-item" onclick="openArchive(<?php echo $project['id']; ?>, <?php echo htmlspecialchars(json_encode($project['project_name'])); ?>, <?php echo $isArchived ? 'true' : 'false'; ?>)">
                             <?php echo $isArchived ? 'Unarchive' : 'Archive'; ?>
                         </button>
                          <button class="card-dd-item" onclick="openDuplicate(<?php echo $project['id']; ?>, <?php echo htmlspecialchars(json_encode($project['project_name'])); ?>)">
                             Duplicate
                         </button>
-                        <?php if ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published'): ?>
-                        <button class="card-dd-item danger" onclick="openUnpublish(<?php echo $project['id']; ?>)">
-                            Unpublish
-                        </button>
-                        <?php endif; ?>
                         <div class="card-dd-sep"></div>
                         <button class="card-dd-item danger" onclick="openDelete(<?php echo $project['id']; ?>, <?php echo htmlspecialchars(json_encode($project['project_name'])); ?>)">
                             Delete
@@ -575,18 +822,18 @@ function getCategoryLabel(string $folderPath): string {
 
                     <!-- Card inner (link area) -->
                     <div class="project-card-inner">
-                        <a href="<?= BASE_URL ?>/project-editor.php?id=<?php echo $project['id']; ?>" class="project-card-link">
-                            <div class="project-card-visual template-preview-container shimmer">
-                                <?php echo TemplatePreview::getPreviewHtml($project); ?>
+                        <a href="<?= BASE_URL ?>/public/editor.html?id=<?php echo $project['id']; ?>" class="project-card-link">
+                            <div class="project-card-visual" style="width: 100%; aspect-ratio: 16/10; background: #f9f9f9; border-bottom: 1px solid #E5E5E5; overflow: hidden; position: relative;">
+                                <iframe src="<?= BASE_URL ?><?php echo htmlspecialchars($project['html_path'] ?? ''); ?>?t=<?php echo time(); ?>" style="width: 400%; height: 400%; transform: scale(0.25); transform-origin: top left; border: none; pointer-events: none; background: #fff;"></iframe>
                                 <div class="project-card-visual-overlay"></div>
-                                <?php if (!empty($project['live_url'] ?? '') && ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published')): ?>
-                                <div class="card-visit-overlay" onclick="event.preventDefault(); event.stopPropagation(); window.open('<?php echo htmlspecialchars($project['live_url'] ?? ''); ?>', '_blank');">
+                                <div class="card-visit-overlay" onclick="event.preventDefault(); event.stopPropagation(); window.open('<?= BASE_URL ?><?php echo htmlspecialchars($project['html_path'] ?? ''); ?>', '_blank');">
                                     <span class="card-visit-btn">&#8599; Visit Site</span>
                                 </div>
-                                <?php endif; ?>
                             </div>
                             <div class="project-card-header">
-                                <span class="project-type"><?php echo htmlspecialchars($categoryLabel); ?></span>
+                                <span class="project-type" style="font-weight:900; color:<?php echo ($statusLabel === 'Live') ? '#10b981' : '#6B6B6B'; ?>;">
+                                    <?php echo ($statusLabel === 'Live') ? '🟢 LIVE' : strtoupper($categoryLabel); ?>
+                                </span>
                                 <span class="status-badge <?php echo $statusClass; ?>"><?php echo $statusLabel; ?></span>
                             </div>
                             <div class="project-card-body" style="padding:16px;border-top:1px solid #F0F0F0;">
@@ -601,12 +848,12 @@ function getCategoryLabel(string $folderPath): string {
                             <span class="card-published-label">⏳ Building Site...</span>
                             <div class="spinner-small"></div>
                         </div>
-                        <?php elseif ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published'): ?>
-                        <div class="card-published-bar">
-                            <span class="card-published-label">✅ Live</span>
+                        <?php elseif ($project['publish_status'] === 'deployed' || $project['publish_status'] === 'published' || !empty($project['live_url'])): ?>
+                        <div class="card-published-bar" style="background:#f0fff4; border-top:1px solid #c6f6d5;">
+                            <span class="card-published-label" style="color:#166534; font-weight:700;">✅ Live on Vercel</span>
                             <div style="display:flex;gap:5px;align-items:center;">
-                                <button onclick="openPublish(<?php echo $project['id']; ?>, '<?php echo htmlspecialchars(addslashes($project['custom_slug'])); ?>', true)" class="card-download-btn" title="Re-publish" style="background:#0F0F0F;color:#fff;">↺ Re-publish</button>
-                                <button onclick="openUnpublish(<?php echo $project['id']; ?>)" class="card-download-btn" title="Unpublish" style="background:#fff;color:#c00;border:1px solid #f5c6c6;">⊘</button>
+                                <button onclick="openPublish(<?php echo $project['id']; ?>, '<?php echo htmlspecialchars(addslashes($project['custom_slug'])); ?>', true)" class="card-download-btn" title="Re-publish Changes" style="background:#0F0F0F; color:#fff; padding: 6px 14px; font-weight:800; border-radius:4px;">↺ RE-PUBLISH</button>
+                                <button onclick="openUnpublish(<?php echo $project['id']; ?>)" class="card-download-btn" title="Unpublish" style="background:#fff; color:#c00; border:1px solid #f5c6c6; padding: 6px 10px;">⊘</button>
                             </div>
                         </div>
                         <?php else: ?>
@@ -744,15 +991,15 @@ function getCategoryLabel(string $folderPath): string {
     </div>
 
     <style>
-        /* ── Publish Progress Overlay ─────────────────────── */
+        /* ── Publish Progress Overlay (Premium) ───────────── */
         #publish-progress-overlay {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             align-items: center;
             justify-content: center;
         }
@@ -766,16 +1013,17 @@ function getCategoryLabel(string $folderPath): string {
         }
         .pub-card {
             background: #fff;
-            border-radius: 16px;
-            padding: 36px 40px;
+            border-radius: 20px;
+            padding: 40px 44px;
             width: 420px;
             max-width: 92vw;
-            box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.06);
+            border: 1px solid #e8e8e8;
             text-align: center;
             animation: pubCardPop .3s cubic-bezier(0.34,1.56,0.64,1);
         }
         @keyframes pubCardPop {
-            from { opacity:0; transform: scale(0.88) translateY(20px); }
+            from { opacity:0; transform: scale(0.92) translateY(16px); }
             to   { opacity:1; transform: scale(1) translateY(0); }
         }
         .pub-rocket {
@@ -791,19 +1039,20 @@ function getCategoryLabel(string $folderPath): string {
         .pub-title {
             font-size: 20px;
             font-weight: 800;
-            color: #0F0F0F;
+            color: #0a0a0a;
             margin: 10px 0 4px;
+            letter-spacing: -0.02em;
         }
         .pub-step {
             font-size: 13px;
-            color: #666;
+            color: #888;
             margin-bottom: 24px;
             min-height: 20px;
             transition: opacity .3s;
         }
         .pub-track {
             width: 100%;
-            height: 6px;
+            height: 4px;
             background: #f0f0f0;
             border-radius: 99px;
             overflow: hidden;
@@ -812,13 +1061,13 @@ function getCategoryLabel(string $folderPath): string {
         .pub-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #0F0F0F, #555);
+            background: #0a0a0a;
             border-radius: 99px;
             transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
         }
         .pub-pct {
             font-size: 12px;
-            color: #999;
+            color: #bbb;
             font-weight: 600;
             font-variant-numeric: tabular-nums;
         }
@@ -1171,20 +1420,20 @@ function getCategoryLabel(string $folderPath): string {
             btn.disabled = true; btn.textContent = 'Saving…';
 
             try {
-                const res  = await fetch(BASE_URL + '/project-rename.php', {
+                const res  = await fetch(BASE_URL + '/api/rename-project.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ project_id: _renameId, name })
+                    body: JSON.stringify({ id: _renameId, name })
                 });
                 const data = await res.json();
 
                 if (data.success) {
                     // Update card title in DOM
                     const titleEl = document.getElementById('title-' + _renameId);
-                    if (titleEl) titleEl.textContent = data.name;
+                    if (titleEl) titleEl.textContent = name;
                     // Update data-project-name for search
                     const card = document.querySelector('.project-card[data-project-id="' + _renameId + '"]');
-                    if (card) card.dataset.projectName = data.name;
+                    if (card) card.dataset.projectName = name;
                     closeRename();
                 } else {
                     alert(data.message || 'Failed to rename.');
@@ -1227,7 +1476,7 @@ function getCategoryLabel(string $folderPath): string {
             btn.disabled = true; btn.textContent = 'Working…';
 
             try {
-                const res  = await fetch(BASE_URL + '/project-archive.php', {
+                const res  = await fetch(BASE_URL + '/api/archive-project.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ project_id: _archiveId, action: _archiveAction })
@@ -1278,10 +1527,10 @@ function getCategoryLabel(string $folderPath): string {
             btn.disabled = true; btn.textContent = 'Deleting…';
 
             try {
-                const res  = await fetch(BASE_URL + '/project-delete.php', {
+                const res  = await fetch(BASE_URL + '/api/delete-project.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ project_id: _deleteId })
+                    body: JSON.stringify({ id: _deleteId })
                 });
                 const data = await res.json();
 
@@ -1328,7 +1577,7 @@ function getCategoryLabel(string $folderPath): string {
             btn.disabled = true; btn.textContent = 'Duplicating…';
 
             try {
-                const res = await fetch(BASE_URL + '/project-duplicate.php', {
+                const res = await fetch(BASE_URL + '/api/duplicate-project.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ project_id: _duplicateId })
@@ -1369,5 +1618,9 @@ function getCategoryLabel(string $folderPath): string {
             if (e.key === 'Enter') executeRename();
         });
     </script>
+    <script>
+        const BASE_URL = '<?= BASE_URL ?>';
+    </script>
+    <script src="<?= BASE_URL ?>/public/assets/js/script.js"></script>
 </body>
 </html>

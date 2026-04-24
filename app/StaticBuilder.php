@@ -26,7 +26,7 @@ class StaticBuilder
         $stmt = $this->pdo->prepare(
             "SELECT p.*, t.folder_path, t.slug AS template_slug
              FROM projects p
-             JOIN templates t ON p.template_id = t.id
+             LEFT JOIN templates t ON p.template_id = t.id
              WHERE p.id = ?"
         );
         $stmt->execute([$projectId]);
@@ -36,6 +36,9 @@ class StaticBuilder
 
     private function resolveTemplateSource(): void
     {
+        if ($this->project['is_ai_generated']) {
+            return; // No template source needed for AI projects
+        }
         $root       = defined('APP_ROOT') ? APP_ROOT : dirname(__DIR__);
         $folderPath = rtrim($this->project['folder_path'], '/');
         $baseDir    = $root . '/' . $folderPath;
@@ -101,6 +104,15 @@ class StaticBuilder
 
     private function processHtml(): string
     {
+        if ($this->project['is_ai_generated']) {
+            $root = defined('APP_ROOT') ? APP_ROOT : dirname(__DIR__);
+            $path = $root . '/' . ltrim($this->project['html_path'], '/');
+            if (file_exists($path)) {
+                return file_get_contents($path);
+            }
+            throw new Exception("AI project HTML file not found at " . $path);
+        }
+
         $html     = file_get_contents($this->realTemplateDir . '/' . $this->realTemplateFile);
         $userData = json_decode($this->project['content_json'] ?? '{}', true) ?: [];
 
@@ -245,6 +257,22 @@ class StaticBuilder
 
     private function copyAssets(): void
     {
+        if ($this->project['is_ai_generated']) {
+            $root = defined('APP_ROOT') ? APP_ROOT : dirname(__DIR__);
+            $srcDir = $root . '/public/output/' . $this->project['id'];
+            if (is_dir($srcDir)) {
+                $dir = opendir($srcDir);
+                while (false !== ($file = readdir($dir))) {
+                    if ($file === '.' || $file === '..' || $file === 'index.html') continue;
+                    $src = $srcDir . '/' . $file;
+                    $dst = $this->buildPath . $file;
+                    if (is_dir($src)) $this->recurseCopy($src, $dst); else copy($src, $dst);
+                }
+                closedir($dir);
+            }
+            return;
+        }
+
         $dir = opendir($this->realTemplateDir);
         while (false !== ($file = readdir($dir))) {
             if ($file === '.' || $file === '..' || $file === $this->realTemplateFile || $file === 'schema.json') continue;

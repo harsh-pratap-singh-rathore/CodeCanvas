@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $response['success'] = true;
                 if ($user['role'] === 'admin') {
-                    $response['redirect'] = BASE_URL . '/admin/dashboard.php';
+                    $response['redirect'] = BASE_URL . '/admin/index.php';
                 } else {
-                    $response['redirect'] = BASE_URL . '/dashboard.php';
+                    $response['redirect'] = BASE_URL . '/app/dashboard.php';
                 }
             } else {
                 $response['message'] = 'Invalid credentials.';

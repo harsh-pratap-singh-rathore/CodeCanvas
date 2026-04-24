@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Rathore - Web Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #F5F5F5;
+            --accent: #4567b7;
+            --background: #F5F5F5;
+            --text: #333333;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #portfolio-root {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 245, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 0 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-name {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            transform: translateY(0);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(69, 103, 183, 0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .about-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .project-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            background: rgba(69, 103, 183, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(69, 103, 183, 0.05) 0%, rgba(245, 245, 245, 0.1) 100%);
+            border-radius: 30px;
+            margin: 2rem 0;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-description {
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .contact-platforms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .platform {
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .platform:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(69, 103, 183, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero-name {
+                font-size: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div id="portfolio-root">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand" data-edit="navbar.brand">Harsh Rathore</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-name animate" data-edit="hero.name">Harsh Rathore</h1>
+                <h2 class="hero-title animate delay-1" data-edit="hero.title">Web Developer</h2>
+                <p class="hero-subtitle animate delay-2" data-edit="hero.subtitle">Expert in web development with a passion for creating dynamic and interactive user experiences</p>
+                <a href="#projects" class="cta-button animate delay-3" data-edit="hero.cta">Explore My Projects</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="about-content">
+                <h2 class="section-heading" data-edit="about.heading">About Me</h2>
+                <p class="about-description" data-edit="about.description">I'm Harsh Rathore, a BCA student with a strong passion for web development. I have experience in building dynamic and interactive web applications using HTML, CSS, and JavaScript. I'm always looking to improve my skills and stay up-to-date with the latest technologies and trends. In my free time, I enjoy experimenting with new coding techniques and collaborating with other developers on open-source projects. I'm excited to share my projects and experiences with you, and I look forward to connecting with you.</p>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <h2 class="section-heading" data-edit="projects.heading">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card animate">
+                    <h3 class="project-title" data-edit="projects.0.title">Project 1</h3>
+                    <p class="project-description" data-edit="projects.0.description">This is a web development project that showcases my skills in HTML, CSS, and JavaScript. The project features a responsive design, interactive elements, and a dynamic user interface. I'm proud of how it turned out and I'm excited to share it with you. The project was built using a combination of front-end and back-end technologies, and it demonstrates my ability to work with different programming languages and frameworks.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="project-card animate delay-1">
+                    <h3 class="project-title" data-edit="projects.1.title">Project 2</h3>
+                    <p class="project-description" data-edit="projects.1.description">This is another web development project that showcases my skills in web development. The project features a unique design, interactive elements, and a dynamic user interface. I'm proud of how it turned out and I'm excited to share it with you. The project was built using a combination of front-end and back-end technologies, and it demonstrates my ability to work with different programming languages and frameworks.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="project-card animate delay-2">
+                    <h3 class="project-title" data-edit="projects.2.title">Project 3</h3>
+                    <p class="project-description" data-edit="projects.2.description">This is a web development project that showcases my skills in web development. The project features a responsive design, interactive elements, and a dynamic user interface. I'm proud of how it turned out and I'm excited to share it with you. The project was built using a combination of front-end and back-end technologies, and it demonstrates my ability to work with different programming languages and frameworks.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <h2 class="section-heading" data-edit="skills.heading">My Skills</h2>
+            <div class="skills-container">
+                <div class="skill-item animate" data-edit="skills.0">HTML</div>
+                <div class="skill-item animate delay-1" data-edit="skills.1">CSS</div>
+                <div class="skill-item animate delay-2" data-edit="skills.2">JavaScript</div>
+                <div class="skill-item animate" data-edit="skills.3">Web Development</div>
+                <div class="skill-item animate delay-1" data-edit="skills.4">Responsive Design</div>
+                <div class="skill-item animate delay-2" data-edit="skills.5">Interactive Elements</div>
+                <div class="skill-item animate" data-edit="skills.6">Dynamic User Interface</div>
+                <div class="skill-item animate delay-1" data-edit="skills.7">Front-end Development</div>
+                <div class="skill-item animate delay-2" data-edit="skills.8">Back-end Development</div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="contact-content">
+                <h2 class="section-heading" data-edit="contact.heading">Get in Touch</h2>
+                <p class="contact-description" data-edit="contact.description">If you're interested in collaborating with me or learning more about my projects, please don't hesitate to reach out. I'm always looking to connect with other developers and learn about new opportunities. You can contact me through my website or through my social media profiles.</p>
+                <div class="contact-platforms">
+                    <a href="#" class="platform">Email</a>
+                    <a href="#" class="platform">LinkedIn</a>
+                    <a href="#" class="platform">GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p data-edit="footer.text">Harsh Rathore 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -46,7 +46,12 @@ if (strlen($slug) < 3) {
 
 try {
     // ─── 1. Verify project ownership ──────────────────────────────────────────
-    $stmt = $pdo->prepare("SELECT p.*, t.folder_path FROM projects p JOIN templates t ON p.template_id = t.id WHERE p.id = ? AND p.user_id = ?");
+    $stmt = $pdo->prepare("
+        SELECT p.*, t.folder_path 
+        FROM projects p 
+        LEFT JOIN templates t ON p.template_id = t.id 
+        WHERE p.id = ? AND p.user_id = ?
+    ");
     $stmt->execute([$projectId, $_SESSION['user_id']]);
     $project = $stmt->fetch();
 
@@ -54,7 +59,7 @@ try {
         throw new Exception('Project not found or access denied');
     }
 
-    // Update status to Publishing immediately (using correct column: publish_status)
+    // Update status to Publishing immediately
     $pdo->prepare("UPDATE projects SET publish_status = 'publishing' WHERE id = ?")->execute([$projectId]);
 
     // ─── 2. Enforce Strict Vercel API Validation & Failsafe ────────────────────

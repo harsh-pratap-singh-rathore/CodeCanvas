@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Portfolio | CodeCanvas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --sidebar-width: 320px;
+            --primary: #000; /* Serious, professional black primary */
+            --accent: #6366f1;
+            --bg-body: #fff;
+            --bg-sidebar: #fff;
+            --bg-input: #f9f9f9;
+            --border: #eeeeee;
+            --text-main: #000;
+            --text-muted: #888;
+            --header-height: 64px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #fafafa; color: #000; }
+        
+        /* Main Header */
+        .main-header {
+            height: var(--header-height);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: #fff;
+            z-index: 100;
+        }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .brand { font-size: 1.1rem; font-weight: 800; color: #000; letter-spacing: -0.01em; }
+        .project-indicator { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .status-badge { font-size: 11px; font-weight: 700; color: #10b981; display: flex; align-items: center; gap: 8px; background: #f0fdf4; padding: 6px 14px; border-radius: 6px; border: 1px solid #dcfce7; }
+        .status-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; }
+
+        .toolbar {
+            height: 48px;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 24px;
+            gap: 12px;
+        }
+
+        .app-container { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar */
+        #editor-panel {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        #editor-panel::-webkit-scrollbar { width: 4px; }
+        #editor-panel::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+
+        .sidebar-header {
+            padding: 32px 24px;
+        }
+        .sidebar-header h2 { font-size: 16px; font-weight: 800; margin-bottom: 6px; color: #000; letter-spacing: -0.01em; }
+        .sidebar-header p { font-size: 12px; color: #888; font-weight: 500; }
+        
+        /* Accordion */
+        .sec-accordion { border-top: 1px solid var(--border); }
+        .acc-header {
+            width: 100%;
+            padding: 18px 24px;
+            background: #fff;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .acc-header:hover { background: #fafafa; }
+        .acc-header.active { background: #fff; }
+        .acc-header h3 { font-size: 12px; font-weight: 700; color: #000; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .acc-header .arrow { font-size: 14px; color: #ccc; transition: transform 0.3s; }
+        .acc-header.active .arrow { transform: rotate(180deg); color: #000; }
+        
+        .acc-content {
+            display: none;
+            padding: 0 24px 28px;
+            background: #fff;
+        }
+        .acc-header.active + .acc-content { display: block; }
+        
+        /* Fields */
+        .field-group { margin-top: 20px; }
+        .field-group label { display: block; font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.03em; }
+        .field-group input, .field-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-input);
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            color: #222;
+            transition: all 0.2s;
+        }
+        .field-group input:focus, .field-group textarea:focus { outline: none; border-color: #000; background: #fff; box-shadow: 0 0 0 4px rgba(0,0,0,0.03); }
+        .field-group textarea { min-height: 100px; resize: vertical; }
+
+        /* Preview Area */
+        #preview-pane {
+            flex: 1;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .preview-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            font-size: 10px;
+            font-weight: 800;
+            color: #ddd;
+            letter-spacing: 0.2em;
+        }
+        #preview-iframe {
+            flex: 1;
+            border: 1px solid #eee;
+            background: #fff;
+            border-radius: 4px;
+            margin: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid #eee;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: #fafafa; border-color: #ddd; }
+        .btn-primary { background: #000; color: #fff; border: none; }
+        .btn-primary:hover { background: #222; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-save { background: #fff; color: var(--accent); border-color: #e0e7ff; }
+        .btn-save:hover { background: #f5f7ff; }
+        
+        .device-toggles { display: flex; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 10px; margin-right: 24px; }
+        .device-btn { background: none; border: none; cursor: pointer; color: #aaa; padding: 6px 12px; font-size: 14px; border-radius: 6px; transition: all 0.2s; }
+        .device-btn.active { color: #000; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .device-btn:hover { color: #000; }
+
+        #preview-iframe.mobile-view {
+            width: 375px !important;
+            margin: 24px auto;
+            border: 12px solid #111;
+            border-radius: 30px;
+        }
+        
+        /* Toast */
+        #status-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: #000;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        #status-toast.error { background: #ef4444; }
+
+        /* --- Deployment Modal Styles --- */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 440px;
+            padding: 32px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .modal-box h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+        .modal-box p { font-size: 13px; color: #666; margin-bottom: 24px; line-height: 1.5; }
+        
+        .slug-input-group {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+        .slug-prefix, .slug-suffix { font-size: 13px; color: #999; font-weight: 600; }
+        .slug-input-field {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            outline: none;
+        }
+        
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+        .modal-btn { padding: 10px 20px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; border: 1px solid #ddd; background: #fff; }
+        .modal-btn-primary { background: #000; color: #fff; border-color: #000; }
+        .modal-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- Fullscreen Progress --- */
+        #publish-progress-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        #publish-progress-overlay.visible { display: flex; }
+        .pub-card { text-align: center; width: 360px; }
+        .pub-rocket { font-size: 50px; display: block; margin-bottom: 20px; animation: float 2s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .pub-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        .pub-step { font-size: 14px; color: #aaa; margin-bottom: 30px; min-height: 20px; }
+        .pub-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+        .pub-fill { height: 100%; width: 0%; background: #fff; transition: width 0.4s ease; }
+        .pub-pct { font-size: 12px; font-weight: 700; color: #666; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <div class="brand">CodeCanvas</div>
+            <div class="project-indicator">
+                <span>D</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                All changes saved
+            </div>
+            <button class="btn" onclick="location.reload()">Reset</button>
+            <button class="btn btn-save" id="save-btn">Save Draft</button>
+            <button class="btn" id="download-btn" onclick="exportHTML()">Download</button>
+
+            <button class="btn btn-primary" id="publish-btn">Publish</button>
+            <button id="top-view-live-btn" class="btn" style="display:none;" onclick="openLiveSite()">
+                <i class="ph ph-external-link"></i> Visit Site
+            </button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside id="editor-panel">
+            <div class="sidebar-header">
+                <h2>Edit Your Portfolio</h2>
+                <p>Changes update the preview in real-time</p>
+            </div>
+
+            <!-- Sections -->
+            <div class="sec-accordion" id="sec-global">
+                <button class="acc-header" onclick="toggleAcc('sec-global')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-globe-hemisphere-west" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Global Settings</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-global"></div>
+            </div>
+            <div class="sec-accordion" id="sec-hero">
+                <button class="acc-header active" onclick="toggleAcc('sec-hero')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-lightning" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Hero</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" style="display:block;" id="form-hero"></div>
+            </div>
+            <div class="sec-accordion" id="sec-navigation">
+                <button class="acc-header" onclick="toggleAcc('sec-navigation')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-navigation-arrow" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Navigation</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-navigation"></div>
+            </div>
+            <div class="sec-accordion" id="sec-about">
+                <button class="acc-header" onclick="toggleAcc('sec-about')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-user-focus" style="font-size:18px; color:#aaa;"></i>
+                        <h3>About</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-about"></div>
+            </div>
+            <div class="sec-accordion" id="sec-skills">
+                <button class="acc-header" onclick="toggleAcc('sec-skills')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-certificate" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Skills</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-skills"></div>
+            </div>
+            <div class="sec-accordion" id="sec-projects">
+                <button class="acc-header" onclick="toggleAcc('sec-projects')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-folders" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Projects</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-projects"></div>
+            </div>
+            <div class="sec-accordion" id="sec-contact">
+                <button class="acc-header" onclick="toggleAcc('sec-contact')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-paper-plane-tilt" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Contact</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-contact"></div>
+            </div>
+            <div class="sec-accordion" id="sec-footer">
+                <button class="acc-header" onclick="toggleAcc('sec-footer')">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <i class="ph ph-copyright" style="font-size:18px; color:#aaa;"></i>
+                        <h3>Footer</h3>
+                    </div>
+                    <span class="arrow"><i class="ph ph-caret-down"></i></span>
+                </button>
+                <div class="acc-content" id="form-footer"></div>
+            </div>
+        </aside>
+
+        <main id="preview-pane">
+            <!-- Deployment Modals -->
+            <div class="modal-backdrop" id="publish-backdrop">
+                <div class="modal-box">
+                    <h3>Deploy Website</h3>
+                    <p>Choose a custom URL for your portfolio. It will be live on Vercel in seconds.</p>
+                    <form id="publish-form">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display:block; font-size:10px; font-weight:800; color:#999; margin-bottom:8px; text-transform:uppercase;">Custom Slug</label>
+                            <div class="slug-input-group">
+                                <span class="slug-prefix">https://</span>
+                                <input type="text" id="publish-slug" placeholder="my-portfolio" class="slug-input-field" required autocomplete="off">
+                                <span class="slug-suffix">.vercel.app</span>
+                            </div>
+                            <div id="slug-feedback" style="font-size:11px; margin-top:5px; min-height:16px;"></div>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="button" class="modal-btn" onclick="closePublishModal()">Cancel</button>
+                            <button type="submit" class="modal-btn modal-btn-primary" id="publish-confirm-btn" disabled>Deploy Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="publish-progress-overlay">
+                <div class="pub-card">
+                    <span class="pub-rocket">🚀</span>
+                    <div class="pub-title">Publishing Now</div>
+                    <div class="pub-step" id="pub-step">Initializing deployment...</div>
+                    <div class="pub-track"><div class="pub-fill" id="pub-fill"></div></div>
+                    <div class="pub-pct" id="pub-pct">0%</div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop" id="publish-success-backdrop">
+                <div class="modal-box" style="text-align: center;">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
+                    <h3>Published Successfully!</h3>
+                    <p>Your portfolio is now live at the URL below:</p>
+                    <div id="live-url-display" style="background:#f9f9f9; padding:15px; border-radius:8px; border:1px dashed #ddd; font-family:monospace; font-size:13px; margin-bottom:24px; word-break:break-all;"></div>
+                    <div class="modal-actions" style="justify-content: center;">
+                        <a href="#" id="view-live-btn" target="_blank" class="modal-btn modal-btn-primary">Visit Site</a>
+                        <button class="modal-btn" onclick="closeSuccessModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-header-bar">
+                <div class="device-toggles">
+                    <button class="device-btn active" id="view-desktop" title="Desktop View">
+                        <i class="ph ph-desktop"></i>
+                    </button>
+                    <button class="device-btn" id="view-mobile" title="Mobile View">
+                        <i class="ph ph-smartphone"></i>
+                    </button>
+                    <button class="device-btn" id="view-live" title="Open Live Site">
+                        <i class="ph ph-arrow-square-out"></i>
+                    </button>
+                </div>
+                <div class="preview-label">LIVE PREVIEW</div>
+            </div>
+            <iframe id="preview-iframe"></iframe>
+        </main>
+    </div>
+
+    <div id="status-toast">Saved</div>
+
+    <script src="editor.js"></script>
+    <script>
+        function toggleAcc(id) {
+            const el = document.getElementById(id);
+            const header = el.querySelector('.acc-header');
+            const content = el.querySelector('.acc-content');
+            const isActive = header.classList.contains('active');
+            
+            if (isActive) {
+                header.classList.remove('active');
+                content.style.display = 'none';
+            } else {
+                header.classList.add('active');
+                content.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -88,8 +88,8 @@ exit;
             $_SESSION['user_role'] = $user['role'];
             $_SESSION['auth_method'] = 'google';
 
-            $redirectUrl = ($user['role'] === 'admin') ? '../admin/dashboard.php' : '../dashboard.php';
-            header("Location: " . BASE_URL . "/app/$redirectUrl");
+            $redirectUrl = ($user['role'] === 'admin') ? '/admin/index.php' : '/app/dashboard.php';
+            header("Location: " . BASE_URL . $redirectUrl);
 exit;
 
         } else {
@@ -114,7 +114,7 @@ exit;
                 // Dispatch welcome event
                 UserRegisteredEvent::dispatch($email, $name);
 
-                header("Location: " . BASE_URL . "/dashboard.php");
+                header("Location: " . BASE_URL . "/app/dashboard.php");
 exit;
             } else {
                 throw new Exception("Database insertion failed for new Google user.");
