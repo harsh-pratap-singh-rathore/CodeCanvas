@@ -2,7 +2,12 @@
 
 <img src="https://raw.githubusercontent.com/harsh-pratap-singh-rathore/CodeCanvas/main/public/assets/images/logo.png" alt="CodeCanvas Logo" width="120" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 20px;" />
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Outfit&weight=800&size=48&duration=4000&pause=1000&color=000000&center=true&vCenter=true&width=800&height=80&lines=CodeCanvas+V2;Intelligent+Design+Engine;Zero+Cloud+Costs;Local+AI+Generation" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=Outfit&weight=800&size=48&duration=4000&pause=1000&color=FFFFFF&center=true&vCenter=true&width=800&height=80&lines=CodeCanvas+V2;Intelligent+Design+Engine;Zero+Cloud+Costs;Local+AI+Generation">
+    <img src="https://readme-typing-svg.demolab.com?font=Outfit&weight=800&size=48&duration=4000&pause=1000&color=000000&center=true&vCenter=true&width=800&height=80&lines=CodeCanvas+V2;Intelligent+Design+Engine;Zero+Cloud+Costs;Local+AI+Generation" alt="Typing SVG">
+  </picture>
+</a>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama" />
